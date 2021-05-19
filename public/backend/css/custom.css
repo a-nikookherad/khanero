@@ -1,0 +1,33 @@
+:root {
+    --main-color: #f7941d;
+}
+.back-url {
+    padding-bottom: 15px;
+    padding-right: 15px;
+}
+.now-url {
+    color: #777;
+}
+.btn-green {
+    background: var(--main-color);
+    border: none;
+    color: #fefefe;
+    cursor: pointer;
+    padding: 7px;
+}
+.btn-green:hover {
+    background: #0f6c8c;
+    border: none;
+}
+.bg-green {
+    background: var(--main-color);
+}
+.border-green {
+    border: 1px solid var(--main-color);
+}
+.text-green {
+    color: var(--main-color);
+}
+.calendar-hover {
+    background-color: #c8e8ea;
+}

@@ -1,0 +1,1 @@
+<?php echo Captcha::img('default'); ?>

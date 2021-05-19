@@ -1,0 +1,1508 @@
+/*@import url(fonts.css);*/
+/*@import url(custom.css);*/
+
+/*body {*/
+/*font-family: IRANSans, sans-serif;*/
+/*direction: rtl;*/
+/*text-align: right;*/
+/*color: #444444;*/
+/*overflow-x: hidden;*/
+/*}*/
+
+.set__calendar a {
+    color: #444444;
+    transition: .3s;
+}
+
+.set__calendar a:hover {
+    color: rgb(66, 163, 228);
+    text-decoration: none;
+}
+
+.set__calendar h1,
+.set__calendar h2,
+.set__calendar h3,
+.set__calendar h4,
+.set__calendar h5,
+.set__calendar h6,
+.set__calendar input,
+.set__calendar textarea,
+.set__calendar input {
+    font-family: IRANSans !important;
+}
+
+.set__calendar h1 {
+    font-weight: bold;
+}
+
+.set__calendar {
+    width: 100%;
+    color: #fff;
+    margin: 25px 0;
+}
+
+.body__calendar {
+    box-shadow: 0 2px 12.5px 0 rgba(0, 0, 0, .15);
+    background: #fff;
+    min-height: 335px;
+    border-radius: 6px;
+    margin: 6px 2px;
+}
+
+.ring-left {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    z-index: 99;
+}
+
+.ring-right {
+    position: absolute;
+    top: 60px;
+    right: 60px;
+    z-index: 99;
+}
+
+.ring-left::after {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, .3), 0 -1px 1px rgba(0, 0, 0, .2);
+    content: "";
+    display: inline-block;
+    margin: 8px;
+    height: 29px;
+    width: 8px;
+}
+
+.ring-left::before {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, .3), 0 -1px 1px rgba(0, 0, 0, .2);
+    content: "";
+    display: inline-block;
+    margin: 8px;
+    height: 29px;
+    width: 8px;
+}
+
+.ring-right::after {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, .3), 0 -1px 1px rgba(0, 0, 0, .2);
+    content: "";
+    display: inline-block;
+    margin: 8px;
+    height: 29px;
+    width: 8px;
+}
+
+.ring-right::before {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, .3), 0 -1px 1px rgba(0, 0, 0, .2);
+    content: "";
+    display: inline-block;
+    margin: 8px;
+    height: 29px;
+    width: 8px;
+}
+
+.btn__left {
+    float: left;
+    margin: 14px 12px 0;
+    background: none;
+    border: 1px solid #fff;
+    width: 30px;
+    height: 30px;
+    padding: 3px 2px 0 0;
+    color: #fff;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.btn__right {
+    float: right;
+    margin: 14px 12px 0;
+    background: none;
+    border: 1px solid #fff;
+    width: 30px;
+    height: 30px;
+    padding: 3px 0 0 2px;
+    color: #fff;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.header__calendar {
+    background: #007b8c;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    height: 57px;
+    border-radius: 6px;
+}
+
+.title__calendar {
+    display: inline-block;
+    margin: 16px;
+}
+
+.day__name {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 1px 0;
+}
+
+/*////////////*/
+
+:root {
+    --clendar-mainColor: #0060af
+}
+
+.set__calendar a {
+    color: inherit !important;
+    text-decoration: none !important
+}
+
+.calendar-container {
+    visibility: visible;
+    width: 100%;
+    color: #000;
+    text-align: center;
+    z-index: 1
+}
+
+.isHousePage .calendar-container {
+    position: absolute
+}
+
+.notHousePage .calendar-container {
+    position: relative;
+    display: block !important
+}
+
+.calendar-content > div,
+.sth {
+    position: relative;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 7px
+}
+
+.isHousePage .calendar-content > div,
+.sth {
+    box-shadow: 0 2px 12.5px 0 rgba(0, 0, 0, .15)
+}
+
+.notHousePage .calendar-content > div,
+.sth {
+    border: 1px solid #e6e6e6
+}
+
+.isHousePage .calendar-content > div,
+.sth {
+    padding: 3px 5px;
+    margin-top: 2px
+}
+
+.calendar-header {
+    margin: 0;
+    padding: 15px 10px !important;
+    background-color: #3ba0ff;
+    color: #fff
+}
+
+.calendar-header > div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.calendar-header > .calendar-arrival-departure-date {
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+.isHousePage .calendar-header .monthName {
+    font-size: 15px
+}
+
+.calendar-change-month {
+    padding: 5px;
+    border: 1px solid #fff;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: background .4s
+}
+
+.calendar-change-month:hover {
+    background-color: hsla(0, 0%, 100%, .3)
+}
+
+.calendar-change-month > main {
+    top: 0
+}
+
+.calendar-arrival-departure-date > div {
+    margin: 0 14px;
+    font-size: 14px;
+    font-weight: 500
+}
+
+.calendar-body {
+    position: relative;
+    background-color: #fff
+}
+
+.calendar-day-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 1px 0;
+    color: #444;
+}
+
+.calendar-day-row > main {
+    position: relative;
+    width: 14%;
+    margin: 0 1px;
+    text-align: center;
+    font-size: 15.5px;
+    float: left
+}
+
+.calendar-day-row > main:before {
+    content: "";
+    display: block;
+    padding-top: 100%
+}
+
+.isHousePage .calendar-day-row > main:before {
+    padding-top: 100%
+}
+
+.calendar-day-row > main > .info-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+.calendar-day-row#daysOfWeek > main {
+    font-size: 13px;
+    font-weight: 700
+}
+
+.calendar-day-row .calendar-day-item {
+    color: #000;
+    cursor: pointer;
+    border: 1px solid #f2f2f2
+}
+
+.calendar-day-row .calendar-day-item:not(.calendar-day-past) {
+    font-weight: 700
+}
+
+.calendar-day-row .calendar-day-noItem {
+    padding: 0 1px
+}
+
+.calendar-day-item-price {
+    font-size: 11px;
+    font-weight: 100;
+    color: #999;
+}
+
+.calendar-day-row .calendar-day-today {
+    border: 2px solid #3ba0ff;
+    border-radius: 5px
+}
+
+.calendar-day-row .calendar-day-past {
+    color: #dcdcdc;
+    cursor: default
+}
+
+.calendar-day-row .calendar-day-past > .calendar-day-item-date {
+    text-decoration: line-through
+}
+
+.calendar-day-row .calendar-day-disable,
+.calendar-day-row .calendar-day-minDisable {
+    background: repeating-linear-gradient(-45deg, #e9e9e9, #e9e9e9 10px, #dbdbdb 0, #dbdbdb 20px)
+}
+
+.calendar-day-row .calendar-day-unavailable {
+    background: repeating-linear-gradient(45deg, #4caf50, #4caf50 10px, #8bc34a 0, #8bc34a 20px)
+}
+
+.isHousePage .calendar-day-row .calendar-day-disable:not(.calendar-day-item-active),
+.isHousePage .calendar-day-row .calendar-day-minDisable {
+    cursor: not-allowed !important
+}
+
+.calendar-day-row .calendar-day-lastSecondOfferDays {
+    background-repeat: no-repeat;
+    background-size: 36%
+}
+
+.calendar-day-row .calendar-day-holidays {
+    color: red
+}
+
+.calendar-day-row .calendar-day-past.calendar-day-holidays {
+    color: #ffc7c7
+}
+
+.isHousePage .calendar-day-row .calendar-day-disable,
+.isHousePage .calendar-day-row .calendar-day-minDisable {
+    color: #adadad
+}
+
+.calendar-day-row .calendar-day-disable.calendar-day-holidays {
+    color: #fc8989
+}
+
+.calendar-day-row .calendar-day-item .toolTipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: #f1f0f0;
+    color: #000;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity .3s;
+    font-size: 11px;
+    font-weight: 500
+}
+
+.calendar-day-row .calendar-day-item .toolTipText:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -7px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: #e6e6e6 transparent transparent
+}
+
+.calendar-day-row .calendar-day-item .toolTipText:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #f1f0f0 transparent transparent
+}
+
+.calendar-day-row .calendar-day-item:not(.calendar-day-item-active):hover .toolTipText {
+    visibility: visible;
+    opacity: 1
+}
+
+.calendar-day-row .calendar-day-item-active {
+    background: #0060af !important;
+    color: #fff !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1) !important;
+    font-weight: 900;
+    border-radius: 0;
+    border: none
+}
+
+.isHousePage .calendar-day-row .calendar-day-item-departure .calendar-day-item-price {
+    visibility: hidden
+}
+
+.calendar-day-row .calendar-day-item-hover {
+    background: rgba(27, 109, 133, .12);
+    color: #000
+}
+
+.calendar-price-tip {
+    text-align: right;
+    font-weight: 500;
+    color: #f44336
+}
+.calendar-price-tip i {
+    display: inline-block;
+}
+.calendar-price-tip main {
+    display: inline-block;
+}
+.calendar-bookedDays {
+    color: #444;
+}
+
+.calendar-footer .calendar-footer-txt {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 10px 5px 5px;
+    font-size: 11px
+}
+
+.calendar-reset-btn {
+    color: #ff5a5f;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500
+}
+
+.calendar-footer .footer-last-update {
+    padding: 5px;
+    text-align: right;
+    font-size: 11px;
+    color: #444;
+}
+
+.bookBox-container .spinner {
+    width: 100%;
+    margin-top: 3px;
+    text-align: center
+}
+
+.isHousePage .bookBox-container .spinner {
+    padding: 10px 0 5px
+}
+
+.bookBox-container .spinner > div {
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    display: inline-block;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both
+}
+
+.isHousePage .spinner > div {
+    background-color: #ff5a5f
+}
+
+.notHousePage .spinner > div {
+    background-color: #fff
+}
+
+.bookBox-container .spinner .bounce1 {
+    animation-delay: -.32s
+}
+
+.bookBox-container .spinner .bounce2 {
+    animation-delay: -.16s
+}
+
+@keyframes sk-bouncedelay {
+    0%,
+    80%,
+    to {
+        transform: scale(0)
+    }
+    40% {
+        transform: scale(1)
+    }
+}
+
+.bookingModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #000;
+    background-color: hsla(0, 0%, 100%, .7)
+}
+
+.bookingModal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 450px;
+    box-shadow: 0 -1px 8px 1px rgba(0, 0, 0, .14) !important;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: .4s;
+    animation-name: animatetop;
+    animation-duration: .4s
+}
+
+@keyframes animatetop {
+    0% {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: 700
+}
+
+.close:focus,
+.close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer
+}
+
+.bookingModal-header {
+    padding: 2px 16px
+}
+
+.bookingModal-body {
+    padding: 2px 5px
+}
+
+.bookingModal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: #fff
+}
+
+.book_body {
+    padding: 0 4px;
+    border: 1px solid #e6e6e6;
+    background-color: #fff
+}
+
+.bookingModal-info-container {
+    padding-bottom: 7px;
+    border-bottom: 1px solid #eee
+}
+
+.bookingModal-item.guest-count-container,
+.bookingModal-item .inputBox {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.bookingModal-item .inputBox {
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 5px;
+    border-top: 1px solid #dfdfdf;
+    border-width: .15em !important
+}
+
+.bookingModal-item .inputBox#mobileCalendar {
+    padding: 0;
+    border: none
+}
+
+.bookingModal-item.guest-count-container .inputBox {
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: none
+}
+
+.bookingModal-item .guest-btn {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #1b6d85;
+    border-radius: 100%;
+    color: #1b6d85;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color .3s
+}
+
+.bookingModal-item .guest-btn:not(.guest-btn-disable):hover {
+    background-color: rgba(27, 109, 133, .1)
+}
+
+.bookingModal-item .guest-btn-disable {
+    opacity: .3
+}
+
+.bookingModal-item .guestCountDisplay {
+    width: 40px;
+    text-align: center;
+    border: none;
+    font-size: 18px;
+    font-weight: 500
+}
+
+.guest-count-container .guest-count-title {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column
+}
+
+.bookingModal-item .okAccommodates {
+    font-size: 12px;
+    font-weight: 500;
+    color: #777
+}
+
+.bookingModal-item .bookingModal-Btn {
+    width: 100%;
+    padding: 6px;
+    background-color: #adadad;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 500;
+    border: 1px solid #fff !important;
+    outline: none !important;
+    margin-top: 8px;
+    font-size: 15px
+}
+
+.booking {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    color: #484848;
+    background-color: #fff;
+    box-shadow: 0 -1px 8px 1px rgba(0, 0, 0, .14) !important;
+    transition: bottom .35s
+}
+
+.booking-container {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.booking-container > * {
+    width: 50%
+}
+
+.booking-btn {
+    padding: 10px 30px;
+    background-color: #ff5a5f;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center
+}
+
+.booking-info {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+.bookBox-container {
+    padding: 5px;
+    background-color: #fff
+}
+
+.bookBox-container > * {
+    position: relative
+}
+
+.bookBox-header .bookBox-close {
+    text-align: right;
+    font-size: 37px;
+    margin-top: 4px
+}
+
+.bookBox-header .bookBox-close > main {
+    line-height: 25px
+}
+
+.bookBox-header .bookBox-header-info {
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    margin-bottom: 10px
+}
+
+.bookBox-header .bookBox-header-info .bookBox-header-info-priceRate {
+    position: relative;
+    top: -10px
+}
+
+.bookBox-header .bookBox-header-info .bookBox-header-info-priceRate .bookBox-header-info-price > .price-txt {
+    font-size: 16px;
+    font-weight: 900;
+    color: #000
+}
+
+.bookBox-header .bookBox-header-info .bookBox-header-info-detail {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    font-weight: 700;
+    font-size: 12px;
+    position: relative;
+    top: -8px
+}
+
+.bookBox-header .bookBox-header-info .bookBox-header-info-detail img {
+    width: 80px
+}
+
+.bookBox-header .bookBox-header-info .bookBox-header-info-detail .bookBox-header-info-houseID {
+    padding: 4px 0
+}
+
+.bookBox-body {
+    padding: 5px 0 10px;
+    border-bottom: 1px solid #eee
+}
+
+.bookBox-body-item {
+    position: relative;
+    margin-bottom: 9px
+}
+
+.notHousePage .bookBox-body-item {
+    margin-bottom: 15px
+}
+
+.bookBox-body-item.host-change-choice {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 25px
+}
+
+.bookBox-body-item .bookBox-input-label {
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 700
+}
+
+.bookBox-body-item .bookBox-input,
+.bookBox-body-item .bookBox-input-label {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.bookBox-body-item .bookBox-input {
+    padding: 6px 15px;
+    border: 1px solid #e6e6e6
+}
+
+.notHousePage .bookBox-body-item .bookBox-input {
+    padding: 10px 15px
+}
+
+.bookBox-body-item .bookBox-input > #hostPrice {
+    width: 70%;
+    border: none;
+    box-shadow: none;
+    text-align: left;
+    padding-left: 10px
+}
+
+.bookBox-body-item .bookBox-input > #hostPrice::-webkit-input-placeholder {
+    color: #939393;
+    text-align: center
+}
+
+.bookBox-body-item .bookBox-input > #hostPrice::-moz-placeholder {
+    color: #939393;
+    text-align: center
+}
+
+.bookBox-body-item .bookBox-input > #hostPrice:-ms-input-placeholder {
+    color: #939393;
+    text-align: center
+}
+
+.bookBox-body-item .bookBox-input > #hostPrice:-moz-placeholder {
+    color: #939393;
+    text-align: center
+}
+
+.bookBox-body-item .bookBox-input > main {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #858585;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500
+}
+
+.bookBox-body-item .bookBox-input > main.active > main {
+    padding: 3px 10px;
+    border-radius: 5px;
+    background-color: #e0f7ff
+}
+
+.notHousePage .bookBox-body-item .bookBox-input > main.active > main {
+    padding: 6px 10px
+}
+
+.bookBox-body-item .bookBox-input > main.bookBox-input-iconDate {
+    font-size: 20px
+}
+
+.bookBox-input-date {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    left: -10px
+}
+
+.bookBox-body-item .guestCount-extraPerson {
+    margin-right: 5px;
+    font-size: 11px;
+    font-weight: 400
+}
+
+.bookBox-body-item .bookBox-input-guestCount-btn {
+    display: -ms-flexbox;
+    display: flex
+}
+
+.bookBox-body-item .bookBox-input-guestCount-btn .guest-btn {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #0060af;
+    border-radius: 100%;
+    color: #0060af;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color .3s
+}
+
+.bookBox-body-item .bookBox-input-guestCount-btn .guest-btn:not(.guest-btn-disable):hover {
+    background-color: rgba(27, 109, 133, .1)
+}
+
+.bookBox-body-item .bookBox-input-guestCount-btn .guest-btn.guest-btn-disable {
+    opacity: .3
+}
+
+.bookBox-body-item .bookBox-input-guestCount-btn .guestCount-display {
+    width: 30px;
+    text-align: center;
+    border: none;
+    font-size: 18px;
+    font-weight: 500
+}
+
+.bookBox-body-item .bookBox-invoice-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 9px 2px;
+    border-bottom: 1px solid #e6e6e6
+}
+
+.bookBox-body-item .bookBox-invoice-row:last-child {
+    border: none;
+    padding-bottom: 0;
+    font-weight: 700
+}
+
+.bookBox-body-item .bookBox-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 14px;
+    background-color: #ff5a5f;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    border: none !important;
+    border-radius: 5px;
+    outline: none !important
+}
+
+.notHousePage .bookBox-body-item .bookBox-btn {
+    background-color: #2196f3 !important
+}
+
+.bookBox-body-item .bookBox-btn.bookBox-instant-btn {
+    background-color: #4caf50
+}
+
+.bookBox-body-item .bookBox-btn-text {
+    margin-top: 7px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px
+}
+
+.bookBox-body-item .bookBox-btn-text img {
+    width: 10px;
+    transform: rotate(-90deg);
+    margin-left: 3px
+}
+
+.bookBox-body-item .bookBox-btn-text.bookBox-txt-instant i {
+    color: #4caf50
+}
+
+.bookBox-footer > * {
+    margin-bottom: 10px
+}
+
+.bookBox-footer .bookBox-footer-feature {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #eee;
+    border-radius: 4px;
+    font-size: 11px
+}
+
+.bookBox-footer .bookBox-footer-feature > div {
+    display: -ms-flexbox;
+    display: flex;
+    width: 33%;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    font-weight: 700
+}
+
+.bookBox-footer .bookBox-footer-feature > div > img {
+    width: 90%;
+    max-width: 30px
+}
+
+.bookBox-footer .bookBox-footer-contact {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: 500
+}
+
+.bookBox-footer .bookBox-footer-contact > :first-child {
+    margin-bottom: 4px
+}
+
+.bookBox-footer .bookBox-footer-contact > * {
+    color: #666
+}
+
+.can-toggle {
+    position: relative
+}
+
+.can-toggle *,
+.can-toggle:after,
+.can-toggle:before {
+    box-sizing: border-box
+}
+
+.can-toggle input[type=checkbox] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.can-toggle input[type=checkbox][disabled] ~ label {
+    pointer-events: none
+}
+
+.can-toggle input[type=checkbox][disabled] ~ label .can-toggle__switch {
+    opacity: .4
+}
+
+.can-toggle input[type=checkbox]:checked ~ label .can-toggle__switch:before {
+    content: attr(data-unchecked);
+    left: 0
+}
+
+.can-toggle input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    content: attr(data-checked)
+}
+
+.can-toggle label {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.can-toggle label .can-toggle__label-text {
+    padding-left: 12px
+}
+
+.can-toggle label .can-toggle__switch {
+    position: relative;
+    cursor: pointer
+}
+
+.can-toggle label .can-toggle__switch:before {
+    content: attr(data-checked);
+    position: absolute;
+    top: 0;
+    text-transform: uppercase;
+    text-align: center
+}
+
+.can-toggle label .can-toggle__switch:after {
+    content: attr(data-unchecked);
+    position: absolute;
+    z-index: 0;
+    text-transform: uppercase;
+    text-align: center;
+    background: #fff;
+    transform: translateZ(0)
+}
+
+.can-toggle input[type=checkbox][disabled] ~ label {
+    color: hsla(0, 0%, 47%, .5)
+}
+
+.can-toggle input[type=checkbox]:focus ~ label .can-toggle__switch,
+.can-toggle input[type=checkbox]:hover ~ label .can-toggle__switch {
+    background-color: #777
+}
+
+.can-toggle input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    color: #5e5d5d
+}
+
+.can-toggle input[type=checkbox]:hover ~ label {
+    color: #6a6a6a
+}
+
+.can-toggle input[type=checkbox]:checked ~ label:hover {
+    color: #55bc49
+}
+
+.can-toggle input[type=checkbox]:checked ~ label .can-toggle__switch {
+    background-color: #70c767
+}
+
+.can-toggle input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    color: #4fb743
+}
+
+.can-toggle input[type=checkbox]:checked:focus ~ label .can-toggle__switch,
+.can-toggle input[type=checkbox]:checked:hover ~ label .can-toggle__switch {
+    background-color: #5fc054
+}
+
+.can-toggle input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    color: #47a43d
+}
+
+.can-toggle label .can-toggle__label-text {
+    -ms-flex: 1;
+    flex: 1;
+    font-weight: 400;
+    color: #858585
+}
+
+.can-toggle label .can-toggle__switch {
+    transition: background-color .3s cubic-bezier(0, 1, .5, 1);
+    background: #848484
+}
+
+.can-toggle label .can-toggle__switch:before {
+    color: hsla(0, 0%, 100%, .5)
+}
+
+.can-toggle label .can-toggle__switch:after {
+    transition: transform .3s cubic-bezier(0, 1, .5, 1);
+    color: #777
+}
+
+.can-toggle input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .4)
+}
+
+.can-toggle input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    transform: translate3d(52px, 0, 0)
+}
+
+.can-toggle input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .4)
+}
+
+.can-toggle label {
+    font-size: 14px
+}
+
+.can-toggle label .can-toggle__switch {
+    height: 36px;
+    -ms-flex: 0 0 110px;
+    flex: 0 0 110px;
+    border-radius: 4px
+}
+
+.can-toggle label .can-toggle__switch:before {
+    left: 55px;
+    font-size: 12px;
+    line-height: 36px;
+    width: 55px;
+    padding: 0 12px
+}
+
+.can-toggle label .can-toggle__switch:after {
+    top: 3px;
+    left: 3px;
+    border-radius: 2px;
+    width: 52px;
+    line-height: 30px;
+    font-size: 12px
+}
+
+.can-toggle label .can-toggle__switch:hover:after {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.can-toggle--size-small input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle.can-toggle--size-small input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.can-toggle--size-small input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    transform: translate3d(44px, 0, 0)
+}
+
+.can-toggle.can-toggle--size-small input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle.can-toggle--size-small input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.can-toggle--size-small label {
+    font-size: 13px
+}
+
+.can-toggle.can-toggle--size-small label .can-toggle__switch {
+    height: 28px;
+    -ms-flex: 0 0 90px;
+    flex: 0 0 90px;
+    border-radius: 2px
+}
+
+.can-toggle.can-toggle--size-small label .can-toggle__switch:before {
+    left: 45px;
+    font-size: 10px;
+    line-height: 28px;
+    width: 45px;
+    padding: 0 12px
+}
+
+.can-toggle.can-toggle--size-small label .can-toggle__switch:after {
+    top: 1px;
+    left: 1px;
+    border-radius: 1px;
+    width: 44px;
+    line-height: 26px;
+    font-size: 10px
+}
+
+.can-toggle.can-toggle--size-small label .can-toggle__switch:hover:after {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.can-toggle--size-large input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle.can-toggle--size-large input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.can-toggle--size-large input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    transform: translate3d(78px, 0, 0)
+}
+
+.can-toggle.can-toggle--size-large input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle.can-toggle--size-large input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.can-toggle--size-large label {
+    font-size: 14px
+}
+
+.can-toggle.can-toggle--size-large label .can-toggle__switch {
+    height: 50px;
+    -ms-flex: 0 0 160px;
+    flex: 0 0 160px;
+    border-radius: 4px
+}
+
+.can-toggle.can-toggle--size-large label .can-toggle__switch:before {
+    left: 80px;
+    font-size: 14px;
+    line-height: 50px;
+    width: 80px;
+    padding: 0 12px
+}
+
+.can-toggle.can-toggle--size-large label .can-toggle__switch:after {
+    top: 2px;
+    left: 2px;
+    border-radius: 2px;
+    width: 78px;
+    line-height: 46px;
+    font-size: 14px
+}
+
+.can-toggle.can-toggle--size-large label .can-toggle__switch:hover:after {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox][disabled] ~ label {
+    color: hsla(0, 0%, 46%, .5)
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:focus ~ label .can-toggle__switch,
+.can-toggle.demo-rebrand-1 input[type=checkbox]:hover ~ label .can-toggle__switch {
+    background-color: #757575
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle.demo-rebrand-1 input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    color: #5c5b5b
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:hover ~ label {
+    color: #686868
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked ~ label:hover {
+    color: #47a44b
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked ~ label .can-toggle__switch {
+    background-color: #5cb860
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    color: #449d48
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked:focus ~ label .can-toggle__switch,
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked:hover ~ label .can-toggle__switch {
+    background-color: #4caf50
+}
+
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle.demo-rebrand-1 input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    color: #3d8b40
+}
+
+.can-toggle.demo-rebrand-1 label .can-toggle__label-text {
+    -ms-flex: 1;
+    flex: 1;
+    font-weight: 400;
+    color: #858585
+}
+
+.can-toggle.demo-rebrand-1 label .can-toggle__switch {
+    transition: background-color .3s ease-in-out;
+    background: #828282
+}
+
+.can-toggle.demo-rebrand-1 label .can-toggle__switch:before {
+    color: hsla(0, 0%, 100%, .6)
+}
+
+.can-toggle.demo-rebrand-1 label .can-toggle__switch:after {
+    transition: transform .3s ease-in-out;
+    color: #757575
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox][disabled] ~ label {
+    color: rgba(68, 68, 68, .5)
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:focus ~ label .can-toggle__switch,
+.can-toggle.demo-rebrand-2 input[type=checkbox]:hover ~ label .can-toggle__switch {
+    background-color: #444
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle.demo-rebrand-2 input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    color: #2b2a2a
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:hover ~ label {
+    color: #373737
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked ~ label:hover {
+    color: #62b125
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked ~ label .can-toggle__switch {
+    background-color: #75d32d
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    color: #5da924
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked:focus ~ label .can-toggle__switch,
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked:hover ~ label .can-toggle__switch {
+    background-color: #69be28
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    color: #52941f
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__label-text {
+    -ms-flex: 1;
+    flex: 1;
+    font-weight: 400;
+    color: #858585
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch {
+    transition: background-color .3s cubic-bezier(.86, 0, .07, 1);
+    background: #515151
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
+    color: hsla(0, 0%, 100%, .7)
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch:after {
+    transition: transform .3s cubic-bezier(.86, 0, .07, 1);
+    color: #444
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:focus ~ label .can-toggle__switch:after,
+.can-toggle.demo-rebrand-2 input[type=checkbox]:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked ~ label .can-toggle__switch:after {
+    transform: translate3d(58px, 0, 0)
+}
+
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked:focus ~ label .can-toggle__switch:after,
+.can-toggle.demo-rebrand-2 input[type=checkbox]:checked:hover ~ label .can-toggle__switch:after {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .4)
+}
+
+.can-toggle.demo-rebrand-2 label {
+    font-size: 13px
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch {
+    height: 60px;
+    -ms-flex: 0 0 120px;
+    flex: 0 0 120px;
+    border-radius: 60px
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
+    left: 60px;
+    font-size: 13px;
+    line-height: 60px;
+    width: 60px;
+    padding: 0 12px
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch:after {
+    top: 2px;
+    left: 2px;
+    border-radius: 30px;
+    width: 58px;
+    line-height: 56px;
+    font-size: 13px
+}
+
+.can-toggle.demo-rebrand-2 label .can-toggle__switch:hover:after {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .4)
+}
+
+.last-day-item {
+    background: #e0e0e0;
+    cursor: no-drop !important;
+}
