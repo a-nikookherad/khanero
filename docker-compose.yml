@@ -40,13 +40,13 @@ services:
       - app-network
 
   #MySQL Service
-  db:
+  mysql:
     image: mysql:5.7.22
-    container_name: db
+    container_name: mysql
     restart: unless-stopped
     tty: true
-    #ports:
-    #  - 3306:3306
+    ports:
+      - 3306:3306
     environment:
       MYSQL_DATABASE: irannpco_khosravi
       MYSQL_ROOT_PASSWORD: 123
@@ -65,18 +65,18 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     depends_on:
-      - db
+      - mysql
     restart: unless-stopped
     volumes:
       - ./php/phpmyadmin.ini:/usr/local/etc/php/php.ini
     #    tty: true
     links:
-      - db:db
+      - mysql:mysql
     ports:
       - 9191:80
     environment:
       MYSQL_ROOT_PASSWORD: 123
-      PMA_HOST: db
+      PMA_HOST: mysql
     networks:
       - app-network
 
