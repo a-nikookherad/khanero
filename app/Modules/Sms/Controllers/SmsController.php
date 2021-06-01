@@ -17,23 +17,24 @@ use Melipayamak;
 
 class SmsController extends Controller
 {
-    public static function SendSMSRegister($Name, $Mobile, $Token)
+    public static function SendSMSRegister($Name=null, $Mobile, $Token)
     {
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ''.$Name.' عزیز
-//به سایت رنت خوش آمدید
-//کد فعالسازی "رنت" :'.$Token.'
-//راهنمای نحوه رزرو :
-//کانال تلگرام :
-//شماره پشتیبانی :';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
-        return true;
+/*        try {
+            $sms = melipayamak::sms();
+            $to = $Mobile;
+            $from = '10007514';
+
+            $text = ''.$Name.' عزیز
+به سایت رنت خوش آمدید
+کد فعالسازی "رنت" :'.$Token.'
+راهنمای نحوه رزرو :
+کانال تلگرام :
+شماره پشتیبانی :';
+            $sms->send($to, $from, $text);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return true;*/
     }
     public static function SendSMSRegister2($Mobile, $Token)
     {
@@ -161,7 +162,6 @@ class SmsController extends Controller
     public static function SendSmsUser(Request $request)
     {
 
-        return 2323;
         /**
          * $arr_mobile => array mobile users
          */

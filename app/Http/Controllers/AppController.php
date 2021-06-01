@@ -37,7 +37,7 @@ class AppController extends Controller
         $slideShowModel = SlideShow::all();
 
         return view('frontend.Page.HomePage', compact(
-        'slideShowModel'
+            'slideShowModel'
         ));
     }
 
@@ -45,7 +45,8 @@ class AppController extends Controller
     {
 //        return $id;
 
-        $hostModel = Host::where('id', $id)
+        $hostModel = Host::query()
+            ->where('id', $id)
             ->where('active', 1)
             ->where('status', 1)
             ->where('step', 100)
@@ -64,7 +65,7 @@ class AppController extends Controller
             ->with('getPriceDay.getWeek')
             ->with('getDiscount')
             ->first();
-        if(empty($hostModel)) {
+        if (empty($hostModel)) {
             return back();
         }
 
@@ -108,7 +109,7 @@ class AppController extends Controller
 
         $hostLike = Host::where('township_id', $hostModel->township_id)
             ->where('building_type_id', $hostModel->building_type_id)
-            ->where('id','!=', $hostModel->id)
+            ->where('id', '!=', $hostModel->id)
             ->where('active', 1)
             ->where('status', 1)
             ->where('step', 100)
@@ -120,26 +121,26 @@ class AppController extends Controller
         $nowYearJalali = jDate::forge(date("Y/m/d"))->format('Y'); // get now year
         $nowMonthJalali = jDate::forge(date("Y/m/d"))->format('m'); // get now month
 
-        $first_date_month_jalali = ''.$nowYearJalali.'/'.$nowMonthJalali.'/01'; // get first day now month
+        $first_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/01'; // get first day now month
         $month_model = Month::where('id', $nowMonthJalali)->first(); // get detail now month
-        $last_date_month_jalali = ''.$nowYearJalali.'/'.$nowMonthJalali.'/'.$month_model->number_day; // get count day now month
+        $last_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $month_model->number_day; // get count day now month
         $first_date_month_miladi = jDateTime::ConvertToGeorgian($first_date_month_jalali, date('H:i:s')); // change first day now month jalali to miladi(AD)
         $last_date_month_miladi = jDateTime::ConvertToGeorgian($last_date_month_jalali, date('H:i:s')); // change last day now month jalali to miladi(AD)
-        $first_date_month_miladi = explode(' ',$first_date_month_miladi); // put date to array for separate date and time
-        $last_date_month_miladi = explode(' ',$last_date_month_miladi); // put date to array for separate date and time
-        $first_date_month_miladi = $first_date_month_miladi[0].' 00:00:00'; // change time to 00:00:00
-        $last_date_month_miladi = $last_date_month_miladi[0].' 00:00:00'; // change time to 00:00:00
+        $first_date_month_miladi = explode(' ', $first_date_month_miladi); // put date to array for separate date and time
+        $last_date_month_miladi = explode(' ', $last_date_month_miladi); // put date to array for separate date and time
+        $first_date_month_miladi = $first_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
+        $last_date_month_miladi = $last_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
         $special_date_model = SpecialDate::where('date', '>=', $first_date_month_miladi)
             ->where('date', '<=', $last_date_month_miladi)
             ->get();
         $holidays_now_month = array();
         foreach ($special_date_model as $key => $value) {
             $jalali_date = jDate::forge($value->date)->format('Y/m/d');
-            $jalali_date = explode('/',$jalali_date);
+            $jalali_date = explode('/', $jalali_date);
             $holidays_now_month[] = $jalali_date[2];
         }
         // $holidays_now_month => this month's holidays [1, 8, 22, ...]
-        list($year, $month, $day) = explode('/', ''.$nowYearJalali.'/'.$nowMonthJalali.'/01');
+        list($year, $month, $day) = explode('/', '' . $nowYearJalali . '/' . $nowMonthJalali . '/01');
         $timestamp = bmktime(0, 0, 0, $month, $day, $year);
         $day_info = bgetdate($timestamp);
         $num_week = Carbon::now()->dayOfWeek;
@@ -208,16 +209,16 @@ class AppController extends Controller
         $priceModel = PriceDay::where('host_id', $hostModel->id)->get();
 
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
-            $dayCalendarJalali = ''.$nowYearJalali.'/'.$nowMonthJalali.'/'.$i;
+            $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $i;
             $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
-                if($value->week_id == $day_id) {
+                if ($value->week_id == $day_id) {
                     $priceDay = $value->price;
                 }
             }
             foreach ($specialDateModel as $key => $value) {
-                if($value->date == $dayCalendarMiladi) {
+                if ($value->date == $dayCalendarMiladi) {
                     $priceDay = $hostModel->special_price;
                 }
             }
@@ -227,7 +228,7 @@ class AppController extends Controller
             })->get();
 
             foreach ($specialModel as $key => $value) {
-                if($value->date == $dayCalendarMiladi) {
+                if ($value->date == $dayCalendarMiladi) {
                     $priceDay = $value->price;
                 }
             }
@@ -237,7 +238,7 @@ class AppController extends Controller
                 $Q->where('id', $id);
             })->orderBy('host_id')->orderBy('date')->get();
             foreach ($blockedDayModel as $key => $value) {
-                if($value->date == $dayCalendarMiladi) {
+                if ($value->date == $dayCalendarMiladi) {
                     $blockDay = 1;
                 }
             }
@@ -245,7 +246,7 @@ class AppController extends Controller
             $blockedDayReserve = Reserve::where('host_id', $id)
                 ->whereIn('status', array(2))->get(); // array(1,2)
             foreach ($blockedDayReserve as $key => $value) {
-                if($value->reserve_date == $dayCalendarMiladi) {
+                if ($value->reserve_date == $dayCalendarMiladi) {
                     $blockDay = 1;
                 }
             }
@@ -606,9 +607,6 @@ class AppController extends Controller
     }
 
 
-
-
-
     public static function SectionHomePage()
     {
         $section = Sections::first();
@@ -616,17 +614,18 @@ class AppController extends Controller
     }
 
 
-
-    public function DetailCancelRule() {
+    public function DetailCancelRule()
+    {
         $cancelRule = config('setting');
         dd($cancelRule);
     }
 
 
-
-    public function LoginJangi($mobile) {
+    public function LoginJangi($mobile)
+    {
+        dd(3453);
         $userModel = User::where('mobile', $mobile)->first();
-        if(!empty($userModel)) {
+        if (!empty($userModel)) {
             Auth::loginUsingId($userModel->id);
             return redirect(route('HomePage'));
         }

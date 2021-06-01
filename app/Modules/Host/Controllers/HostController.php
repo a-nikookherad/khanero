@@ -197,7 +197,6 @@ class HostController extends Controller
      ***************/
     public function StoreHostStep1(Request $request)
     {
-
         $Message = [
             'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'building_type_id.required' => 'فیلد نوع اقامتگاه نمیتواند خالی باشد',
