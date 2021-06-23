@@ -79,6 +79,7 @@ class HostController extends Controller
             }
             $hostModel = $host->get();
         }
+
         return view('Host::indexHost', compact('hostModel', 'type'));
     }
 
@@ -161,6 +162,7 @@ class HostController extends Controller
             $hostModel->save();
         }
         $galleryModel =Gallery::where('host_id', $hostModel->id)->get();
+//        dd($hostModel->getRoom);
         if (auth()->user()->confirm_rules != 0) {
             return view('Host::createHost', compact('provinceModel',
                 'optionModel',
@@ -261,14 +263,15 @@ class HostController extends Controller
         // check room common after update host record
         Room::where('host_id', $request->host_id)->delete();
         $Room = json_decode($request->rooms);
+//        dd($Room);
         if (count($Room) > 0) {
             foreach ($Room as $key => $value) {
                 $data[] = [
                     'host_id' => $request->host_id,
-                    'single_beds' => $value[0],
-                    'double_beds' => $value[1],
-                    'sofa_beds' => $value[2],
-                    'traditional_beds' => $value[3],
+                    'single_beds' => ($value[0]==null)?0:$value[0],
+                    'double_beds' =>($value[1]==null)?0:$value[1],
+                    'sofa_beds' =>($value[2]==null)?0:$value[2],
+                    'traditional_beds' => ($value[3]==null)?0:$value[3],
                     'active' => 1,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s')

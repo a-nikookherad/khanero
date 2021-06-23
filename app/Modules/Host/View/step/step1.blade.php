@@ -279,7 +279,11 @@
                                 });
                             </script>
                     <div class="boxRoom">
+
+
                         @foreach($hostModel->getRoom as $key => $value)
+
+                            @endphp
                             <div class="each-item col-md-12 box">
                                 <p class="some-title">اتاق شماره {{$key+1}}</p>
                                 <div class="boxs">
@@ -288,7 +292,7 @@
                                         <select class="each-Qt form-control" name="single_bed" id="InputSingleBed">
                                             <option value="0" selected>ندارد</option>
                                             @for($i = 1; $i <= 10; $i++)
-                                                <option value="{{$i}}">{{$i}}</option>
+                                                <option value="{{$i}}" {{ ($value->single_beds==$i)?'selected':'' }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -297,7 +301,7 @@
                                         <select class="each-Qt form-control" name="double_bed" id="InputDoubleBed">
                                             <option value="0" selected>ندارد</option>
                                             @for($i = 1; $i <= 10; $i++)
-                                                <option value="{{$i}}">{{$i}}</option>
+                                                <option value="{{$i}}" {{ ($value->double_beds==$i)?'selected':'' }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -306,7 +310,7 @@
                                         <select class="each-Qt form-control" name="sofa_bed" id="InputSofaBed">
                                             <option value="0" selected>ندارد</option>
                                             @for($i = 1; $i <= 10; $i++)
-                                                <option value="{{$i}}">{{$i}}</option>
+                                                <option value="{{$i}}" {{ ($value->sofa_bed==$i)?'selected':'' }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -316,7 +320,7 @@
                                                 id="InputTraditionalBedding">
                                             <option value="0" selected>ندارد</option>
                                             @for($i = 1; $i <= 10; $i++)
-                                                <option value="{{$i}}">{{$i}}</option>
+                                                <option value="{{$i}}" {{ ($value->traditional_bedding==$i)?'selected':'' }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -503,6 +507,12 @@
 
 
     $('#step1').click(function () {
+        meter=$('#InputMeter').val();
+            // if (typeof meter != 'number')
+            // {
+            //     alert("متراژ باید عدد باشد"+meter);
+            //     return false;
+            // }
         $(".box-loading-step").fadeIn("slow", function () {
             $(this).show();
         });
@@ -537,15 +547,15 @@
             myArray.push([]);
         }
         for (var i = 0; i < countRoom; i++) {
-            for (var j = 0; j < 3; j++) {
+            // for (var j = 0; j < 3; j++) {
                 myArray[i][0] = (arrayBox.eq(i).find('#InputSingleBed').val());
                 myArray[i][1] = (arrayBox.eq(i).find('#InputDoubleBed').val());
                 myArray[i][2] = (arrayBox.eq(i).find('#InputSofaBed').val());
                 myArray[i][3] = (arrayBox.eq(i).find('#InputTraditionalBedding').val());
-            }
+            // }
         }
 
-
+            console.log(myArray);
         formData.append('rooms', JSON.stringify(myArray));
 
         $.ajaxSetup({
