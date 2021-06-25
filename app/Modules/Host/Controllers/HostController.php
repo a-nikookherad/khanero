@@ -397,6 +397,8 @@ class HostController extends Controller
      ***************/
     public function StoreHostStep3(Request $request)
     {
+
+//        dd($request->all());
         $Message = [
             'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'select_array.required' => 'انتخاب حداقل یک مورد از فیلد های زیر اجباری است',

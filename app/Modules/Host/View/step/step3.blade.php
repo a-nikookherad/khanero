@@ -16,8 +16,10 @@
     @php
         $g = $hostModel->getHostPossibilities;
         $arr = [];
+        $arrval = [];
         foreach ($g as $key => $value) {
             $arr[] = $value->option_id;
+            $arrval[$value->option_id] = $value->description;
         }
     @endphp
     <div class="panel-body row">
@@ -30,14 +32,14 @@
                         @php($counter = 0)
 
                 @endif
-                <div class="each-item col-md-6 rows row">
+                <div class="each-item col-md-4 rows row">
                     <div class="col-md-3 text-right each-option-1">
                         <input type="checkbox" value="{{$value->id}}" @if(in_array($value->id, $arr)) checked @endif class="chk check-description" data-value="{{$key+1}}" id="slideThree{{$key+1}}" name="check{{$key+1}}" />
                         <span class="checkmark"></span>
                         <label class="title-S m-0" title="{{$value->description}}" for="slideThree{{$key+1}}">{{$value->name}}</label>
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="each-Qt form-control @if(!in_array($value->id, $arr)) none @endif description input{{$key+1}}" name="" id="" placeholder="{{$value->description. ' ' . $value->name}}" />
+                        <input type="text" class="each-Qt form-control @if(!in_array($value->id, $arr)) none @endif description input{{$key+1}}" name="" id="" placeholder="{{$value->description. ' ' . $value->name}}" @if(in_array($value->id, $arr)) value="{!! $arrval[$value->id] !!}" @endif />
                     </div>
                 </div>
                 @php($counter++)
@@ -53,12 +55,12 @@
                     @endif
                     <div class="each-item col-md-6 rows row">
                         <div class="col-md-3 text-right each-option-1">
-                            <input type="checkbox" value="{{$value->id}}" class="chk check-description" data-value="{{$key+1}}" id="slideThree_{{$key+1}}" name="check{{$key+1}}" />
+                            <input type="checkbox" value="{{$value->id}}" @if(in_array($value->id, $arr)) checked @endif  class="chk check-description" data-value="{{$key+1}}" id="slideThree_{{$key+1}}" name="check{{$key+1}}" />
                             <span class="checkmark"></span>
                             <label class="title-S m-0" title="{{$value->description}}" for="slideThree_{{$key+1}}">{{$value->name}}</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="each-Qt form-control none description input{{$key+1}}" name="" id="" placeholder="{{$value->description}}" />
+                            <input type="text" class="each-Qt form-control @if(!in_array($value->id, $arr)) none @endif  description input{{$key+1}}" name="" id="" placeholder="{{$value->description}}" @if(in_array($value->id, $arr)) value="{!! $arrval[$value->id] !!}" @endif  />
                         </div>
                     </div>
                     @php($counter++)
@@ -104,9 +106,9 @@
         var descriptionArray = [];
         /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
         $(".chk:checked").each(function() {
-            var description = $(this).parent().parent().parent().parent().find('.description');
+            var description = $(this).parent().parent().find('.description');
             chkArray.push($(this).val());
-            descriptionArray.push( description.val());
+            descriptionArray.push(description.val());
         });
         /* we join the array separated by the comma */
         var selected;
@@ -200,7 +202,12 @@
     $('.check-description').click(function () {
         var key = $(this).attr('data-value');
         var input = $(this).parent().parent().parent().find('.input'+key);
-        input.toggleClass('show');
+        console.log(input);
+        console.log(input.hasClass( "show" ));
+        // if(!input.hasClass( "show" )){
+            input.toggleClass('show');
+        // }
+
     });
 </script>
 
