@@ -824,6 +824,8 @@ class HostController extends Controller
      ******************/
     public function StoreImageHost(Request $request)
     {
+//        dd($request->all());
+
         $Message = [
             'img.required' => 'عکس نمیتواند خالی باشد',
 //            'img.max' => 'حجم عکس نمیتواند بیش از 5000 KB باشد',

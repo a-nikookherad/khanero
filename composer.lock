@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "deac0697dad6068ea9d1d8123b176edb",
+    "content-hash": "856603e3eb3cae8b22850cbf4b9a9450",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -4395,7 +4395,6 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "abandoned": true,
             "time": "2015-07-28T20:34:47+00:00"
         },
         {

@@ -172,6 +172,8 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
 
         /*
          * Application Service Providers...
