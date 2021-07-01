@@ -35,7 +35,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions
 RUN docker-php-ext-install gd pdo_mysql mbstring zip exif pcntl sockets bcmath
-RUN docker-php-ext-configure gd --with-gd --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-gd --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
+&& docker-php-ext-install -j "$(nproc)" gd
 #RUN docker-php-ext-install gd
 #RUN docker-php-ext-install sockets
 RUN pecl install -o -f redis \
