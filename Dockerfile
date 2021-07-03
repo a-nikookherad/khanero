@@ -43,9 +43,15 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions
 RUN docker-php-ext-install gd pdo_mysql mbstring zip exif pcntl sockets bcmath
-RUN docker-php-ext-configure gd --with-gd --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-#RUN docker-php-ext-install gd
-#RUN docker-php-ext-install sockets
+RUN docker-php-ext-configure gd --with-gd --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
+&& docker-php-ext-install -j "$(nproc)" gd
+
+#RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+#RUN cd /usr/src/php/ext/gd && make
+#RUN cp /usr/src/php/ext/gd/modules/gd.so /usr/local/lib/php/extensions/no-debug-non-zts-20190902/gd.so
+#RUN docker-php-ext-install -j$(nproc) gd
+
+
 RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis
