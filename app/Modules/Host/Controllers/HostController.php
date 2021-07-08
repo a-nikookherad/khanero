@@ -79,6 +79,7 @@ class HostController extends Controller
             }
             $hostModel = $host->get();
         }
+
         return view('Host::indexHost', compact('hostModel', 'type'));
     }
 
@@ -161,6 +162,7 @@ class HostController extends Controller
             $hostModel->save();
         }
         $galleryModel =Gallery::where('host_id', $hostModel->id)->get();
+//        dd($hostModel->getRoom);
         if (auth()->user()->confirm_rules != 0) {
             return view('Host::createHost', compact('provinceModel',
                 'optionModel',
@@ -261,14 +263,15 @@ class HostController extends Controller
         // check room common after update host record
         Room::where('host_id', $request->host_id)->delete();
         $Room = json_decode($request->rooms);
+//        dd($Room);
         if (count($Room) > 0) {
             foreach ($Room as $key => $value) {
                 $data[] = [
                     'host_id' => $request->host_id,
-                    'single_beds' => $value[0],
-                    'double_beds' => $value[1],
-                    'sofa_beds' => $value[2],
-                    'traditional_beds' => $value[3],
+                    'single_beds' => ($value[0]==null)?0:$value[0],
+                    'double_beds' =>($value[1]==null)?0:$value[1],
+                    'sofa_beds' =>($value[2]==null)?0:$value[2],
+                    'traditional_beds' => ($value[3]==null)?0:$value[3],
                     'active' => 1,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s')
@@ -394,6 +397,8 @@ class HostController extends Controller
      ***************/
     public function StoreHostStep3(Request $request)
     {
+
+//        dd($request->all());
         $Message = [
             'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'select_array.required' => 'انتخاب حداقل یک مورد از فیلد های زیر اجباری است',
@@ -511,6 +516,7 @@ class HostController extends Controller
      ***************/
     public function StoreHostStep5(Request $request)
     {
+
         $Message = [
             'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'time_enter_from.required' => 'وارد کردن ساعت ورود اجباری است',
@@ -603,8 +609,11 @@ class HostController extends Controller
      ***************/
     public function StoreHostStep6(Request $request)
     {
-//        return $request->all();
 
+//        $dateString = \Morilog\Jalali\jDateTime::convertNumbers('۱۳۹۵-۰۲-۱۹', true); // 1395-02-19
+//        $dateString =\Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y/m/d'); //2016-05-8
+//        dd($dateString);
+//        return $request->all();
         $Message = [
             'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'price_saturday.required' => 'وارد کردن قیمت روز شنبه اجباری است',
@@ -704,13 +713,17 @@ class HostController extends Controller
         // ثبت بازه تخفیف دار
 
         if($request->turn_discount != '' && $request->day_turn_discount_from != '' && $request->day_turn_discount_to != '') {
-            $dateTime_1 = jDateTime::ConvertToGeorgian($request->day_turn_discount_from,date('H:i:s'));
-            $buffer_1 = explode(' ', $dateTime_1);
-            $dayTimeFrom = $buffer_1[0].' 00:00:00';
+//            $dateTime_1 = jDateTime::ConvertToGeorgian($request->day_turn_discount_from,date('H:i:s'));
+//            $buffer_1 = explode(' ', $dateTime_1);
+            $buffer_1=\Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y-m-d'); //2016-05-8
+//            dd($dateString);
+            $dayTimeFrom = $buffer_1.' 00:00:00';
 
-            $dateTime_2= jDateTime::ConvertToGeorgian($request->day_turn_discount_to,date('H:i:s'));
-            $buffer_2 = explode(' ', $dateTime_2);
-            $dayTimeTo = $buffer_2[0].' 00:00:00';
+//            $dateTime_2= jDateTime::ConvertToGeorgian($request->day_turn_discount_to,date('H:i:s'));
+//            $buffer_2 = explode(' ', $dateTime_2);
+            $buffer_2=\Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y-m-d'); //2016-05-8
+//
+            $dayTimeTo = $buffer_2.' 00:00:00';
 
             $specialModel = new Special();
             $specialModel->host_id = $hostModel->id;
@@ -819,6 +832,8 @@ class HostController extends Controller
      ******************/
     public function StoreImageHost(Request $request)
     {
+//        dd($request->all());
+
         $Message = [
             'img.required' => 'عکس نمیتواند خالی باشد',
 //            'img.max' => 'حجم عکس نمیتواند بیش از 5000 KB باشد',

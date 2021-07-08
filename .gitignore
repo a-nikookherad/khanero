@@ -12,6 +12,4 @@ yarn-error.log
 .env
 storage
 my-data/*
-
-
-
+public/Uploaded/Gallery/Img

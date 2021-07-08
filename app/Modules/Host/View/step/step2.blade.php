@@ -90,10 +90,9 @@
                 @endphp
                 <div class="each-item col-md-6">
                                     <label class="title-S">بافت منطقه</label>
-                                    <select class="each-Qt form-control">
-                                        <option></option>
-                                    </select>
-                                    <!--
+                                    {{--<select class="each-Qt form-control">--}}
+                                        {{--<option></option>--}}
+                                    {{--</select>--}}
                                     <div class="row">
                                         @foreach($positionTypeModel1 as $key => $value)
                                             @if($arr != 0)
@@ -109,12 +108,13 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    -->
                             </div>
                 <div class="each-item col-md-6">
                                     <label class="title-S">چشم انداز</label>
-                                    <select class="each-Qt form-control">
-                                        <option></option>
+                                    <select class="each-Qt form-control" id="InputVision">
+                                        @foreach($positionTypeModel2 as  $value)
+                                        <option value="{!! $value->id !!}">{!! $value->name !!}</option>
+                                        @endforeach
                                     </select>
                                     <!--
                                     <div class="row">
@@ -122,24 +122,24 @@
                                     </div>
                                     -->
                             </div>
-                <!--<div class="col-md-8">-->
-                <!--    <div class="form-group">-->
-                <!--        <label>فاصله تا مرکز خرید این اقامتگاه</label>-->
-                <!--        <div class="row">-->
-                <!--            <textarea id="InputDistanceShopping" rows="4" class="form-control" placeholder="فاصله تا مرکز خرید"></textarea>-->
-                <!--        </div>-->
-                <!--    </div>-->
-                <!--</div>-->
-                <!--<div class="col-md-4">-->
-                <!--    <div class="form-group">-->
-                <!--        <label for="">وضعیت پارکینگ عمومی و غیره</label>-->
-                <!--        <br/>-->
-                <!--        <input type="radio" value="1" name="parking" checked id="InputParking1"/>-->
-                <!--        <label for="InputParking1">  دارد </label>-->
-                <!--        <input type="radio" value="2" name="parking" id="InputParking2"/>-->
-                <!--        <label for="InputParking2"> ندارد </label>-->
-                <!--    </div>-->
-                <!--</div>-->
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>فاصله تا مرکز خرید این اقامتگاه</label>
+                        <div class="row">
+                            <textarea id="InputDistanceShopping" rows="4" class="form-control"  placeholder="فاصله تا مرکز خرید">{!! $hostModel->distance_shopping !!}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="">وضعیت پارکینگ عمومی و غیره</label>
+                        <br/>
+                        <input type="radio" value="1" name="parking" {{ ($hostModel->parking==1)?'checked':'' }}  id="InputParking1"/>
+                        <label for="InputParking1">  دارد </label>
+                        <input type="radio" value="2" name="parking" {{ ($hostModel->parking==2)?'checked':'' }} id="InputParking2"/>
+                        <label for="InputParking2"> ندارد </label>
+                    </div>
+                </div>
                 <div class="each-item col-md-12">
                     <label class="title-S" for="TextAreaOtherPosition">اطلاعات جغرافیایی دیگر</label>
                     <textarea id="TextAreaOtherPosition" rows="6" class="each-Qt form-control" placeholder="مثلا مسیر دسترسی خاکی است ، ...">{{$hostModel->other_position}}</textarea>

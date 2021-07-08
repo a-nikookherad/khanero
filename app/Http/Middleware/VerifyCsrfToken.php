@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         //
-        "check-user-ajax"
+        "check-user-ajax",
+        "remove/img-host"
     ];
 }
