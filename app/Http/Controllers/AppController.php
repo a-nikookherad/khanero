@@ -72,6 +72,7 @@ class AppController extends Controller
         // امکانات خانه ها
         $optionModel = Option::where('active', 1)->get();
 
+        $arr_option[]= null;
         // هر خانه ای چه امکاناتی دارد
         foreach ($hostModel->getHostPossibilities as $key => $value) {
             $arr_option[] = $value->option_id;
@@ -102,22 +103,25 @@ class AppController extends Controller
         $ruleModel = Rule::where('active', 1)->get();
 
         //قوانین و مقرراتی که باید برای این خانه رعایت شود
+        $arr_rule[]=null;
         foreach ($hostModel->getHostRules as $key => $value) {
             $arr_rule[] = $value->rule_id;
         }
 
-//        if (auth()->check()) {
-//            $reserveModel = Reserve::where('user_id', auth()->user()->id)
-//                ->where('submit_rate', 0)
-//                ->where('status', 2)
-//                ->where('host_id', $hostModel->id)
-//                ->first();
-//            if (empty($reserveModel)) {
-//                $reserveModel = array();
-//            }
-//        } else {
-//            $reserveModel = array();
-//        }
+//        dd( $arr_rule);
+
+        if (auth()->check()) {
+            $reserveModel = Reserve::where('user_id', auth()->user()->id)
+                ->where('submit_rate', 0)
+                ->where('status', 2)
+                ->where('host_id', $hostModel->id)
+                ->first();
+            if (empty($reserveModel)) {
+                $reserveModel = array();
+            }
+        } else {
+            $reserveModel = array();
+        }
 
         // خانه های که در این شهر باشند و از این مدل ساختمان باشد مثلا اپارتمان
         $hostLike = Host::where('township_id', $hostModel->township_id)
@@ -346,6 +350,7 @@ class AppController extends Controller
 
 
 
+
         return view('frontend.Page.Host.DetailHost', compact(
             'hostModel',
             'optionModel',
@@ -355,9 +360,9 @@ class AppController extends Controller
             'priceModelFirstWeek',
             'priceModelLastWeek',
             'ruleModel',
-//            'arr_rule',
-//            'arr_option',
-//            'reserveModel',
+            'arr_rule',
+            'arr_option',
+            'reserveModel',
 //            'commentModel',
             'calendar',
             'hostLike',
