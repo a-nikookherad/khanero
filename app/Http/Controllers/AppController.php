@@ -124,12 +124,12 @@ class AppController extends Controller
         $first_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/01'; // get first day now month
         $month_model = Month::where('id', $nowMonthJalali)->first(); // get detail now month
         $last_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $month_model->number_day; // get count day now monthz
-//        $first_date_month_miladi = jDateTime::ConvertToGeorgian($first_date_month_jalali, date('H:i:s')); // change first day now month jalali to miladi(AD)
-//        $last_date_month_miladi = jDateTime::ConvertToGeorgian($last_date_month_jalali, date('H:i:s')); // change last day now month jalali to miladi(AD)
-//        $first_date_month_miladi = explode(' ', $first_date_month_miladi); // put date to array for separate date and time
-//        $last_date_month_miladi = explode(' ', $last_date_month_miladi); // put date to array for separate date and time
-//        $first_date_month_miladi = $first_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
-//        $last_date_month_miladi = $last_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
+        $first_date_month_miladi = jDateTime::ConvertToGeorgian($first_date_month_jalali, date('H:i:s')); // change first day now month jalali to miladi(AD)
+        $last_date_month_miladi = jDateTime::ConvertToGeorgian($last_date_month_jalali, date('H:i:s')); // change last day now month jalali to miladi(AD)
+        $first_date_month_miladi = explode(' ', $first_date_month_miladi); // put date to array for separate date and time
+        $last_date_month_miladi = explode(' ', $last_date_month_miladi); // put date to array for separate date and time
+        $first_date_month_miladi = $first_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
+        $last_date_month_miladi = $last_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
 
         $first_date_month_miladi =$this->convertDateToMiladi($first_date_month_jalali,true);
         $last_date_month_miladi = $this->convertDateToMiladi($last_date_month_jalali,true);
@@ -213,9 +213,9 @@ class AppController extends Controller
 
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
             $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $i;
-//            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
-            dd($dayCalendarJalali);
-            $dayCalendarMiladi =$this->convertDateToMiladi($dayCalendarJalali,true);
+            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+//            dd($dayCalendarJalali);
+//            $dayCalendarMiladi =$this->convertDateToMiladi($dayCalendarJalali,true);
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
                 if ($value->week_id == $day_id) {

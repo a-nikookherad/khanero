@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
+      - "8080:80"
     #      - "443:443"
     #      - "9001-9009:9001-9009"
     volumes:
@@ -80,6 +80,17 @@ services:
     networks:
       - app-network
 
+  #redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+    command: redis-server --port 6379
+    restart: unless-stopped
+    tty: true
+    #ports:
+    #  - 6380:6380
+    networks:
+      - app-network
 #Docker Networks
 networks:
   app-network:
