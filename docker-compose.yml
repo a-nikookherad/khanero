@@ -6,11 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     image: php
-    container_name: php_fpm
+    container_name: php_fpm1
     restart: unless-stopped
     tty: true
     ports:
-      - 9999:9999
+          - 9999:9999
     #      - 8009:9000
     #      - 9001-9009:9001-9009
     environment:
@@ -26,11 +26,11 @@ services:
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: webserver
+    container_name: webserver1
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
+      - "80:80" # 80:80
     #      - "443:443"
     #      - "9001-9009:9001-9009"
     volumes:
@@ -42,11 +42,11 @@ services:
   #MySQL Service
   mysql:
     image: mysql:5.7.22
-    container_name: mysql
+    container_name: mysql1
     restart: unless-stopped
     tty: true
     ports:
-      - 3306:3306
+      - 3306:3306 # 3306:3306
     environment:
       MYSQL_DATABASE: irannpco_khosravi
       MYSQL_ROOT_PASSWORD: 123
@@ -63,7 +63,7 @@ services:
   #   PhpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin1
     depends_on:
       - mysql
     restart: unless-stopped
@@ -73,7 +73,7 @@ services:
     links:
       - mysql:mysql
     ports:
-      - 9191:80
+      - 9191:80 # 9191:80
     environment:
       MYSQL_ROOT_PASSWORD: 123
       PMA_HOST: mysql
