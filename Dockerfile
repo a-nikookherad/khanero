@@ -17,7 +17,6 @@ RUN apt-get update --fix-missing && apt-get install -y \
     build-essential \
     default-mysql-server \
     libpng-dev \
-    libfreetype6-dev \
     libjpeg62-turbo-dev \
     locales \
     jpegoptim optipng pngquant gifsicle \
@@ -29,13 +28,6 @@ RUN apt-get update --fix-missing && apt-get install -y \
     libzip-dev \
     python \
     supervisor
-
-#RUN apt-get update && apt-get install -y \
-#    libfreetype6-dev \
-#    libjpeg62-turbo-dev \
-#    libpng-dev \
-#    && docker-php-ext-configure gd --with-freetype --with-jpeg
-#    && docker-php-ext-install -j$(nproc) gd
 
 
 # Clear cache

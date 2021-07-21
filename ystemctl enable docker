@@ -1,0 +1,18 @@
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Mon 2021-07-05 07:22:34 +0430; 35s ago
+TriggeredBy: [0;1;32m●[0m docker.socket
+       Docs: https://docs.docker.com
+    Process: 1628 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock (code=exited, status=0/SUCCESS)
+   Main PID: 1628 (code=exited, status=0/SUCCESS)
+
+جولای 05 07:21:31 amir-lp dockerd[1628]: time="2021-07-05T07:21:31.454878639+04:30" level=info msg="ignoring event" container=57c112bcc332aeaa408634418b25b22b367c382b716b75f11fb557f94230015c module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+جولای 05 07:21:31 amir-lp dockerd[1628]: time="2021-07-05T07:21:31.520286083+04:30" level=info msg="ignoring event" container=29ee055d94f74b3d309f199b1548e76d51a3ea398f8b116fcd44a87ba786d446 module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+جولای 05 07:21:32 amir-lp dockerd[1628]: time="2021-07-05T07:21:32.532930579+04:30" level=info msg="ignoring event" container=bc7876124987c63b9762edc1d6545adb0b2ff9895a7b407e26c23646272c906e module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+جولای 05 07:22:34 amir-lp dockerd[1628]: time="2021-07-05T07:22:34.696768633+04:30" level=info msg="Processing signal 'terminated'"
+جولای 05 07:22:34 amir-lp systemd[1]: Stopping Docker Application Container Engine...
+جولای 05 07:22:34 amir-lp dockerd[1628]: time="2021-07-05T07:22:34.698512823+04:30" level=info msg="stopping event stream following graceful shutdown" error="<nil>" module=libcontainerd namespace=moby
+جولای 05 07:22:34 amir-lp dockerd[1628]: time="2021-07-05T07:22:34.699118146+04:30" level=info msg="Daemon shutdown complete"
+جولای 05 07:22:34 amir-lp dockerd[1628]: time="2021-07-05T07:22:34.699177417+04:30" level=info msg="stopping event stream following graceful shutdown" error="context canceled" module=libcontainerd namespace=plugins.moby
+جولای 05 07:22:34 amir-lp systemd[1]: docker.service: Succeeded.
+جولای 05 07:22:34 amir-lp systemd[1]: Stopped Docker Application Container Engine.
