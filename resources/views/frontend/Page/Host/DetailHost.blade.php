@@ -1,4 +1,5 @@
 @extends('frontend.MasterPage.Layout')
+
 @section('title',TitlePage($hostModel->name))
 @section('style')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -27,7 +28,7 @@
         [tooltip]:not([flow])::after,
         [tooltip][flow^="up"]::before,
         [tooltip][flow^="up"]::after {color:#000;background: #fff;left: 50%;transform: translate(-50%, -.5em);}
-        [tooltip]:not([flow])::before,{color:#000;background: transparent !important;left: 50%;transform: translate(-50%, -.5em);}
+        [tooltip]:not([flow])::before {color:#000;background: transparent !important;left: 50%;transform: translate(-50%, -.5em);}
         @keyframes tooltips-vert {
             to {opacity: .9;transform: translate(-50%, 0);}
         }
@@ -142,12 +143,12 @@
                         <h1 class="col-12 p-0 d-inline-block mb-2 text-dark maintitle">{{$hostModel->name}}</h1>
                         <div class="col-12 p-0 text-right">
                             <span class="px-1 font-weight-bold position-relative info1">{{$hostModel->getProvince->name}} ، {{$hostModel->getTownship->name}}</span>
-                        </div> 
+                        </div>
                         <div class="col-12 p-0 text-right">
                             <span class="px-1 font-weight-bold position-relative info2">کد اقامتگاه:</span>
                             <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id + 5000}}</span>
                         </div>
-                                               
+
                     </div>
                     <div class="col-sm-3 p-0 d-flex justify-content-flex-end">
                         <div class="text-center P-InfoHost">
@@ -310,7 +311,7 @@
                             <svg data-id="SVG_GUEST_CHECKED_IN_COLOR__24" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="none" fill="none" viewBox="0 0 24 24"><path stroke="#2474DE" d="M3.492 11.998h11.316M12.058 8.996l3.002 3.002L12.058 15"></path><path stroke="#292929" d="M8.745 7.424V5.782c0-.71.576-1.287 1.286-1.287h7.19c.71 0 1.286.576 1.286 1.287v12.436c0 .71-.576 1.287-1.286 1.287h-7.19c-.71 0-1.286-.576-1.286-1.287v-1.642"></path></svg>
                             <p>ساعت خروج</p>
                             <p class="clock"> تا {{$hostModel->time_exit}}</p>
-                        </li>                    
+                        </li>
                     </div>
                     <ul class="Rules-items">
                         @php
@@ -394,7 +395,7 @@
                         <ul class="host-items d-flex">
                             <li><span class="title-op">زمان پاسخگویی : </span><label class="info-op">بیش از ۲ ساعت</label></li>
                             <li><span class="title-op">میزان پاسخگویی : </span><label class="info-op">80 درصد</label></li>
-                        </ul>                        
+                        </ul>
                     </div>
                     <div class="col-sm-2"><img class="mw-100 rounded-circle pic-host" src="https://www.otaghak.com/api/v1/Media/images/2093077/3/ProfileImage" alt="image"></div>
                 </div>
@@ -437,7 +438,7 @@
                     <div class="row each-rating">
                         <div class="col-sm-6 bc-1">
                             <div class="title-rate">دسترسی</div>
-                            <div class="degre-rate">                        
+                            <div class="degre-rate">
                                 <i class="far fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="fas fa-star"></i>
@@ -447,7 +448,7 @@
                         </div>
                         <div class="col-sm-6 bc-1">
                             <div class="title-rate">شباهت با اطلاعات سایت</div>
-                            <div class="degre-rate">                        
+                            <div class="degre-rate">
                                 <i class="far fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="fas fa-star"></i>
@@ -457,7 +458,7 @@
                         </div>
                         <div class="col-sm-6 bc-1">
                             <div class="title-rate">نظافت</div>
-                            <div class="degre-rate">                        
+                            <div class="degre-rate">
                                 <i class="far fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="fas fa-star"></i>
@@ -467,7 +468,7 @@
                         </div>
                         <div class="col-sm-6 bc-1">
                             <div class="title-rate">کیفیت منطقه</div>
-                            <div class="degre-rate">                        
+                            <div class="degre-rate">
                                 <i class="far fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="fas fa-star"></i>
@@ -477,7 +478,7 @@
                         </div>
                         <div class="col-sm-6 bc-1">
                             <div class="title-rate">ارزش نسبت به قیمت   </div>
-                            <div class="degre-rate">                        
+                            <div class="degre-rate">
                                 <i class="far fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="fas fa-star"></i>
@@ -487,7 +488,7 @@
                         </div>
                         <div class="col-sm-6 bc-1">
                             <div class="title-rate">برخورد میزبان</div>
-                            <div class="degre-rate">                        
+                            <div class="degre-rate">
                                 <i class="far fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="fas fa-star"></i>
@@ -526,7 +527,7 @@
                                 </p>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
 
             </section>
@@ -538,7 +539,7 @@
                         <div class=" d-flex align-items-center">
                             <span class="night-price"> هر شب از :</span>
                             <span class="number-price">{{number_format(GetMinPrice($hostModel->id))}}</span>
-                            <span class="unitq-price">تومان</span>                            
+                            <span class="unitq-price">تومان</span>
                         </div>
                         <div class="rating-home border-bottom d-flex align-items-center">
                             <span class="idea">( 22 نظر )</span>
