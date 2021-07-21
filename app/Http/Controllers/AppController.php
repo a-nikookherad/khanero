@@ -69,44 +69,61 @@ class AppController extends Controller
             return back();
         }
 
+        // امکانات خانه ها
         $optionModel = Option::where('active', 1)->get();
 
+        $arr_option[]= null;
+        // هر خانه ای چه امکاناتی دارد
         foreach ($hostModel->getHostPossibilities as $key => $value) {
             $arr_option[] = $value->option_id;
         }
+        //خانه در چه ناحیه ای قرار دارد ساحلی یا کویری یا ....
         $positionTypeModel = PositionType::where('active', 1)->get();
+
+        // قیمت خانه در روز سه شنبه مختلف هفته
         $priceModelFirstWeek = DB::table('price_days')
             ->where('host_id', $id)
             ->where('week_id', 4)// tuesday
             ->first();
+
+        // قیمت خانه در روز جمعه مختلف هفته
 
         $priceModelLastWeek = DB::table('price_days')
             ->where('host_id', $id)
             ->where('week_id', 6)// friday
             ->first();
 
+        // از تاریخ فلان تا فلان مقدار 10 درصد تخفیف داده است
         $specialModel = Special::where('host_id', $hostModel->id)->get();
+
+        // قیمت خانه در ایام هفته
         $dayPriceModel = PriceDay::with('getWeek')->where('host_id', $id)->orderBy('id', 'asc')->get();
 
+        // قوانین و مقرراتی که باید رعایت شود
         $ruleModel = Rule::where('active', 1)->get();
 
+        //قوانین و مقرراتی که باید برای این خانه رعایت شود
+        $arr_rule[]=null;
         foreach ($hostModel->getHostRules as $key => $value) {
             $arr_rule[] = $value->rule_id;
         }
 
-//        if (auth()->check()) {
-//            $reserveModel = Reserve::where('user_id', auth()->user()->id)
-//                ->where('submit_rate', 0)
-//                ->where('status', 2)
-//                ->where('host_id', $hostModel->id)
-//                ->first();
-//            if (empty($reserveModel)) {
-//                $reserveModel = array();
-//            }
-//        } else {
-//            $reserveModel = array();
-//        }
+//        dd( $arr_rule);
 
+        if (auth()->check()) {
+            $reserveModel = Reserve::where('user_id', auth()->user()->id)
+                ->where('submit_rate', 0)
+                ->where('status', 2)
+                ->where('host_id', $hostModel->id)
+                ->first();
+            if (empty($reserveModel)) {
+                $reserveModel = array();
+            }
+        } else {
+            $reserveModel = array();
+        }
+
+        // خانه های که در این شهر باشند و از این مدل ساختمان باشد مثلا اپارتمان
         $hostLike = Host::where('township_id', $hostModel->township_id)
             ->where('building_type_id', $hostModel->building_type_id)
             ->where('id', '!=', $hostModel->id)
@@ -133,9 +150,12 @@ class AppController extends Controller
 
         $first_date_month_miladi =$this->convertDateToMiladi($first_date_month_jalali,true);
         $last_date_month_miladi = $this->convertDateToMiladi($last_date_month_jalali,true);
+
+
         $special_date_model = SpecialDate::where('date', '>=', $first_date_month_miladi)
             ->where('date', '<=', $last_date_month_miladi)
             ->get();
+
         $holidays_now_month = array();
         foreach ($special_date_model as $key => $value) {
             $jalali_date = jDate::forge($value->date)->format('Y/m/d');
@@ -147,6 +167,7 @@ class AppController extends Controller
         $timestamp = bmktime(0, 0, 0, $month, $day, $year);
         $day_info = bgetdate($timestamp);
         $num_week = Carbon::now()->dayOfWeek;
+
 
         $week = array(
             1 => 'شنبه',
@@ -180,6 +201,7 @@ class AppController extends Controller
                 $num_week_jalali = 2;
                 break; //یکشنبه
         }
+
         $now = Carbon::now();
         $month = jdate($now)->format('m');
 
@@ -208,48 +230,77 @@ class AppController extends Controller
             'day' => jdate($now)->format('d')
         );
 
+//        return response()->json($detailMonth);
+
         $specialDateModel = SpecialDate::all();
+
+        // نمایش لیست قیمت های روز هفته برای خانه مورد نظر
         $priceModel = PriceDay::where('host_id', $hostModel->id)->get();
 
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
-            $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $i;
+
+            if(strlen($i)==1){
+                $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . 0 . $i;
+            }else{
+                $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $i;
+            }
 //            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
-            dd($dayCalendarJalali);
             $dayCalendarMiladi =$this->convertDateToMiladi($dayCalendarJalali,true);
+
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
                 if ($value->week_id == $day_id) {
                     $priceDay = $value->price;
                 }
             }
+
             foreach ($specialDateModel as $key => $value) {
                 if ($value->date == $dayCalendarMiladi) {
                     $priceDay = $hostModel->special_price;
                 }
             }
-            $specialModel = Special::with('getHost')->whereHas('getHost', function ($Q) use ($id) {
-                $Q->where('step', 100);
-                $Q->where('id', $id);
-            })->get();
 
-            foreach ($specialModel as $key => $value) {
-                if ($value->date == $dayCalendarMiladi) {
-                    $priceDay = $value->price;
-                }
-            }
+//            $specialModel = Special::query()->with('getHost')
+//                ->whereHas('getHost', function ($Q) use ($id) {
+//                $Q->where('getHost.step','=', 100);
+//                $Q->where('getHost.id','=', $id);
+//            })->get();
+
+            $specialModel = Special::query()
+                ->leftJoin('hosts','special_days.host_id','=','hosts.id')
+                ->where('hosts.step','=',100)
+                ->where('hosts.id','=',$id)
+                ->get();
+
+
+//            foreach ($specialModel as $key => $value) {
+//                if ($value->date == $dayCalendarMiladi) {
+//                    $priceDay = $value->price;
+//                }
+//            }
+
             $blockDay = 0;
-            $blockedDayModel = BlockedDay::with('getHost')->whereHas('getHost', function ($Q) use ($id) {
-                $Q->where('step', 100);
-                $Q->where('id', $id);
-            })->orderBy('host_id')->orderBy('date')->get();
+//            $blockedDayModel = BlockedDay::with('getHost')->whereHas('getHost', function ($Q) use ($id) {
+//                $Q->where('step', 100);
+//                $Q->where('id', $id);
+//            })->orderBy('host_id')->orderBy('date')->get();
+
+            $blockedDayModel = BlockedDay::query()
+                ->leftJoin('hosts','blocked_days.host_id','=','hosts.id')
+                ->where('hosts.step','=',100)
+                ->where('hosts.id','=',$id)
+                ->orderBy('blocked_days.host_id')
+                ->orderBy('blocked_days.date')
+                ->get();
+
             foreach ($blockedDayModel as $key => $value) {
                 if ($value->date == $dayCalendarMiladi) {
                     $blockDay = 1;
                 }
             }
-
+            // نشان دهنده اینه که روزی که رزرو شده با روزی که رزور کردم یکیه
             $blockedDayReserve = Reserve::where('host_id', $id)
-                ->whereIn('status', array(2))->get(); // array(1,2)
+                ->whereIn('status', [1,2])->get(); // array(1,2)
             foreach ($blockedDayReserve as $key => $value) {
                 if ($value->reserve_date == $dayCalendarMiladi) {
                     $blockDay = 1;
@@ -257,16 +308,17 @@ class AppController extends Controller
             }
 
 
-//            $reserveModelUser = Reserve::where('host_id', $hostModel->id)
-//                ->where('reserve_date', $dayCalendarMiladi)
-//                ->where('status', 0)
-//                ->first();
-//
-//            if(!empty($reserveModelUser)) {
-//                if($reserveModelUser->reserve_date == $dayCalendarMiladi) {
-//                    $blockDay = 1;
-//                }
-//            }
+
+////            $reserveModelUser = Reserve::where('host_id', $hostModel->id)
+////                ->where('reserve_date', $dayCalendarMiladi)
+////                ->where('status', 0)
+////                ->first();
+////
+////            if(!empty($reserveModelUser)) {
+////                if($reserveModelUser->reserve_date == $dayCalendarMiladi) {
+////                    $blockDay = 1;
+////                }
+////            }
 
             $detailMonth['detail_days'][] = array(
                 'day' => $i,
@@ -284,7 +336,6 @@ class AppController extends Controller
         }
 
 
-//        dd($detailMonth);
         $calendar = view('Host::Calendar.CalendarReserve', compact(
             'detailMonth',
             'week',
@@ -293,6 +344,12 @@ class AppController extends Controller
         ));
 
         /*********** End Calendar **********/
+
+
+
+
+
+
 
         return view('frontend.Page.Host.DetailHost', compact(
             'hostModel',
@@ -306,7 +363,7 @@ class AppController extends Controller
             'arr_rule',
             'arr_option',
             'reserveModel',
-            'commentModel',
+//            'commentModel',
             'calendar',
             'hostLike',
             'monthModel'

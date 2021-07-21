@@ -56,13 +56,21 @@ class ReserveController extends Controller
 //
 //curl_close ($ch);
 
-        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)->orWhereHas('getHost', function ($Query) {
-            $Query->where('user_id', auth()->user()->id);
-        })->get()->groupBy('group_code');
+
+
+        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
+//            ->orWhereHas('getHost', function ($Query) {
+//            $Query->where('user_id', auth()->user()->id);
+//        })
+            ->orWhere('host_id',auth()->user()->id)
+            ->get()->groupBy('group_code');
+
+
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
         foreach ($reserveModel as $key => $value) {
+
             $res = Reserve::where('group_code', $key)->first();
             if($res->user_id == auth()->user()->id) {
                 $type = 'my-reserve';
