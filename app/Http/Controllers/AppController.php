@@ -372,7 +372,6 @@ class AppController extends Controller
 
     public function SearchHost(Request $request)
     {
-
         if ($request->date_from != "" && $request->date_to != "") {
             $from = jDateTime::ConvertToGeorgian($request->date_from, date('H:i:s'));
             $bufferFrom = explode(' ', $from);
