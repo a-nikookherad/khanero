@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\DB;
 use Melipayamak;
 use Morilog\Jalali\Facades\jDate;
 use Morilog\Jalali\Facades\jDateTime;
+use Morilog\Jalali\Jalalian;
 
 class AppController extends Controller
 {
@@ -44,6 +45,7 @@ class AppController extends Controller
     public function DetailHost($id)
     {
 //        return $id;
+
 
         $hostModel = Host::query()
             ->where('id', $id)
@@ -135,22 +137,27 @@ class AppController extends Controller
 
         /*************  Calendar  ************/
 
-        $nowYearJalali = jDate::forge(date("Y/m/d"))->format('Y'); // get now year
-        $nowMonthJalali = jDate::forge(date("Y/m/d"))->format('m'); // get now month
+        $nowYearJalali = Jalalian::forge(date("Y/m/d"))->format('Y'); // get now year
+        $nowMonthJalali = Jalalian::forge(date("Y/m/d"))->format('m'); // get now month
 
         $first_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/01'; // get first day now month
         $month_model = Month::where('id', $nowMonthJalali)->first(); // get detail now month
         $last_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $month_model->number_day; // get count day now monthz
-        $first_date_month_miladi = jDateTime::ConvertToGeorgian($first_date_month_jalali, date('H:i:s')); // change first day now month jalali to miladi(AD)
-        $last_date_month_miladi = jDateTime::ConvertToGeorgian($last_date_month_jalali, date('H:i:s')); // change last day now month jalali to miladi(AD)
-        $first_date_month_miladi = explode(' ', $first_date_month_miladi); // put date to array for separate date and time
-        $last_date_month_miladi = explode(' ', $last_date_month_miladi); // put date to array for separate date and time
-        $first_date_month_miladi = $first_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
-        $last_date_month_miladi = $last_date_month_miladi[0] . ' 00:00:00'; // change time to 00:00:00
+
+        $first_date_month_miladi = \Morilog\Jalali\CalendarUtils::toGregorian($nowYearJalali,$nowMonthJalali,1); // change first day now month jalali to miladi(AD)
+        $last_date_month_miladi = \Morilog\Jalali\CalendarUtils::toGregorian($nowYearJalali,$nowMonthJalali,$month_model->number_day); // change last day now month jalali to miladi(AD)
+        $first_date_month_miladi = $first_date_month_miladi[0].'/'.$first_date_month_miladi[1].'/'.$first_date_month_miladi[2];
+        $last_date_month_miladi = $last_date_month_miladi[0].'/'.$last_date_month_miladi[1].'/'.$last_date_month_miladi[2];
+
+//        $first_date_month_miladi = explode(' ', $first_date_month_miladi); // put date to array for separate date and time
+//        $last_date_month_miladi = explode(' ', $last_date_month_miladi); // put date to array for separate date and time
+
+        $first_date_month_miladi = $first_date_month_miladi . ' 00:00:00'; // change time to 00:00:00
+        $last_date_month_miladi = $last_date_month_miladi . ' 00:00:00'; // change time to 00:00:00
+
 
         $first_date_month_miladi =$this->convertDateToMiladi($first_date_month_jalali,true);
         $last_date_month_miladi = $this->convertDateToMiladi($last_date_month_jalali,true);
-
 
         $special_date_model = SpecialDate::where('date', '>=', $first_date_month_miladi)
             ->where('date', '<=', $last_date_month_miladi)
@@ -158,7 +165,7 @@ class AppController extends Controller
 
         $holidays_now_month = array();
         foreach ($special_date_model as $key => $value) {
-            $jalali_date = jDate::forge($value->date)->format('Y/m/d');
+            $jalali_date = Jalalian::forge($value->date)->format('Y/m/d');
             $jalali_date = explode('/', $jalali_date);
             $holidays_now_month[] = $jalali_date[2];
         }
@@ -167,7 +174,6 @@ class AppController extends Controller
         $timestamp = bmktime(0, 0, 0, $month, $day, $year);
         $day_info = bgetdate($timestamp);
         $num_week = Carbon::now()->dayOfWeek;
-
 
         $week = array(
             1 => 'شنبه',
@@ -238,23 +244,17 @@ class AppController extends Controller
         $priceModel = PriceDay::where('host_id', $hostModel->id)->get();
 
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
-            //todo لطفا این کانفلیکت رو برطرف کنید بچه ها
-//<<<<<<< app/Http/Controllers/AppController.php
-            $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $i;
-            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
-//            dd($dayCalendarJalali);
-//            $dayCalendarMiladi =$this->convertDateToMiladi($dayCalendarJalali,true);
-//=======
 
-            if(strlen($i)==1){
-                $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . 0 . $i;
+            if ($i<10){
+                $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . '0'.$i;
             }else{
-                $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $i;
+                $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' .$i;
             }
-//            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+
+            $dayCalendarMiladi = \Morilog\Jalali\CalendarUtils::toGregorian($nowYearJalali,$nowMonthJalali,$i);
+//            dd($dayCalendarJalali);
             $dayCalendarMiladi =$this->convertDateToMiladi($dayCalendarJalali,true);
 
-//>>>>>>> app/Http/Controllers/AppController.php
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
                 if ($value->week_id == $day_id) {
@@ -267,7 +267,6 @@ class AppController extends Controller
                     $priceDay = $hostModel->special_price;
                 }
             }
-
 //            $specialModel = Special::query()->with('getHost')
 //                ->whereHas('getHost', function ($Q) use ($id) {
 //                $Q->where('getHost.step','=', 100);
@@ -380,7 +379,6 @@ class AppController extends Controller
 
     public function SearchHost(Request $request)
     {
-
         if ($request->date_from != "" && $request->date_to != "") {
             $from = jDateTime::ConvertToGeorgian($request->date_from, date('H:i:s'));
             $bufferFrom = explode(' ', $from);
@@ -705,7 +703,7 @@ class AppController extends Controller
     {
 
 //        dd($date);
-        $date=\Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $date)->format('Y-m-d'); //2016-05-8
+        $date=\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d', $date)->format('Y-m-d'); //2016-05-8
 //
         if($parameters){
             $date = $date.' 00:00:00';

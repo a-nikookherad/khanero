@@ -145,7 +145,14 @@ class ReserveController extends Controller
 
     public function CalculateReserveHostByDateAjax(Request $request)
     {
-//        return $request->all();
+        // داده های که ارسال میشود
+        // count_guest :1 example
+        // from_date :1400/4/26
+        // from_to :1400/4/31
+        // type : calculate
+        // host_id : 5
+
+
         // new update ...
         $hostModel = Host::where('id', $request->host_id)->first();
         if ($request->host_id == "" || $request->host_id == null) {
@@ -165,6 +172,7 @@ class ReserveController extends Controller
         $countGuest = $hostModel->count_guest; // ظرفیت مهمانان
         $countRequestGuest = $request->count_guest; // تعداد مهمان درخواست کننده
 
+
         $extraPriceForPerson = 0; // Extra person
         $total_sum_guest = 0;
         if($countRequestGuest > $standardGuest) {
@@ -178,16 +186,36 @@ class ReserveController extends Controller
             }
         }
         // اضافه کردن صفر به تاریخ شروع و پایان
-        $from = jDateTime::ConvertToGeorgian($request->from_date, date('H:i:s'));
-        $bufferFrom = explode(' ', $from);
-        $dateFrom = $bufferFrom[0] . ' 00:00:00';
 
-        $to = jDateTime::ConvertToGeorgian($request->to_date, date('H:i:s'));
-        $to = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
-        $bufferTo = explode(' ', $to);
-        $dateTo = $bufferTo[0] . ' 00:00:00';
+//        $from = jDateTime::ConvertToGeorgian($request->from_date, date('H:i:s'));
+//        $bufferFrom = explode(' ', $from);
+//        $dateFrom = $bufferFrom[0] . ' 00:00:00';
+
+        $t =$request->from_date;
+        $t =explode('/',$t);
+        $dateFrom = \Morilog\Jalali\jDateTime::toGregorianDate($t[0],$t[1],$t[2]);
+
+
+
+
+
+//
+//        $to = jDateTime::ConvertToGeorgian($request->to_date, date('H:i:s'));
+//        $to = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
+//        $bufferTo = explode(' ', $to);
+//        $dateTo = $bufferTo[0] . ' 00:00:00';
+
+        $t =$request->to_date;
+        $t =explode('/',$t);
+        $to = \Morilog\Jalali\jDateTime::toGregorianDate($t[0],$t[1],$t[2]);
+        $dateTo = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
+
+        return response()->json($dateTo);
 
         $nowDate = date('Y-m-d 00:00:00');
+
+
+
         if ($dateFrom > $dateTo) { // چک کردن بزرگ نبودن تاریخ شروع از پایان
             $Response = ["Success" => "0", "Message" => array()];
             return response()->json($Response);
