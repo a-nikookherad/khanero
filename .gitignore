@@ -3,6 +3,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/my-data
+/mysql
 /.idea
 /.vagrant
 Homestead.json
@@ -12,4 +14,5 @@ yarn-error.log
 .env
 storage
 my-data/*
+mysql/*
 public/Uploaded/Gallery/Img
