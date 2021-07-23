@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Melipayamak;
 use App\User;
 use DB;
+use Morilog\Jalali\Jalalian;
 
 class ReserveController extends Controller
 {
@@ -193,7 +194,9 @@ class ReserveController extends Controller
 
         $t =$request->from_date;
         $t =explode('/',$t);
-        $dateFrom = \Morilog\Jalali\jDateTime::toGregorianDate($t[0],$t[1],$t[2]);
+        $dateFrom = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]);
+        $dateFrom =$dateFrom[0].'/'.$dateFrom[1].'/'.$dateFrom[2].' '.'00:00:00';
+
 
 
 
@@ -207,12 +210,21 @@ class ReserveController extends Controller
 
         $t =$request->to_date;
         $t =explode('/',$t);
-        $to = \Morilog\Jalali\jDateTime::toGregorianDate($t[0],$t[1],$t[2]);
-        $dateTo = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
+        $to = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]-1);
+        $dateTo =$to[0].'/'.$to[1].'/'.$to[2].' '.'00:00:00';
 
-        return response()->json($dateTo);
+
+
+
+
+
+
+
+//        $dateTo = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
+
 
         $nowDate = date('Y-m-d 00:00:00');
+
 
 
 
@@ -221,28 +233,37 @@ class ReserveController extends Controller
             return response()->json($Response);
         }
         if ($dateFrom < $nowDate) { // چک کردن اینکه تاریخ شروع کوچک تر از الان نباشد
-            $Response = ["Success" => "0", "Message" => array()];
+            $Response = ["Success" => "1", "Message" => array()];
             return response()->json($Response);
         }
+
+
+
         $date_from = Carbon::parse($dateFrom);
         $date_to = Carbon::parse($dateTo);
+
+
         // محاسبه اختلاف بین دو تاریخ
         $countDayReserve = $date_from->diffInDays($date_to);
+
         if($countDayReserve < $hostModel->min_reserve_day - 1) {
             $Response = ["Success" => "0", "Message" => "حداقل تعداد روز رزرو برای این اقامتگاه ". $hostModel->min_reserve_day ." روز می باشد."];
             return response()->json($Response);
         }
+
+
         $array_day_reserve = array();
         // وارد کردن روزهای انتخاب شده در آرایه
         for ($i = 0; $i <= $countDayReserve; $i++) {
             $array_day_reserve[] = date('Y-m-d 00:00:00', strtotime($date_from . ' + ' . $i . ' days'));
         }
+
         // چک کردن خالی بودن روزهای رزرو در سیستم
         foreach ($array_day_reserve as $key => $value) {
             $blockedDayModel = BlockedDay::where('host_id', $hostModel->id)
                 ->where('date', $value)->first();
             if(!empty($blockedDayModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". \Morilog\Jalali\Facades\jDate::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
             $reserveModel = Reserve::where('host_id', $hostModel->id)
@@ -251,10 +272,12 @@ class ReserveController extends Controller
 //                ->whereIn('step', array()) // چک کردن مرحله رزرو
                 ->first();
             if(!empty($reserveModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". \Morilog\Jalali\Facades\jDate::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
         }
+
+
         // چک کردن تخفیف برای چند روز رزرو
         $discountModel = Discount::where('host_id', $hostModel->id)
             ->orderBy('number_days', 'DESC')
@@ -262,6 +285,8 @@ class ReserveController extends Controller
             ->first();
         $total_price_reserve = 0; // قیمت کل رزرو
         $array_price_date = array();
+
+
         foreach ($array_day_reserve as $key => $value) {
             if (Carbon::parse($value)->format('N') == 6) {
                 $id = 1; // shanbe
@@ -334,7 +359,6 @@ class ReserveController extends Controller
             );
             $total_price_reserve = $total_price_reserve + $final_price;
         }
-
         /**  For Next Step We Need : 'type' */
 
         if($request->type == 'calculate') { // محاسبه و نمایش فاکتور قبل از رزرو
