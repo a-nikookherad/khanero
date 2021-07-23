@@ -166,7 +166,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
 
-        Morilog\Jalali\JalaliServiceProvider::class,
+
         Melipayamak\Laravel\ServiceProvider::class,
         /*
          * Package Service Providers...
@@ -268,7 +268,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'jDate' => Morilog\Jalali\Facades\jDate::class,
+
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Melipayamak' => Melipayamak\Laravel\Facade::class,
