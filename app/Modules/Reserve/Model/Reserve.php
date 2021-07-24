@@ -23,10 +23,11 @@ class Reserve extends Model
         'special', 'special_price', 'percent', 'final_price', 'description', 'status'
     ];
 
-//    public function getHost() {
-//        return $this->hasOne(Host::class,  'id','host_id');
-//    }
     public function getHost() {
+        return $this->hasOne(Host::class,  'id','host_id');
+    }
+
+    public function Host() {
         return $this->belongsTo(Host::class,  'host_id','id');
     }
 
