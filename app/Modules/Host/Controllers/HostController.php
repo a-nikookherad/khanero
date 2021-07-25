@@ -3110,13 +3110,20 @@ class HostController extends Controller
 
 
     public function SearchHost(Request $request) {
-        $hostModelList = Host::query()
-            ->where('active', 1)
-            ->where('status', 1);
+        $hostModelList = Host::query()->with('getProvince')
+            ->where('hosts.active', 1)
+            ->where('hosts.status', 1);
 
 
         $hostModelList
-            ->where(DB::raw("standard_guest + count_guest"),'>=',$request->number);
+            ->where(DB::raw("hosts.standard_guest + hosts.count_guest"),'>=',$request->number);
+
+        if (!is_null($request->city)) {
+            $hostModelList
+                ->leftJoin('provinces','provinces.id','=','hosts.province_id')
+                ->where('provinces.name','LIKE',"%{$request->city}%");
+        }
+
 
         $hostModel = $hostModelList->get();
 
