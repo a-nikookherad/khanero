@@ -19,6 +19,7 @@ use App\Modules\Host\Model\LastMinuteReserve;
 use App\Modules\City\Model\Province;
 use App\Modules\City\Model\Township;
 use App\Modules\Possibilities\Model\Option;
+use App\Modules\Rate\Model\Rate;
 use App\Modules\Sms\Controllers\SmsController;
 use App\Modules\Week\Model\Week;
 use App\Modules\Discount\Model\Discount;
@@ -3109,8 +3110,18 @@ class HostController extends Controller
 
 
     public function SearchHost(Request $request) {
-        dd($request->all());
-        $hostModel = Host::where('active', 1)->where('status', 1)->get();
+        $hostModelList = Host::query()
+            ->where('active', 1)
+            ->where('status', 1);
+
+
+        $hostModelList
+            ->where(DB::raw("standard_guest + count_guest"),'>=',$request->number);
+
+        $hostModel = $hostModelList->get();
+
+
+
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }
 
