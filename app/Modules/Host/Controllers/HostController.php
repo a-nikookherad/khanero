@@ -3108,7 +3108,8 @@ class HostController extends Controller
     }
 
 
-    public function SearchHost() {
+    public function SearchHost(Request $request) {
+        dd($request->all());
         $hostModel = Host::where('active', 1)->where('status', 1)->get();
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }
