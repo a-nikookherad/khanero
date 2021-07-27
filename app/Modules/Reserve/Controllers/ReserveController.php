@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Melipayamak;
 use App\User;
 use DB;
+use Morilog\Jalali\Jalalian;
 
 class ReserveController extends Controller
 {
@@ -56,13 +57,21 @@ class ReserveController extends Controller
 //
 //curl_close ($ch);
 
-        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)->orWhereHas('getHost', function ($Query) {
-            $Query->where('user_id', auth()->user()->id);
-        })->get()->groupBy('group_code');
+
+
+        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
+//            ->orWhereHas('getHost', function ($Query) {
+//            $Query->where('user_id', auth()->user()->id);
+//        })
+            ->orWhere('host_id',auth()->user()->id)
+            ->get()->groupBy('group_code');
+
+
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
         foreach ($reserveModel as $key => $value) {
+
             $res = Reserve::where('group_code', $key)->first();
             if($res->user_id == auth()->user()->id) {
                 $type = 'my-reserve';
@@ -137,7 +146,14 @@ class ReserveController extends Controller
 
     public function CalculateReserveHostByDateAjax(Request $request)
     {
-//        return $request->all();
+        // داده های که ارسال میشود
+        // count_guest :1 example
+        // from_date :1400/4/26
+        // from_to :1400/4/31
+        // type : calculate
+        // host_id : 5
+
+
         // new update ...
         $hostModel = Host::where('id', $request->host_id)->first();
         if ($request->host_id == "" || $request->host_id == null) {
@@ -157,6 +173,7 @@ class ReserveController extends Controller
         $countGuest = $hostModel->count_guest; // ظرفیت مهمانان
         $countRequestGuest = $request->count_guest; // تعداد مهمان درخواست کننده
 
+
         $extraPriceForPerson = 0; // Extra person
         $total_sum_guest = 0;
         if($countRequestGuest > $standardGuest) {
@@ -170,43 +187,83 @@ class ReserveController extends Controller
             }
         }
         // اضافه کردن صفر به تاریخ شروع و پایان
-        $from = jDateTime::ConvertToGeorgian($request->from_date, date('H:i:s'));
-        $bufferFrom = explode(' ', $from);
-        $dateFrom = $bufferFrom[0] . ' 00:00:00';
 
-        $to = jDateTime::ConvertToGeorgian($request->to_date, date('H:i:s'));
-        $to = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
-        $bufferTo = explode(' ', $to);
-        $dateTo = $bufferTo[0] . ' 00:00:00';
+//        $from = jDateTime::ConvertToGeorgian($request->from_date, date('H:i:s'));
+//        $bufferFrom = explode(' ', $from);
+//        $dateFrom = $bufferFrom[0] . ' 00:00:00';
+
+        $t =$request->from_date;
+        $t =explode('/',$t);
+        $dateFrom = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]);
+        $dateFrom =$dateFrom[0].'/'.$dateFrom[1].'/'.$dateFrom[2].' '.'00:00:00';
+
+
+
+
+
+
+//
+//        $to = jDateTime::ConvertToGeorgian($request->to_date, date('H:i:s'));
+//        $to = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
+//        $bufferTo = explode(' ', $to);
+//        $dateTo = $bufferTo[0] . ' 00:00:00';
+
+        $t =$request->to_date;
+        $t =explode('/',$t);
+        $to = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]-1);
+        $dateTo =$to[0].'/'.$to[1].'/'.$to[2].' '.'00:00:00';
+
+
+
+
+
+
+
+
+//        $dateTo = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
+
 
         $nowDate = date('Y-m-d 00:00:00');
+
+
+
+
         if ($dateFrom > $dateTo) { // چک کردن بزرگ نبودن تاریخ شروع از پایان
             $Response = ["Success" => "0", "Message" => array()];
             return response()->json($Response);
         }
         if ($dateFrom < $nowDate) { // چک کردن اینکه تاریخ شروع کوچک تر از الان نباشد
-            $Response = ["Success" => "0", "Message" => array()];
+            $Response = ["Success" => "1", "Message" => array()];
             return response()->json($Response);
         }
+
+
+
         $date_from = Carbon::parse($dateFrom);
         $date_to = Carbon::parse($dateTo);
+
+
         // محاسبه اختلاف بین دو تاریخ
         $countDayReserve = $date_from->diffInDays($date_to);
+
         if($countDayReserve < $hostModel->min_reserve_day - 1) {
             $Response = ["Success" => "0", "Message" => "حداقل تعداد روز رزرو برای این اقامتگاه ". $hostModel->min_reserve_day ." روز می باشد."];
             return response()->json($Response);
         }
+
+
         $array_day_reserve = array();
         // وارد کردن روزهای انتخاب شده در آرایه
         for ($i = 0; $i <= $countDayReserve; $i++) {
             $array_day_reserve[] = date('Y-m-d 00:00:00', strtotime($date_from . ' + ' . $i . ' days'));
         }
+
         // چک کردن خالی بودن روزهای رزرو در سیستم
         foreach ($array_day_reserve as $key => $value) {
             $blockedDayModel = BlockedDay::where('host_id', $hostModel->id)
                 ->where('date', $value)->first();
             if(!empty($blockedDayModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". \Morilog\Jalali\Facades\jDate::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
             $reserveModel = Reserve::where('host_id', $hostModel->id)
@@ -215,10 +272,12 @@ class ReserveController extends Controller
 //                ->whereIn('step', array()) // چک کردن مرحله رزرو
                 ->first();
             if(!empty($reserveModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". \Morilog\Jalali\Facades\jDate::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
         }
+
+
         // چک کردن تخفیف برای چند روز رزرو
         $discountModel = Discount::where('host_id', $hostModel->id)
             ->orderBy('number_days', 'DESC')
@@ -226,6 +285,8 @@ class ReserveController extends Controller
             ->first();
         $total_price_reserve = 0; // قیمت کل رزرو
         $array_price_date = array();
+
+
         foreach ($array_day_reserve as $key => $value) {
             if (Carbon::parse($value)->format('N') == 6) {
                 $id = 1; // shanbe
@@ -298,7 +359,6 @@ class ReserveController extends Controller
             );
             $total_price_reserve = $total_price_reserve + $final_price;
         }
-
         /**  For Next Step We Need : 'type' */
 
         if($request->type == 'calculate') { // محاسبه و نمایش فاکتور قبل از رزرو
