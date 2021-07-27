@@ -52,13 +52,13 @@
                                 <div class="datepersian">
                                     <span class="icon-calender"></span>
                                     <span class="input-calender">
-						 <input class="input-date1" type="" placeholder=" تاریخ ورود" name="">
+						 <input class="Q-bx date-enter input-date1" type="" id="InputFromDate" placeholder=" تاریخ ورود" name="">
 					 </span>
                                 </div>
                                 <div class="datepersian">
                                     <span class="icon-calender"></span>
                                     <span class="input-calender">
-						   <input class="input-date2" type="" placeholder=" تاریخ خروج" name="">
+						   <input class="Q-bx date-exit input-date2" type="" id="InputToDate" placeholder=" تاریخ خروج" name="">
 					 </span>
                                 </div>
                                 <div class="number">
