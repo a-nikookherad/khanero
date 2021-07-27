@@ -56,7 +56,7 @@
                         <li class="hidden-xs phone">
                             <img src="{{asset('frontend/images/icon-t1.png')}}" alt="logo"> <a href=""> 0910 698 66 86 </a>
                         </li>
-                        <li class="sabt">
+                        <li class="sabt hidden-xs visible-md">
                             <a href="{{route('CreateHost')}}">
                                 <span> <img src="{{asset('frontend/images/icon-t2.png')}}" alt="logo"></span>
                                 <span>ثبت اقامتگاه </span>
