@@ -3111,18 +3111,54 @@ class HostController extends Controller
 
     public function SearchHost(Request $request) {
 
-       dd($request->all());
-       $from=$request->data_from;
-       $to=$request->date_to;
-       $data_from = \Morilog\Jalali\jDateTime::toGregorian($from[0],$from[1],$from[2]); // [2016, 5, 7]
-       $data_from = \Morilog\Jalali\jDateTime::toGregorian(1395, 2, 18); // [2016, 5, 7]
-
-
-
+        $dif=0;
+        $dateList=[];
 
         $hostModelList = Host::query()->with('getProvince')
             ->where('hosts.active', 1)
             ->where('hosts.status', 1);
+
+
+        if (isset($request->data_from) && isset($request->date_to)) {
+            $from = explode('/',$request->data_from);
+            $to = explode('/',$request->date_to);
+            $from1 = \Morilog\Jalali\jDateTime::toGregorian($from[0],$from[1],$from[2]); // [2016, 5, 7]
+
+            $from= $from1[0].'-'.$from1[1].'-'.$from1[2];
+
+            $data_from = date_create($from);
+            $to1 = \Morilog\Jalali\jDateTime::toGregorian($to[0],$to[1],$to[2]); // [2016, 5, 7]
+            $to= $to1[0].'-'.$to1[1].'-'.$to1[2];
+
+            $data_to = date_create($to);
+            $dif=date_diff($data_from,$data_to)->format('%d');
+
+            for ($i=0;$i<=$dif;$i++){
+                $day =$from1[2];
+                $val=$i;
+                $day+=$val;
+                $from2= $from1[0].'-'.$from1[1].'-'.$day;
+                $data_from = date_create($from2)->format("Y-m-d H:i:s ");
+                 array_push($dateList,$data_from);
+            }
+
+        }
+
+//        if (isset($request->data_from) && isset($request->date_to)) {
+//            $hostModelList
+//                ->where("hosts.min_reserve_day",'>=',$dif)
+//                ->where("hosts.max_day_show_calendar",'>=',$dif);
+//        }
+
+        if (isset($request->data_from) && isset($request->date_to)) {
+            $hostModelList
+                ->select('hosts.*')
+                ->leftJoin('reserves','reserves.host_id','=','hosts.id')
+                ->whereNotIn('reserves.reserve_date',$dateList);
+        }
+
+
+
 
 
         $hostModelList
