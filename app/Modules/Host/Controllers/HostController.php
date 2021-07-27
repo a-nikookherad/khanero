@@ -3110,6 +3110,14 @@ class HostController extends Controller
 
 
     public function SearchHost(Request $request) {
+
+       dd($request->all());
+       $data_from = \Morilog\Jalali\jDateTime::toGregorian(1395, 2, 18); // [2016, 5, 7]
+       $data_from = \Morilog\Jalali\jDateTime::toGregorian(1395, 2, 18); // [2016, 5, 7]
+
+
+
+
         $hostModelList = Host::query()->with('getProvince')
             ->where('hosts.active', 1)
             ->where('hosts.status', 1);
@@ -3133,7 +3141,8 @@ class HostController extends Controller
     }
 
 
-    public function SearchHostAjax() {
+    public function SearchHostAjax(Request $request) {
+        return response()->json($request->all());
         $hostModel = Host::where('active', 1)->where('status', 1)->get();
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }
