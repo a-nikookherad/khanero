@@ -2,7 +2,6 @@
     <a href="{{route('DetailHost', ['id' => $value->id])}}">
     <div class="item1">
             <img src="{{asset('Uploaded/Gallery/Img/'. $value->getGalleryFirst->img)}}" alt="logo">
-
         <div class="icon-item">
 {{--            <span class="discount sale1"> 20% </span>--}}
             <span class="favorite"><i class="far fa-heart"></i></span>

@@ -2,8 +2,8 @@
     $reserveModel = GetReserveByCode($key);
     $hostModel = GetHostByCode($key);
 @endphp
+
 <div class="bx-Residence my-trip row">
-    <h3>خانه شما</h3>
     <div class="col-sm-4">
         <div class="slid-1">
             <a class="d-block box-sl slide" href="#">
@@ -25,8 +25,9 @@
                     <li class="info-Rsdnc"><span>شماره رزرو  :</span><label>{{$reserveModel[0]->id + 100000}}</label></li>
                     <li class="info-Rsdnc"><span>وضعیت رزرو  :</span><label>در انتظار تایید </label></li>
                 </ul>
-                <div class="col-sm-5 paymnt-not">
-                    <a class="btn-pay" href="#">پرداخت</a>
+                <div class="col-sm-5 paymnt-not d-flex justify-content-center">
+                    <a class="btn-success reseve-Button" href="#">تایید</a>
+                    <a class="btn-danger reseve-Button" href="#">لغو</a>
 {{--                    <div class="timer-py d-flex align-items-center">--}}
 {{--                        <label>--}}
 {{--                            12--}}

@@ -4,7 +4,7 @@
             <li><a class="itm-social" href="#"><i class="far fa-heart"></i></a></li>
         </ul>
         <a class="lnk-bx" href="{{route('DetailHost', ['id' => $value->id])}}">
-            <img src="{{asset('Uploaded/Gallery/Img/'. $value->getGalleryFirst->img)}}" alt="logo">
+{{--            <img src="{{asset('Uploaded/Gallery/Img/'. $value->getGalleryFirst->img)}}" alt="logo">--}}
         </a>
         <ul class="contact-01">
             <li class="itm-01 row align-items-center pt-0">

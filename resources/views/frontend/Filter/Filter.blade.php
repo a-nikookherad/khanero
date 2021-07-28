@@ -223,14 +223,16 @@
 </div>
 
 <script>
+    // دکمه اعمال تغییرات
     $('#BtnFilter').click(function () {
         SearchHostAjax();
     });
-    $('.building_type').click(function () {
-        $('.building_type').removeClass('active');
-        $(this).addClass('active');
-        SearchHostAjax();
-    });
+
+    // $('.building_type').click(function () {
+    //     $('.building_type').removeClass('active');
+    //     $(this).addClass('active');
+    //     SearchHostAjax();
+    // });
     // SearchHostAjax();
     function SearchHostAjax() {
         setTimeout(function(){
@@ -253,19 +255,19 @@
             var selected;
             selected = chkArray.join(',') ;
 
-            {{--formData.append('price_from', p1);--}}
-            {{--formData.append('price_to', p2);--}}
-            {{--formData.append('date_from', $('#InputDateFromFilter').val());--}}
-            {{--formData.append('date_to', $('#InputDateToFilter').val());--}}
-            {{--formData.append('count_guest', $('#CountGuest').val());--}}
-            {{--formData.append('building_type', $('#BuildingType option:selected').val());--}}
-            {{--formData.append('home_type', $('#HomeType option:selected').val());--}}
-            {{--formData.append('fast_reserve', fast_reserve);--}}
-            {{--formData.append('count_room', $('#CountRoom').val());--}}
-            {{--formData.append('count_bed', $('#CountBed').val());--}}
-            {{--formData.append('count_bathroom', $('#CountBathroom').val());--}}
-            {{--formData.append('count_toilet', $('#CountToilet').val());--}}
-            {{--formData.append('option', selected);--}}
+            // formData.append('price_from', p1);
+            // formData.append('price_to', p2);
+            formData.append('date_from', $('#InputDateFromFilter').val());
+            formData.append('date_to', $('#InputDateToFilter').val());
+            formData.append('count_guest', $('#CountGuest').val());
+            formData.append('building_type', $('#BuildingType option:selected').val());
+            formData.append('home_type', $('#HomeType option:selected').val());
+            formData.append('fast_reserve', fast_reserve);
+            formData.append('count_room', $('#CountRoom').val());
+            formData.append('count_bed', $('#CountBed').val());
+            formData.append('count_bathroom', $('#CountBathroom').val());
+            formData.append('count_toilet', $('#CountToilet').val());
+            formData.append('option', selected);
             {{--formData.append('township_id', {{$townshipModel->id}});--}}
             formData.append('sort', $('.building_type.active').attr('data-value'));
             $.ajaxSetup({
@@ -274,7 +276,7 @@
                 }
             });
             $.ajax({
-                url: '{{route('SearchHost')}}',
+                url: '{{route('SearchHostAjax')}}',
                 method: 'post',
                 data: formData,
                 processData: false,
