@@ -99,7 +99,7 @@
         .mb-2 {
             margin-bottom: 1.5rem;
         }
-        .mamad {
+        .d-flex {
             display: flex
         }
     </style>
@@ -111,44 +111,25 @@
 <!-- Header -->
 <header class="">
 <div class="top mb-2">
-    <div class="top1">
+    <div class="top1 border-bottom">
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
                     <div id="logo"><img src="{{asset('frontend/images/LOGO0.png')}}" alt="logo"></div>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
-            <div class="mamad">
-                <div>
-                    <input class="form-control" type="text" placeholder="جستجو">
+            <div class="d-flex">
+                <div class="search-wrapper">
+                    <input class="form-control search-input" type="text" placeholder="جستجو">
                 </div>
                 <div style="margin-right: auto">
                     <div class="btn-menu"></div>
                     <ul class="link-top">
-                        <!-- <li class="sabt hidden-xs visible-md">
-                            <a href="{{route('CreateHost')}}">
-                                <span> <img src="{{asset('frontend/images/icon-t2.png')}}" alt="logo"></span>
-                                <span>ثبت اقامتگاه </span>
-                            </a>
-                        </li> -->
                         <li class="box-login">
                         @if(!auth()->check())
-                                <!-- <a>
-                                    <span data-toggle="modal" data-target="#myModal">
-                                        <span>
-                                            <img src="{{asset('frontend/images/user.png')}}">
-                                        </span>
-                                        <span> ورود </span>
-                                    </span>
-                                </a>
-                                <span class="line-login"> </span>
-                                <a data-toggle="modal" data-target="#myModal">
-                                 ثبت نام
-                                </a>
                                 <!-- Modal -->
                                 <div id="myModal" class="modal fade" role="dialog">
                                     <div class="modal-dialog modal-sm">
-
                                         <!-- Modal content-->
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -214,23 +195,22 @@
                                             }
                                         });
                                     });
-                                </script> -->
-                            <!-- @else -->
-                                @if(auth()->user()->role_id == 1)
-                                    <span class="can-click-on">
-                                        <!--<a href="{{route('AdminDashboard')}}">-->
-                                        <a class="menu-user">
-                                             پنل مدیریتی
-                                        </a>
-                                    </span>
-                                @else
-                                    <span class="can-click-on">
-                                        <a class="menu-user">
-                                          {{auth()->user()->first_name . ' ' . auth()->user()->last_name}}
-                                        </a>
-                                    </span>
-                                @endif
-                            <!-- @endif -->
+                                </script>
+                            @else
+                            @if(auth()->user()->role_id == 1)
+                                <span class="can-click-on">
+                                    <a class="menu-user">
+                                            پنل مدیریتی
+                                    </a>
+                                </span>
+                            @else
+                                <span class="can-click-on">
+                                    <a class="menu-user user-style">
+                                        {{auth()->user()->first_name . ' ' . auth()->user()->last_name}}
+                                    </a>
+                                </span>
+                            @endif
+                            @endif
                             <div class="list-login">
                                 <ul>
                                     <li class="user-info d-flex align-items-center">

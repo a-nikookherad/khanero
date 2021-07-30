@@ -14,10 +14,11 @@
     <link href="{{asset('frontend/css/bootstrap-theme.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('frontend/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="{{asset('frontend/css/persian-datepicker.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('frontend/css/persian-datepicker.css')}}"> -->
     <link href="{{asset('frontend/css/fontawesome-all.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/assets/Popup-jQuery/toast.style.min.css')}}"/>
     <link href="{{asset('frontend/css/custom.css?v=03')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/persian-datepicker.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('backend/css/datepicker.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap-datepicker.min.css')}}"/>
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
@@ -39,151 +40,172 @@
         a.btn-edit-mobile {
             color: #848484 !important;
         }
+        .mb-2 {
+            margin-bottom: 1.5rem;
+        }
+        .d-flex {
+            display: flex
+        }
+        .public-search {
+                display: none;
+            }
+        @media (max-width: 768px) {
+            .search-wrapper {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
 <div class="over-page"></div>
 <div class="top">
-    <div class="top1">
+    <div class="top1 border-bottom">
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
                     <div id="logo"><img src="{{asset('frontend/images/LOGO0.png')}}" alt="logo"></div>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
+            <div class="d-flex">
+                <div class="search-wrapper public-search">
+                    <input class="form-control search-input" type="text" placeholder="جستجو">
+                </div>
+                <div style="margin-right: auto">
                     <div class="btn-menu"></div>
-                    <ul class="link-top">
-                        <li class="hidden-xs phone">
-                            <img src="{{asset('frontend/images/icon-t1.png')}}" alt="logo"> <a href=""> 0910 698 66 86 </a>
-                        </li>
-                        <li class="sabt hidden-xs visible-md">
-                            <a href="{{route('CreateHost')}}">
-                                <span> <img src="{{asset('frontend/images/icon-t2.png')}}" alt="logo"></span>
-                                <span>ثبت اقامتگاه </span>
-                            </a>
-                        </li>
-                        <li class="box-login">
-                            @if(!auth()->check())
-                                <a>
-                                    <span data-toggle="modal" data-target="#myModal">
-                                        <span>
-                                            <img src="{{asset('frontend/images/user.png')}}">
+                        <ul class="link-top">
+                            <li class="hidden-xs phone">
+                                <img src="{{asset('frontend/images/icon-t1.png')}}" alt="logo"> <a href=""> 0910 698 66 86 </a>
+                            </li>
+                            <li class="sabt hidden-xs visible-md">
+                                <a href="{{route('CreateHost')}}">
+                                    <span> <img src="{{asset('frontend/images/icon-t2.png')}}" alt="logo"></span>
+                                    <span>ثبت اقامتگاه </span>
+                                </a>
+                            </li>
+                            <li class="box-login">
+                                @if(!auth()->check())
+                                    <a>
+                                        <span data-toggle="modal" data-target="#myModal">
+                                            <span>
+                                                <img src="{{asset('frontend/images/user.png')}}">
+                                            </span>
+                                            <span> ورود </span>
                                         </span>
-                                        <span> ورود </span>
-                                    </span>
-                                </a>
-                                <span class="line-login"> </span>
-                                <a data-toggle="modal" data-target="#myModal">
-                                 ثبت نام
-                                </a>
-                                <!-- Modal -->
-                                <div id="myModal" class="modal fade" role="dialog">
-                                    <div class="modal-dialog modal-sm">
+                                    </a>
+                                    <span class="line-login"> </span>
+                                    <a data-toggle="modal" data-target="#myModal">
+                                    ثبت نام
+                                    </a>
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog modal-sm">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">ورود یا ثبت نام</h4>
-                                            </div>
-                                            <input type="hidden" id="MobileUser">
-                                            <div class="modal-body box-login-register">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <p class="text-right">جهت ورود یا ثبت نام شماره همراه خود را وارد کنید</p>
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">ورود یا ثبت نام</h4>
+                                                </div>
+                                                <input type="hidden" id="MobileUser">
+                                                <div class="modal-body box-login-register">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <p class="text-right">جهت ورود یا ثبت نام شماره همراه خود را وارد کنید</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group text-right">
-                                                            <input type="text" autocomplete="off" maxlength="11" class="form-control" id="InputMobile" placeholder="شماره همراه">
-                                                            <span class="message text-danger"></span>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group text-right">
+                                                                <input type="text" autocomplete="off" maxlength="11" class="form-control" id="InputMobile" placeholder="شماره همراه">
+                                                                <span class="message text-danger"></span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <button type="button" id="BtnCheckUser" class="btn btn-block">ادامه</button>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <button type="button" id="BtnCheckUser" class="btn btn-block">ادامه</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <script>
-                                    $('#InputMobile').click(function () {
-                                        $('span.message').text('');
-                                    });
-                                    $('#BtnCheckUser').click(function () {
-                                        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
-                                        $(this).html(loading);
-                                        var mobile = $('#InputMobile').val();
-                                        if (mobile.length != 11 || Number.isInteger(parseInt(mobile)) != true) {
-                                            $('span.message').text('فرمت تلفن همراه صحیح نیست.');
-                                            return false;
-                                        }
-                                        $.ajaxSetup({
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            }
+                                    <script>
+                                        $('#InputMobile').click(function () {
+                                            $('span.message').text('');
                                         });
-                                        $.ajax({
-                                            url: "{{route('CheckUserAjax')}}",
-                                            method: "post",
-                                            data: {
-                                                mobile: mobile,
-                                            },
-                                        }).done(function (returnData) {
-                                            if(returnData.Message == 'found') {
-                                                $('#MobileUser').val(mobile);
-                                                $('.box-login-register').html(returnData.Content);
-                                            } else if(returnData.Message == 'sms') {
-                                                $('#MobileUser').val(mobile);
-                                                $('.box-login-register').html(returnData.Content);
-                                            } else {
-                                                alert('error');
+                                        $('#BtnCheckUser').click(function () {
+                                            var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+                                            $(this).html(loading);
+                                            var mobile = $('#InputMobile').val();
+                                            if (mobile.length != 11 || Number.isInteger(parseInt(mobile)) != true) {
+                                                $('span.message').text('فرمت تلفن همراه صحیح نیست.');
+                                                return false;
                                             }
+                                            $.ajaxSetup({
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                }
+                                            });
+                                            $.ajax({
+                                                url: "{{route('CheckUserAjax')}}",
+                                                method: "post",
+                                                data: {
+                                                    mobile: mobile,
+                                                },
+                                            }).done(function (returnData) {
+                                                if(returnData.Message == 'found') {
+                                                    $('#MobileUser').val(mobile);
+                                                    $('.box-login-register').html(returnData.Content);
+                                                } else if(returnData.Message == 'sms') {
+                                                    $('#MobileUser').val(mobile);
+                                                    $('.box-login-register').html(returnData.Content);
+                                                } else {
+                                                    alert('error');
+                                                }
+                                            });
                                         });
-                                    });
-                                </script>
-                            @else
-                                @if(auth()->user()->role_id == 1)
-                                    <span class="can-click-on">
-                                        <!--<a href="{{route('AdminDashboard')}}">-->
-                                        <a class="menu-user">
-                                             پنل مدیریتی
-                                        </a>
-                                    </span>
+                                    </script>
                                 @else
-                                    <span class="can-click-on">
-                                        <a class="menu-user">
-                                          {{auth()->user()->first_name . ' ' . auth()->user()->last_name}}
-                                        </a>
-                                    </span>
+                                    @if(auth()->user()->role_id == 1)
+                                        <span class="can-click-on">
+                                            <!--<a href="{{route('AdminDashboard')}}">-->
+                                            <a class="menu-user">
+                                                پنل مدیریتی
+                                            </a>
+                                        </span>
+                                    @else
+                                        <span class="can-click-on">
+                                            <a class="menu-user user-style">
+                                            {{auth()->user()->first_name . ' ' . auth()->user()->last_name}}
+                                            </a>
+                                        </span>
+                                    @endif
                                 @endif
-                            @endif
-                            
-                            <div class="list-login">
-                                <ul>
-                                    <li class="user-info d-flex align-items-center">
-                                        <img class="pc-user mw-100" src=""/>
-                                        <h5 class="name-user">محمد امین بالاور</h5>
-                                    </li>
-                                    <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>
-                                    <li><a class="item-login" href="{{route('IndexReserve')}}"><i class="fas fa-suitcase-rolling"></i>لیست رزرو ها</a></li>
-                                    <li><a class="item-login" href="{{route('IndexMessage')}}"><i class="far fa-envelope"></i>پیام ها</a></li>
-                                    <li><a class="item-login" href="{{route('IndexFavorite')}}"><i class="far fa-heart"></i>علاقه مندی ها</a></li>
-                                    <li><a class="item-login" href="#"><i class="fas fa-lightbulb"></i>نظر ها</a></li>
-                                    <li><a class="item-login" href="{{route('IndexHost', ['type' => 'all'])}}"><i class="fas fa-home"></i>اقامتگاه های من</a></li>
-                                    <li><a class="item-login" href="{{route('CreateHost')}}"><i class="fas fa-folder-plus"></i>ثبت اقامتگاه</a></li>
-                                    <li><a class="item-login" href="#"><i class="fas fa-share-alt"></i>دعوت از دوستان</a></li>
-                                    <li><a class="item-login" href="#"><i class="fas fa-money-check"></i>امور مالی</a></li>
-                                    <li><a class="item-login" href="{{route('Logout')}}"><i class="fas fa-sign-out-alt"></i>خروج</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
+                                
+                                <div class="list-login">
+                                    <ul>
+                                        <li class="user-info d-flex align-items-center">
+                                            <img class="pc-user mw-100" src=""/>
+                                            <h5 class="name-user">محمد امین بالاور</h5>
+                                        </li>
+                                        <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>
+                                        <li><a class="item-login" href="{{route('IndexReserve')}}"><i class="fas fa-suitcase-rolling"></i>لیست رزرو ها</a></li>
+                                        <li><a class="item-login" href="{{route('IndexMessage')}}"><i class="far fa-envelope"></i>پیام ها</a></li>
+                                        <li><a class="item-login" href="{{route('IndexFavorite')}}"><i class="far fa-heart"></i>علاقه مندی ها</a></li>
+                                        <li><a class="item-login" href="#"><i class="fas fa-lightbulb"></i>نظر ها</a></li>
+                                        <li><a class="item-login" href="{{route('IndexHost', ['type' => 'all'])}}"><i class="fas fa-home"></i>اقامتگاه های من</a></li>
+                                        <li><a class="item-login" href="{{route('CreateHost')}}"><i class="fas fa-folder-plus"></i>ثبت اقامتگاه</a></li>
+                                        <li><a class="item-login" href="#"><i class="fas fa-share-alt"></i>دعوت از دوستان</a></li>
+                                        <li><a class="item-login" href="#"><i class="fas fa-money-check"></i>امور مالی</a></li>
+                                        <li><a class="item-login" href="{{route('Logout')}}"><i class="fas fa-sign-out-alt"></i>خروج</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
 <script>
 //============ search-->
 $(document).ready(function(){
@@ -430,30 +452,73 @@ $(document).ready(function(){
 <a href="#" class="back-to-top" style=""><i class="fas fa-chevron-up"></i></a>
 <script src="{{asset('frontend/js/owl.carousel.js')}}"></script>
 <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}"></script>
-<script src="{{asset('backend/js/bootstrap-datepicker.fa.min.js')}}"></script>
-<script src="{{asset('frontend/js/persian-date.js')}}"></script>
+<!-- <script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}"></script> -->
+<!-- <script src="{{asset('backend/js/bootstrap-datepicker.fa.min.js')}}"></script> -->
+<script src="{{asset('frontend/js/persian-date.min.js')}}"></script>
+<script src="{{asset('frontend/js/persian-datepicker.min.js')}}"></script>
 <script language="javascript" src="{{asset('frontend/js/script.js')}}"></script>
 <script src="{{asset('backend/assets/Popup-jQuery/toast.script.js')}}"></script>
 
 
 <script>
-    $("#InputFromDate").datepicker({
-        minDate: 0,
-        changeMonth: true,
-        changeYear: true,
-        isRTL: true,
-        dateFormat: "yy/mm/dd",
-        EnableTimePicker: true,
-    });
-    $("#InputToDate").datepicker({
-        minDate: 0,
-        changeMonth: true,
-        changeYear: true,
-        isRTL: true,
-        dateFormat: "yy/mm/dd",
-        EnableTimePicker: true,
-    });
+
+var to, from;
+to = $(".range-to").persianDatepicker({
+    inline: false,
+    altField: '.range-to-alt',
+    format: 'YYYY/MM/DD',
+    initialValue: false,
+    autoClose: true,
+    minDate: new persianDate().unix(),
+    onSelect: function (unix) {
+        to.touched = true;
+        if (from && from.options && from.options.maxDate != unix) {
+            var cachedValue = from.getState().selected.unixDate;
+            from.options = {maxDate: unix};
+            if (from.touched) {
+                from.setDate(cachedValue);
+            }
+        }
+    }
+});
+// $(".range-to").persianDatepicker({
+//     minDate: new persianDate().unix()
+// });
+from = $(".range-from").persianDatepicker({
+    inline: false,
+    altField: '.range-from-alt',
+    format: 'YYYY/MM/DD',
+    initialValue: false,
+    autoClose: true,
+    minDate: new persianDate().unix(),
+    onSelect: function (unix) {
+        from.touched = true;
+        if (to && to.options && to.options.minDate != unix) {
+            var cachedValue = to.getState().selected.unixDate;
+            to.options = {minDate: unix};
+            if (to.touched) {
+                to.setDate(cachedValue);
+            }
+        }
+    }
+});
+
+    // $("#InputFromDate").datepicker({
+    //     minDate: 0,
+    //     changeMonth: true,
+    //     changeYear: true,
+    //     isRTL: true,
+    //     dateFormat: "yy/mm/dd",
+    //     EnableTimePicker: true,
+    // });
+    // $("#InputToDate").datepicker({
+    //     minDate: 0,
+    //     changeMonth: true,
+    //     changeYear: true,
+    //     isRTL: true,
+    //     dateFormat: "yy/mm/dd",
+    //     EnableTimePicker: true,
+    // });
 
     function SetFavorite(content, id) {
         $.ajaxSetup({

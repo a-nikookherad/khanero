@@ -10,7 +10,7 @@
                 <div class="d-block logo-footer">
                     <img src="{{asset('frontend/images/logo-f.png')}}" alt="logo" class="img-footer">
                 </div>
-                <div class="d-block about-company">
+                <div class="d-block about-company text-dark">
                     {{$contactInfo->about}}
                 </div>
             </div>
@@ -20,7 +20,7 @@
     <div class="col-lg-4 col-md-4 col-sm-6 px-0 pupiular-service accordion-container">
         <div class="set">
         			<span class="service-icon">
-						 <span class="title-footer lnk-footer un-link"><span> ارتباط با ما</span></span>
+						 <span class="title-footer lnk-footer un-link"><span class="text-dark"> ارتباط با ما</span></span>
 
 						 <i class="fa-chevron-down fas fa-chevron-up" aria-hidden="false"></i>
 					</span>
@@ -28,7 +28,7 @@
                 @foreach($contentModel->chunk(4) as $key => $value)
                     <ul class="lnk-footers">
                         @foreach($value as $index => $item)
-                            <li><a href="{{route('PageContent', ['alias' => $item->alias])}}">{{$item->title}}</a></li>
+                            <li><a class="text-dark" href="{{route('PageContent', ['alias' => $item->alias])}}">{{$item->title}}</a></li>
                         @endforeach
                     </ul>
                 @endforeach
@@ -40,7 +40,7 @@
     <div class="col-lg-4 col-md-4 col-sm-6 px-0 pupiular-service accordion-container">
         <div class="set">
         			<span class="service-icon">
-						 <span class="title-footer lnk-footer un-link"><span> دسترسی سریع</span></span>
+						 <span class="title-footer lnk-footer un-link"><span class="text-dark"> دسترسی سریع</span></span>
 
 						 <i class="fa-chevron-down fas fa-chevron-up" aria-hidden="false"></i>
 				     </span>
@@ -48,7 +48,7 @@
                 @foreach($contentModel_2->chunk(4) as $key => $value)
                     <ul class="lnk-footers">
                         @foreach($value as $index => $item)
-                            <li><a href="{{route('PageContent', ['alias' => $item->alias])}}">{{$item->title}}</a></li>
+                            <li><a class="text-dark" href="{{route('PageContent', ['alias' => $item->alias])}}">{{$item->title}}</a></li>
                         @endforeach
                     </ul>
                 @endforeach

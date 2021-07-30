@@ -1180,10 +1180,10 @@ span.time1, span.view {
   float: right;
   width: 100%;
   padding-top: 0;
-  color: #fff;
+  color: #000000 !important;
   padding-bottom: 30px;
   position: relative;
-  background: #383838;
+  background: #ffffff;
 }
 .footer .container {
   position: relative;
@@ -2119,8 +2119,8 @@ div#demos .item1 img {
     font-size: 15px;
     color: #ffffff;
 }
-.btn-menu {width: 28px;height: 18px;position: relative;border-bottom: 2px solid white;float: left;    display: none;margin: 6px 0 0;}
-.btn-menu::before,.btn-menu::after {content: "";position: absolute;width: 100%;background: white;right: 0;left: 0;height: 2px;}
+.btn-menu {width: 28px;height: 18px;position: relative;border-bottom: 2px solid #000000 !important;float: left;    display: none;margin: 6px 0 0;}
+.btn-menu::before,.btn-menu::after {content: "";position: absolute;width: 100%;background: #000000 !important;right: 0;left: 0;height: 2px;}
 .btn-menu::after {top: 0%;}
 .btn-menu::before {top: 50%;}
 
@@ -2576,7 +2576,7 @@ min-height: 45px;
 .top1 {
     float: right;
     width: 100%;
-    background-color: #383838;
+    background-color: #ffffff;
 }	
 .title-site {
     font-size: 13px;
@@ -2791,7 +2791,7 @@ span.line-login {
   top: 0;
   transition: top .3s;
   position: absolute;
-   background: #383838; 
+   background: #fffffff; 
   padding: 10px 0;
 }	
 	div#logo {
@@ -3729,3 +3729,19 @@ li.moore.col-sm-12.text-center {
     .fiix-reserv-mobile .col-xl-6 {width: 50%;padding: 0 10px;}
 }
 @media (max-width: 500px){}
+
+/* farhadi */
+
+.search-wrapper {
+  width: 100%;
+   max-width: 300px;
+   margin-left: 15px;
+}
+.search-input {
+  width: 100%;
+   max-width: 400px;
+}
+.user-style {
+  color: #000000 !important;
+   white-space: nowrap !important;
+}
