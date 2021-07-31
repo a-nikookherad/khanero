@@ -112,12 +112,12 @@
             </div>
         </div>
         <div class="col-md-12 row btn-footer">
-            <div class="col-md-6 text-right">
+            <div class="col-xs-6 text-right">
                 <a href="{{route('CreateHostStep', ['id' => $hostModel->id, 'step' => 2])}}"
                    class="prv-btn btn btn-default btn-block"> <i class="fa fa-angle-right"></i><i
                             class="fa fa-angle-right"></i> مرحله قبلی </a>
             </div>
-            <div class="col-md-6 text-left">
+            <div class="col-xs-6 text-left">
                 <button type="button" id="step4" class="nxt-btn btn btn-default BtnRegAll btn-block">&nbsp; بعدی <i
                             class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i></button>
             </div>
