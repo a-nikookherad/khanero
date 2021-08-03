@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: php
-    container_name: php_fpm
+    container_name: php_fpm1
     restart: unless-stopped
     tty: true
     ports:
@@ -26,7 +26,7 @@ services:
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: webserver
+    container_name: webserver1
     restart: unless-stopped
     tty: true
     ports:
@@ -42,7 +42,7 @@ services:
   #MySQL Service
   mysql:
     image: mysql:5.7.22
-    container_name: mysql
+    container_name: mysql1
     restart: unless-stopped
     tty: true
     ports:
@@ -63,7 +63,7 @@ services:
   #   PhpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin1
     depends_on:
       - mysql
     restart: unless-stopped
@@ -83,7 +83,7 @@ services:
   #redis
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: redis1
     command: redis-server --port 6379
     restart: unless-stopped
     tty: true

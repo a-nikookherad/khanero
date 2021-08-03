@@ -15,4 +15,5 @@ storage
 my-data/*
 mysql/*
 public/Uploaded/Gallery/Img
-/app/vendor
+docker-compose.yml
+.gitignore
