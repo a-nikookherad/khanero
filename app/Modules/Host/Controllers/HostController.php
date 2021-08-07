@@ -3114,50 +3114,40 @@ class HostController extends Controller
         $dif=0;
         $dateList=[];
 
-        $hostModelList = Host::query()->with('getProvince')
+        $hostModelList = Host::query()->with(['getProvince','getTownship','getGalleryFirst','getReserves'])
             ->where('hosts.active', 1)
             ->where('hosts.status', 1);
 
 
-        if (isset($request->data_from) && isset($request->date_to)) {
-            $from = explode('/',$request->data_from);
-            $to = explode('/',$request->date_to);
-            $from1 = \Morilog\Jalali\jDateTime::toGregorian($from[0],$from[1],$from[2]); // [2016, 5, 7]
 
-            $from= $from1[0].'-'.$from1[1].'-'.$from1[2];
+        if (isset($request->data_from) && isset($request->data_to)) {
+            $from = $this->Convertnumber2english($request->data_from);
+            $to = $this->Convertnumber2english($request->data_to);
 
-            $data_from = date_create($from);
-            $to1 = \Morilog\Jalali\jDateTime::toGregorian($to[0],$to[1],$to[2]); // [2016, 5, 7]
-            $to= $to1[0].'-'.$to1[1].'-'.$to1[2];
 
-            $data_to = date_create($to);
+            $from1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$from)->format('Y-m-d'); //2016-05-8
+            $to1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$to)->format('Y-m-d'); //2016-05-8
+
+            $data_from = date_create($from1);
+
+            $data_to = date_create($to1);
             $dif=date_diff($data_from,$data_to)->format('%d');
 
             for ($i=0;$i<=$dif;$i++){
-                $day =$from1[2];
-                $val=$i;
-                $day+=$val;
-                $from2= $from1[0].'-'.$from1[1].'-'.$day;
+                $from3 = \Morilog\Jalali\jDate::forge($from1)->reforge('+'.$i.'days')->format('date');
+                $from2=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d',$from3)->format('Y-m-d'); //2016-05-8
                 $data_from = date_create($from2)->format("Y-m-d H:i:s ");
                  array_push($dateList,$data_from);
             }
 
+
         }
 
-//        if (isset($request->data_from) && isset($request->date_to)) {
-//            $hostModelList
-//                ->where("hosts.min_reserve_day",'>=',$dif)
-//                ->where("hosts.max_day_show_calendar",'>=',$dif);
-//        }
-
-        if (isset($request->data_from) && isset($request->date_to)) {
+        if (isset($request->data_from) && isset($request->data_to)) {
             $hostModelList
-                ->select('hosts.*')
-                ->leftJoin('reserves','reserves.host_id','=','hosts.id')
-                ->whereNotIn('reserves.reserve_date',$dateList);
+                ->where("hosts.min_reserve_day",'>=',$dif)
+                ->where("hosts.max_day_show_calendar",'>=',$dif);
         }
-
-
 
 
 
@@ -3165,14 +3155,19 @@ class HostController extends Controller
             ->where(DB::raw("hosts.standard_guest + hosts.count_guest"),'>=',$request->number);
 
         if (!is_null($request->city)) {
+
+            $city=explode('-',$request->city);
+            if (count($city)==1) {
+                $city[1]=$city[0];
+            }
             $hostModelList
+                ->select('hosts.*')
                 ->leftJoin('provinces','provinces.id','=','hosts.province_id')
-                ->where('provinces.name','LIKE',"%{$request->city}%");
+                ->leftJoin('townships','townships.id','=','hosts.township_id')
+                ->where('provinces.name','LIKE',"%{$city[0]}%")
+                ->where('townships.name','LIKE',"%{$city[1]}%");
         }
-
-
         $hostModel = $hostModelList->get();
-
 
 
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
@@ -3181,7 +3176,7 @@ class HostController extends Controller
 
     public function SearchHostAjax(Request $request) {
         return response()->json($request->all());
-        $hostModel = Host::where('active', 1)->where('status', 1)->get();
+//        $hostModel = Host::where('active', 1)->where('status', 1)->get();
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }
 
@@ -3191,5 +3186,21 @@ class HostController extends Controller
         $weekModel = Week::where('sign', date('N'))->first();
         $priceDay = PriceDay::where('week_id', $weekModel->id)->where('host_id', $hostModel->id)->first();
         return $priceDay->price;
+    }
+
+    function Convertnumber2english($srting) {
+
+        $srting = str_replace('۰', '0', $srting);
+        $srting = str_replace('۱', '1', $srting);
+        $srting = str_replace('۲', '2', $srting);
+        $srting = str_replace('۳', '3', $srting);
+        $srting = str_replace('۴', '4', $srting);
+        $srting = str_replace('۵', '5', $srting);
+        $srting = str_replace('۶', '6', $srting);
+        $srting = str_replace('۷', '7', $srting);
+        $srting = str_replace('۸', '8', $srting);
+        $srting = str_replace('۹', '9', $srting);
+
+        return $srting;
     }
 }

@@ -71,7 +71,10 @@
                     <input class="form-control search-input" type="text" placeholder="جستجو">
                 </div>
                 <div style="margin-right: auto">
-                    <div class="btn-menu"></div>
+                    @if (auth()->check())
+                        <div class="btn-menu"></div>
+                    @endif
+
                         <ul class="link-top">
                             <li class="hidden-xs phone">
                                 <img src="{{asset('frontend/images/icon-t1.png')}}" alt="logo"> <a href=""> 0910 698 66 86 </a>
@@ -182,25 +185,29 @@
                                         </span>
                                     @endif
                                 @endif
-                                
-                                <div class="list-login">
-                                    <ul>
-                                        <li class="user-info d-flex align-items-center">
-                                            <img class="pc-user mw-100" src=""/>
-                                            <h5 class="name-user">محمد امین بالاور</h5>
-                                        </li>
-                                        <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>
-                                        <li><a class="item-login" href="{{route('IndexReserve')}}"><i class="fas fa-suitcase-rolling"></i>لیست رزرو ها</a></li>
-                                        <li><a class="item-login" href="{{route('IndexMessage')}}"><i class="far fa-envelope"></i>پیام ها</a></li>
-                                        <li><a class="item-login" href="{{route('IndexFavorite')}}"><i class="far fa-heart"></i>علاقه مندی ها</a></li>
-                                        <li><a class="item-login" href="#"><i class="fas fa-lightbulb"></i>نظر ها</a></li>
-                                        <li><a class="item-login" href="{{route('IndexHost', ['type' => 'all'])}}"><i class="fas fa-home"></i>اقامتگاه های من</a></li>
-                                        <li><a class="item-login" href="{{route('CreateHost')}}"><i class="fas fa-folder-plus"></i>ثبت اقامتگاه</a></li>
-                                        <li><a class="item-login" href="#"><i class="fas fa-share-alt"></i>دعوت از دوستان</a></li>
-                                        <li><a class="item-login" href="#"><i class="fas fa-money-check"></i>امور مالی</a></li>
-                                        <li><a class="item-login" href="{{route('Logout')}}"><i class="fas fa-sign-out-alt"></i>خروج</a></li>
-                                    </ul>
-                                </div>
+                                @if (auth()->check())
+                                        <div class="list-login">
+                                            <ul>
+                                                <li class="user-info d-flex align-items-center">
+                                                    <img class="pc-user mw-100" src=""/>
+                                                    <h5 class="name-user">محمد امین بالاور</h5>
+                                                </li>
+                                                <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>
+                                                <li><a class="item-login" href="{{route('IndexReserve')}}"><i class="fas fa-suitcase-rolling"></i>لیست رزرو ها</a></li>
+                                                <li><a class="item-login" href="{{route('IndexMessage')}}"><i class="far fa-envelope"></i>پیام ها</a></li>
+                                                <li><a class="item-login" href="{{route('IndexFavorite')}}"><i class="far fa-heart"></i>علاقه مندی ها</a></li>
+                                                <li><a class="item-login" href="#"><i class="fas fa-lightbulb"></i>نظر ها</a></li>
+                                                <li><a class="item-login" href="{{route('IndexHost', ['type' => 'all'])}}"><i class="fas fa-home"></i>اقامتگاه های من</a></li>
+                                                <li><a class="item-login" href="{{route('CreateHost')}}"><i class="fas fa-folder-plus"></i>ثبت اقامتگاه</a></li>
+                                                <li><a class="item-login" href="#"><i class="fas fa-share-alt"></i>دعوت از دوستان</a></li>
+                                                <li><a class="item-login" href="#"><i class="fas fa-money-check"></i>امور مالی</a></li>
+                                                <li><a class="item-login" href="{{route('Logout')}}"><i class="fas fa-sign-out-alt"></i>خروج</a></li>
+                                            </ul>
+                                        </div>
+                                @endif
+
+
+
                             </li>
                         </ul>
                     </div>

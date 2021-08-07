@@ -37,6 +37,10 @@ class Host extends Model
         'longitude', 'new_rule', 'description', 'count_reserve', 'integrated_id', 'active', 'step'
     ];
 
+    public function getReserves() {
+        return $this->hasMany(Reserve::class,'hosts.id','reserves.host_id');
+    }
+
     public function getUser() {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
