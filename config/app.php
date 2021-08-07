@@ -183,6 +183,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Morilog\Jalali\JalaliServiceProvider::class,
 
 
 
@@ -216,7 +217,6 @@ return [
         App\Modules\SlideShow\SlideShowProvider::class,
         App\Modules\InfoCity\InfoCityProvider::class,
         App\Modules\Report\ReportProvider::class,
-        Morilog\Jalali\JalaliServiceProvider::class,
 
     ],
 
@@ -270,10 +270,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'jDate' => Morilog\Jalali\Facades\jDate::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Melipayamak' => Melipayamak\Laravel\Facade::class,
+        'jDate' => Morilog\Jalali\Facades\jDate::class
+
 
     ],
 
