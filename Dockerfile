@@ -6,11 +6,11 @@ FROM php:7.3-fpm
 # Set working directory
 WORKDIR /var/www
 
+
+
 # Set secan.ir DNS
 #RUN echo "nameserver 178.22.122.100" >> /etc/resolv.conf
 #RUN echo "nameserver  185.51.200.2" >> /etc/resolv.conf
-
-
 
 # Install dependencies
 RUN apt-get update --fix-missing && apt-get install -y \
@@ -18,6 +18,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     default-mysql-server \
     libpng-dev \
     libjpeg62-turbo-dev \
+    libxml2-dev \
     locales \
     jpegoptim optipng pngquant gifsicle \
     vim \
@@ -29,14 +30,15 @@ RUN apt-get update --fix-missing && apt-get install -y \
     python \
     supervisor
 
-
+#libxml2-dev php-soap && docker-php-ext-install soap
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions
-RUN docker-php-ext-install gd pdo_mysql mbstring zip exif pcntl sockets bcmath
+RUN docker-php-ext-install gd pdo_mysql mbstring zip exif pcntl sockets bcmath soap
 RUN docker-php-ext-configure gd --with-gd --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
 && docker-php-ext-install -j "$(nproc)" gd
+#&& docker-php-ext-install soap
 #RUN docker-php-ext-install gd
 #RUN docker-php-ext-install sockets
 RUN pecl install -o -f redis \
