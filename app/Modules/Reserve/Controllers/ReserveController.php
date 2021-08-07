@@ -15,13 +15,13 @@ use App\Modules\Discount\Model\Discount;
 use App\Modules\Message\Model\Message;
 use App\Modules\Payment\Model\Payment;
 use App\Modules\Payment\Model\Wallet;
+use Illuminate\Support\Facades\DB;
 use Morilog\Jalali\Facades\jDate;
 use Morilog\Jalali\Facades\jDateTime;
 use App\Modules\Sms\Controllers\SmsController;
 use Carbon\Carbon;
 use Melipayamak;
 use App\User;
-use DB;
 use Morilog\Jalali\Jalalian;
 
 class ReserveController extends Controller
@@ -31,6 +31,7 @@ class ReserveController extends Controller
      ****************/
     public function IndexReserve()
     {
+
 //        $yourjson = {
 //            "Token":"a8d7606bf50b45dab0dd27110c70ce63",
 //          "SenderNumber":"50001",
@@ -59,14 +60,20 @@ class ReserveController extends Controller
 
 
 
-        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
-//            ->orWhereHas('getHost', function ($Query) {
+//        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
+//            ->orWhereHas('Host', function ($Query) {
 //            $Query->where('user_id', auth()->user()->id);
 //        })
-            ->orWhere('host_id',auth()->user()->id)
-            ->get()->groupBy('group_code');
+//            ->orWhere('host_id',auth()->user()->id)
+//            ->get()->groupBy('group_code');
 
-
+        $reserveModel =DB::table('reserves')
+            ->select('group_code')
+            ->groupBy('group_code')
+            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
+            ->where('hosts.user_id','=',auth()->user()->id)
+            ->orWhere('reserves.user_id','=',auth()->user()->id)
+            ->get();
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
@@ -80,6 +87,7 @@ class ReserveController extends Controller
             }
             $reserve[$key] = array('type' => $type, 'group_code' => $res->group_code);
         }
+           
         return view('Reserve::indexReserve', compact('reserve'));
     }
 

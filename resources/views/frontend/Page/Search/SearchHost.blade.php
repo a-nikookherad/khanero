@@ -14,7 +14,7 @@
     .item-right {display: flex;align-items: center;}
     .each-filter.filter-open {border: 1px solid #007dec;    z-index: 111;}
     .each-filter {border: 1px solid #dcdcdc;border-radius: 50px;margin: 5px;padding: 8px;background: white;position: relative;}
-    .row-head-S {position: relative;padding: 18px 0 9px 0;background: #e8e8e8;border-bottom: 1px solid #eaeaea;margin: 0 0 24px;z-index: 12;}
+    .row-head-S {position: relative;padding: 18px 0 9px 0;background: #e8e8e8;border-bottom: 1px solid #eaeaea;margin: 0 0 24px;z-index: 10;}
     .profiledropdown .number {float: right;width: 100%;}
     .profiledropdown span.minus, .profiledropdown span.plus {color: #007dec;border: 1px solid #007dec;    font-size: 14px;display: flex;align-items: center;justify-content: center;}
     .profiledropdown span.minus:hover, .profiledropdown span.plus:hover {background: #007dec00;}

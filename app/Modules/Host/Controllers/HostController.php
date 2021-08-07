@@ -19,6 +19,7 @@ use App\Modules\Host\Model\LastMinuteReserve;
 use App\Modules\City\Model\Province;
 use App\Modules\City\Model\Township;
 use App\Modules\Possibilities\Model\Option;
+use App\Modules\Rate\Model\Rate;
 use App\Modules\Sms\Controllers\SmsController;
 use App\Modules\Week\Model\Week;
 use App\Modules\Discount\Model\Discount;
@@ -3108,14 +3109,74 @@ class HostController extends Controller
     }
 
 
-    public function SearchHost() {
-        $hostModel = Host::where('active', 1)->where('status', 1)->get();
+    public function SearchHost(Request $request) {
+
+        $dif=0;
+        $dateList=[];
+
+        $hostModelList = Host::query()->with(['getProvince','getTownship','getGalleryFirst','getReserves'])
+            ->where('hosts.active', 1)
+            ->where('hosts.status', 1);
+
+
+
+        if (isset($request->data_from) && isset($request->data_to)) {
+            $from = $this->Convertnumber2english($request->data_from);
+            $to = $this->Convertnumber2english($request->data_to);
+
+
+            $from1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$from)->format('Y-m-d'); //2016-05-8
+            $to1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$to)->format('Y-m-d'); //2016-05-8
+
+            $data_from = date_create($from1);
+
+            $data_to = date_create($to1);
+            $dif=date_diff($data_from,$data_to)->format('%d');
+
+            for ($i=0;$i<=$dif;$i++){
+                $from3 = \Morilog\Jalali\jDate::forge($from1)->reforge('+'.$i.'days')->format('date');
+                $from2=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d',$from3)->format('Y-m-d'); //2016-05-8
+                $data_from = date_create($from2)->format("Y-m-d H:i:s ");
+                 array_push($dateList,$data_from);
+            }
+
+
+        }
+
+        if (isset($request->data_from) && isset($request->data_to)) {
+            $hostModelList
+                ->where("hosts.min_reserve_day",'>=',$dif)
+                ->where("hosts.max_day_show_calendar",'>=',$dif);
+        }
+
+
+
+        $hostModelList
+            ->where(DB::raw("hosts.standard_guest + hosts.count_guest"),'>=',$request->number);
+
+        if (!is_null($request->city)) {
+
+            $city=explode('-',$request->city);
+            if (count($city)==1) {
+                $city[1]=$city[0];
+            }
+            $hostModelList
+                ->select('hosts.*')
+                ->leftJoin('provinces','provinces.id','=','hosts.province_id')
+                ->leftJoin('townships','townships.id','=','hosts.township_id')
+                ->where('provinces.name','LIKE',"%{$city[0]}%")
+                ->where('townships.name','LIKE',"%{$city[1]}%");
+        }
+        $hostModel = $hostModelList->get();
+
+
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }
 
 
-    public function SearchHostAjax() {
-        $hostModel = Host::where('active', 1)->where('status', 1)->get();
+    public function SearchHostAjax(Request $request) {
+        return response()->json($request->all());
+//        $hostModel = Host::where('active', 1)->where('status', 1)->get();
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }
 
@@ -3125,5 +3186,21 @@ class HostController extends Controller
         $weekModel = Week::where('sign', date('N'))->first();
         $priceDay = PriceDay::where('week_id', $weekModel->id)->where('host_id', $hostModel->id)->first();
         return $priceDay->price;
+    }
+
+    function Convertnumber2english($srting) {
+
+        $srting = str_replace('۰', '0', $srting);
+        $srting = str_replace('۱', '1', $srting);
+        $srting = str_replace('۲', '2', $srting);
+        $srting = str_replace('۳', '3', $srting);
+        $srting = str_replace('۴', '4', $srting);
+        $srting = str_replace('۵', '5', $srting);
+        $srting = str_replace('۶', '6', $srting);
+        $srting = str_replace('۷', '7', $srting);
+        $srting = str_replace('۸', '8', $srting);
+        $srting = str_replace('۹', '9', $srting);
+
+        return $srting;
     }
 }

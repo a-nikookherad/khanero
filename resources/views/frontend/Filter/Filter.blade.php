@@ -6,12 +6,6 @@
 @endphp
 <div class="row row-head-S">
     <ul class="col-sm-10 item-right">
-        <li class="each-filter d-flex align-items-center">
-            <i class="far fa-calendar-alt"></i>
-            <input class="Q-bx date-moble d-inline-block d-sm-none" type="text" placeholder="تاریخ سفر"/>
-            <input class="Q-bx date-enter d-none d-sm-inline-block" id="InputFromDate" type="text" placeholder="تاریخ ورود"/>
-            <input class="Q-bx date-exit d-none d-sm-inline-block" id="InputToDate" type="text" placeholder="تاریخ خروج"/>
-        </li>
         <li class="each-filter d-none d-sm-inline-block">
             <div class='top-item'>نوع اقامتگاه<i class="fas fa-chevron-down"></i></div>
             <div class='profiledropdown'>
@@ -22,6 +16,14 @@
                     @endforeach
                 </ul>
             </div>
+        </li>
+        <li class="each-filter d-flex align-items-center">
+            <i class="far fa-calendar-alt"></i>
+            <input class="Q-bx date-moble d-inline-block d-sm-none" type="text" placeholder="تاریخ سفر"/>
+            <input class="range-from Q-bx date-enter d-none d-sm-inline-block" placeholder=" تاریخ ورود"/>
+            <input class="range-to Q-bx date-exit d-none d-sm-inline-block" placeholder=" تاریخ خروج"/>
+            <!-- <input class="Q-bx date-enter d-none d-sm-inline-block" id="InputFromDate" type="text" placeholder="تاریخ ورود"/> -->
+            <!-- <input class="Q-bx date-exit d-none d-sm-inline-block" id="InputToDate" type="text" placeholder="تاریخ خروج"/> -->
         </li>
         <li class="each-filter">
             <div class='top-item'> 1 نفر<i class="fas fa-chevron-down"></i></div>
@@ -223,14 +225,16 @@
 </div>
 
 <script>
+    // دکمه اعمال تغییرات
     $('#BtnFilter').click(function () {
         SearchHostAjax();
     });
-    $('.building_type').click(function () {
-        $('.building_type').removeClass('active');
-        $(this).addClass('active');
-        SearchHostAjax();
-    });
+
+    // $('.building_type').click(function () {
+    //     $('.building_type').removeClass('active');
+    //     $(this).addClass('active');
+    //     SearchHostAjax();
+    // });
     // SearchHostAjax();
     function SearchHostAjax() {
         setTimeout(function(){
@@ -253,19 +257,19 @@
             var selected;
             selected = chkArray.join(',') ;
 
-            {{--formData.append('price_from', p1);--}}
-            {{--formData.append('price_to', p2);--}}
-            {{--formData.append('date_from', $('#InputDateFromFilter').val());--}}
-            {{--formData.append('date_to', $('#InputDateToFilter').val());--}}
-            {{--formData.append('count_guest', $('#CountGuest').val());--}}
-            {{--formData.append('building_type', $('#BuildingType option:selected').val());--}}
-            {{--formData.append('home_type', $('#HomeType option:selected').val());--}}
-            {{--formData.append('fast_reserve', fast_reserve);--}}
-            {{--formData.append('count_room', $('#CountRoom').val());--}}
-            {{--formData.append('count_bed', $('#CountBed').val());--}}
-            {{--formData.append('count_bathroom', $('#CountBathroom').val());--}}
-            {{--formData.append('count_toilet', $('#CountToilet').val());--}}
-            {{--formData.append('option', selected);--}}
+            // formData.append('price_from', p1);
+            // formData.append('price_to', p2);
+            formData.append('date_from', $('#InputDateFromFilter').val());
+            formData.append('date_to', $('#InputDateToFilter').val());
+            formData.append('count_guest', $('#CountGuest').val());
+            formData.append('building_type', $('#BuildingType option:selected').val());
+            formData.append('home_type', $('#HomeType option:selected').val());
+            formData.append('fast_reserve', fast_reserve);
+            formData.append('count_room', $('#CountRoom').val());
+            formData.append('count_bed', $('#CountBed').val());
+            formData.append('count_bathroom', $('#CountBathroom').val());
+            formData.append('count_toilet', $('#CountToilet').val());
+            formData.append('option', selected);
             {{--formData.append('township_id', {{$townshipModel->id}});--}}
             formData.append('sort', $('.building_type.active').attr('data-value'));
             $.ajaxSetup({
@@ -274,7 +278,7 @@
                 }
             });
             $.ajax({
-                url: '{{route('SearchHost')}}',
+                url: '{{route('SearchHostAjax')}}',
                 method: 'post',
                 data: formData,
                 processData: false,

@@ -40,31 +40,34 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div id="search">
-                        <form class="search" action="/action_page.php">
+                        <form class="search" action="{{route('SearchHost')}}">
                             <div class="input-search">
                                 <span class="icon-to"></span>
                                 <span class="search2">
-					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="search2">
-				 </span>
+					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">
+				     </span>
                             </div>
 
                             <div class="date">
                                 <div class="datepersian">
                                     <span class="icon-calender"></span>
                                     <span class="input-calender">
-						 <input class="input-date1" type="" placeholder=" تاریخ ورود" name="">
+                                    <input class="range-from" placeholder=" تاریخ ورود" name="data_from"/>
+						 <!-- <input class="Q-bx date-enter input-date1" type="" id="InputFromDate" placeholder=" تاریخ ورود" name=""> -->
 					 </span>
                                 </div>
                                 <div class="datepersian">
                                     <span class="icon-calender"></span>
                                     <span class="input-calender">
-						   <input class="input-date2" type="" placeholder=" تاریخ خروج" name="">
+                                
+                                    <input class="range-to" placeholder=" تاریخ خروج" name="data_to"/>
+						   <!-- <input class="Q-bx date-exit input-date2" type="" id="InputToDate" placeholder=" تاریخ خروج" name=""> -->
 					 </span>
                                 </div>
                                 <div class="number">
                                     <span class="icon-number"></span>
                                     <span class="minus"><i class="fas fa-minus"></i></span>
-                                    <input type="text" value="1" placeholder="تعداد نفرات">
+                                    <input type="text" value="1" placeholder="تعداد نفرات" name="number">
                                     <span class="text-number"> نفر</span>
                                     <span class="plus"><i class="fas fa-plus"></i></span>
                                 </div>
@@ -90,7 +93,7 @@
                                 </script>
 
                             </div>
-                            <a href="{{route('SearchHost')}}" class="btn-search">جستجو</a>
+                            <button class="btn-search">جستجو</button>
                         </form>
                     </div>
                 </div>
