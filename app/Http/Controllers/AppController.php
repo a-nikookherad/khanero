@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\moriJalali\moriJalaiAdaptor;
+use App\Logic\moriJalali\moriJalaiLogic;
 use App\Modules\City\Model\Province;
 use App\Modules\City\Model\Township;
 use App\Modules\Host\Model\BlockedDay;
@@ -137,17 +139,25 @@ class AppController extends Controller
 
         /*************  Calendar  ************/
 
-        $nowYearJalali = Jalalian::forge(date("Y/m/d"))->format('Y'); // get now year
-        $nowMonthJalali = Jalalian::forge(date("Y/m/d"))->format('m'); // get now month
+        // use design patern Adaptor
+
+//        $nowYearJalali = Jalalian::forge(date("Y/m/d"))->format('Y'); // get now year
+//        $nowMonthJalali = Jalalian::forge(date("Y/m/d"))->format('m'); // get now month
+
+        $JdateInstance = new moriJalaiAdaptor(new moriJalaiLogic());
+        $nowYearJalali = $JdateInstance->forge(date("Y/m/d"))->format('Y');
+        $nowMonthJalali = $JdateInstance->forge(date("Y/m/d"))->format('m');
 
         $first_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/01'; // get first day now month
         $month_model = Month::where('id', $nowMonthJalali)->first(); // get detail now month
         $last_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $month_model->number_day; // get count day now monthz
 
-        $first_date_month_miladi = \Morilog\Jalali\CalendarUtils::toGregorian($nowYearJalali,$nowMonthJalali,1); // change first day now month jalali to miladi(AD)
-        $last_date_month_miladi = \Morilog\Jalali\CalendarUtils::toGregorian($nowYearJalali,$nowMonthJalali,$month_model->number_day); // change last day now month jalali to miladi(AD)
-        $first_date_month_miladi = $first_date_month_miladi[0].'/'.$first_date_month_miladi[1].'/'.$first_date_month_miladi[2];
-        $last_date_month_miladi = $last_date_month_miladi[0].'/'.$last_date_month_miladi[1].'/'.$last_date_month_miladi[2];
+
+        $first_date_month_miladi =$JdateInstance->createCarbonFromFormat('Y/m/d',$first_date_month_jalali)->format('Y/m/d'); // change first day now month jalali to miladi(AD)
+        $last_date_month_miladi =$JdateInstance->createCarbonFromFormat('Y/m/d',$last_date_month_jalali)->format('Y/m/d'); // change first day now month jalali to miladi(AD)
+
+
+
 
 //        $first_date_month_miladi = explode(' ', $first_date_month_miladi); // put date to array for separate date and time
 //        $last_date_month_miladi = explode(' ', $last_date_month_miladi); // put date to array for separate date and time
@@ -156,8 +166,8 @@ class AppController extends Controller
         $last_date_month_miladi = $last_date_month_miladi . ' 00:00:00'; // change time to 00:00:00
 
 
-        $first_date_month_miladi =$this->convertDateToMiladi($first_date_month_jalali,true);
-        $last_date_month_miladi = $this->convertDateToMiladi($last_date_month_jalali,true);
+//        $first_date_month_miladi =$this->convertDateToMiladi($first_date_month_jalali,true);
+//        $last_date_month_miladi = $this->convertDateToMiladi($last_date_month_jalali,true);
 
         $special_date_model = SpecialDate::where('date', '>=', $first_date_month_miladi)
             ->where('date', '<=', $last_date_month_miladi)
@@ -165,7 +175,7 @@ class AppController extends Controller
 
         $holidays_now_month = array();
         foreach ($special_date_model as $key => $value) {
-            $jalali_date = Jalalian::forge($value->date)->format('Y/m/d');
+            $jalali_date =  $JdateInstance->forge($value->date)->format('Y/m/d');
             $jalali_date = explode('/', $jalali_date);
             $holidays_now_month[] = $jalali_date[2];
         }
@@ -251,9 +261,8 @@ class AppController extends Controller
                 $dayCalendarJalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' .$i;
             }
 
-            $dayCalendarMiladi = \Morilog\Jalali\CalendarUtils::toGregorian($nowYearJalali,$nowMonthJalali,$i);
-//            dd($dayCalendarJalali);
-            $dayCalendarMiladi =$this->convertDateToMiladi($dayCalendarJalali,true);
+            $dayCalendarMiladi =$JdateInstance->createCarbonFromFormat('Y/m/d',$dayCalendarJalali)->format('Y/m/d H:i:s'); // change first day now month jalali to miladi(AD)
+
 
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
@@ -703,7 +712,9 @@ class AppController extends Controller
     {
 
 //        dd($date);
-        $date=\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d', $date)->format('Y-m-d'); //2016-05-8
+        $JdateInstance = new moriJalaiAdaptor(new moriJalaiLogic());
+        $date =$JdateInstance->createCarbonFromFormat('Y/m/d',$date)->format('Y-m-d'); // change first day now month jalali to miladi(AD)
+
 //
         if($parameters){
             $date = $date.' 00:00:00';
