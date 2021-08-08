@@ -58,7 +58,7 @@
         table tr td {
             cursor: unset!important;
         }
-        
+
         body {
             overflow-x: hidden;
         }
@@ -82,7 +82,7 @@
             background: #67a4da !important;
         }
         #main-wrapper {padding: 20px 170px !important;}
-        
+
         @media (max-width:1024px){
             section#main-wrapper {padding: 20px 50px !important;}
         }
@@ -115,7 +115,7 @@
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
-                    <div id="logo"><img src="{{asset('frontend/images/LOGO0.png')}}" alt="logo"></div>
+                    <div id="logo"><img src="{{public_path('frontend/images/LOGO0.png')}}" alt="logo"></div>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
             <div class="d-flex">
@@ -214,8 +214,8 @@
                             <div class="list-login">
                                 <ul>
                                     <li class="user-info d-flex align-items-center">
-                                        <img class="pc-user mw-100" src=""/>
-                                        <h5 class="name-user">محمد امین بالاور</h5>
+                                        <img class="pc-user mw-100" src="{{auth()->user()->avatar?auth()->user()->avatar:''}}"/>
+                                        <h5 class="name-user">{{auth()->user()->first_name . ' ' . auth()->user()->last_name}}</h5>
                                     </li>
                                     <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>
                                     <li><a class="item-login" href="{{route('IndexReserve')}}"><i class="fas fa-suitcase-rolling"></i>لیست رزرو ها</a></li>

@@ -2083,7 +2083,6 @@ div#demos .item1 img {
     float: right !important;
   }
 }
-
 @media (max-width: 600px) {
   .top1.fixedLinks-fx input.input-search {
     float: right;
@@ -2103,7 +2102,7 @@ div#demos .item1 img {
   }
 }
 .box-map-mob {
-    display: none;
+    display: none ;
 }
 .more-info {
     display: inline-flex;
@@ -2791,7 +2790,7 @@ span.line-login {
   top: 0;
   transition: top .3s;
   position: absolute;
-   background: #fffffff; 
+   background: #ffffff;
   padding: 10px 0;
 }	
 	div#logo {
