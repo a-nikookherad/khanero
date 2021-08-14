@@ -1,6 +1,7 @@
 @php
     $reserveModel = GetReserveByCode($key);
     $hostModel = GetHostByCode($key);
+    $JdateInstance2 = new App\Logic\moriJalali\moriJalaiAdaptor(new App\Logic\moriJalali\moriJalaiLogic());
 @endphp
 
 <div class="bx-Residence my-trip row">
@@ -52,9 +53,9 @@
                 <ul class="each-011">
                     <li class="info-trip">
                         <p class="from">
-                            از {{GetNameDayOfWeek($reserveModel[0]->week_id)}}  {{\Morilog\Jalali\Jalalian::forge($reserveModel[0]->reserve_date)->format('Y/m/d')}}
+                            از {{GetNameDayOfWeek($reserveModel[0]->week_id)}}  {{$JdateInstance2->forge($reserveModel[0]->reserve_date)->format('Y/m/d')}}
 
-                            تا {{GetNameDayOfWeek($reserveModel[count($reserveModel) - 1]->week_id)}}  {{\Morilog\Jalali\Jalalian::forge(date('Y-m-d H:i:s', strtotime($reserveModel[0]->reserve_date . ' +'. (count($reserveModel) - 1) .' day')))->format('Y/m/d')}}
+                            تا {{GetNameDayOfWeek($reserveModel[count($reserveModel) - 1]->week_id)}}  {{$JdateInstance2->forge(date('Y-m-d H:i:s', strtotime($reserveModel[0]->reserve_date . ' +'. (count($reserveModel) - 1) .' day')))->format('Y/m/d')}}
                             به مدت {{count($reserveModel)}} روز
                         </p>
                         <p>

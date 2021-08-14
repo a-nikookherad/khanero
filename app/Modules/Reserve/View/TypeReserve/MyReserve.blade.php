@@ -1,6 +1,8 @@
 @php
     $reserveModel = GetReserveByCode($key);
     $hostModel = GetHostByCode($key);
+    $JdateInstance = new App\Logic\moriJalali\moriJalaiAdaptor(new App\Logic\moriJalali\moriJalaiLogic());
+
 @endphp
 <div class="bx-Residence my-trip row">
     <div class="col-sm-4">
@@ -26,16 +28,16 @@
                 </ul>
                 <div class="col-sm-5 paymnt-not">
                     <a class="btn-pay" href="#">پرداخت</a>
-                    {{--                    <div class="timer-py d-flex align-items-center">--}}
-                    {{--                        <label>--}}
-                    {{--                            12--}}
-                    {{--                            <span>ثانیه</span>--}}
-                    {{--                        </label>--}}
-                    {{--                        <label>--}}
-                    {{--                            12--}}
-                    {{--                            <span>دقیقه</span>--}}
-                    {{--                        </label>--}}
-                    {{--                    </div>--}}
+                                        <div class="timer-py d-flex align-items-center">
+                                            <label>
+                                                12
+                                                <span>ثانیه</span>
+                                            </label>
+                                            <label>
+                                                12
+                                                <span>دقیقه</span>
+                                            </label>
+                                        </div>
                 </div>
                 <div class="col-sm-12 px-0 d-flex align-items-center host-info">
                     @if($reserveModel[0]->getUser->avatar == 'default-user.png')
@@ -50,9 +52,10 @@
                 <ul class="each-011">
                     <li class="info-trip">
                         <p class="from">
-                            از {{GetNameDayOfWeek($reserveModel[0]->week_id)}}  {{\Morilog\Jalali\Jalalian::forge($reserveModel[0]->reserve_date)->format('Y/m/d')}}
 
-                            تا {{GetNameDayOfWeek($reserveModel[count($reserveModel) - 1]->week_id)}}  {{\Morilog\Jalali\Jalalian::forge(date('Y-m-d H:i:s', strtotime($reserveModel[0]->reserve_date . ' +'. (count($reserveModel) - 1) .' day')))->format('Y/m/d')}}
+                            از {{GetNameDayOfWeek($reserveModel[0]->week_id)}}  {{$JdateInstance->forge($reserveModel[0]->reserve_date)->format('Y/m/d')}}
+
+                            تا {{GetNameDayOfWeek($reserveModel[count($reserveModel) - 1]->week_id)}}  {{$JdateInstance->forge(date('Y-m-d H:i:s', strtotime($reserveModel[0]->reserve_date . ' +'. (count($reserveModel) - 1) .' day')))->format('Y/m/d')}}
                             به مدت {{count($reserveModel)}} روز
                         </p>
                         <p>
@@ -77,8 +80,8 @@
                             <span class="unit">تومان</span>
                         </label>
                     </li>
-                    {{--                    <li class="info-trip">پیش پرداخت :<label><span class="price">120,000</span><span class="unit">تومان</span></label></li>--}}
-                    {{--                    <li class="info-trip">پرداخت در محل :<label><span class="price">120,000</span><span class="unit">تومان</span></label></li>--}}
+                                        <li class="info-trip">پیش پرداخت :<label><span class="price">120,000</span><span class="unit">تومان</span></label></li>
+                                        <li class="info-trip">پرداخت در محل :<label><span class="price">120,000</span><span class="unit">تومان</span></label></li>
                 </ul>
                 <ul class="can-click row">
                     <li class="col-sm-6 clck-btn clck-01"><a class="each-clck" data-toggle="modal" data-target="#myModal{{$reserveModel[0]->id}}"> پیام به میزبان</a></li>
