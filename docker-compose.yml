@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: php
-    container_name: php_fpm1
+    container_name: khanero_php_fpm
     restart: unless-stopped
     tty: true
     ports:
@@ -21,12 +21,12 @@ services:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - app-network
+      - khanero-app-network
 
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: webserver1
+    container_name: khanero_webserver
     restart: unless-stopped
     tty: true
     ports:
@@ -37,12 +37,12 @@ services:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - app-network
+      - khanero-app-network
 
   #MySQL Service
   mysql:
     image: mysql:5.7.22
-    container_name: mysql1
+    container_name: khanero_mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -58,12 +58,12 @@ services:
     command:
       - --explicit_defaults_for_timestamp
     networks:
-      - app-network
+      - khanero-app-network
 
   #   PhpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin1
+    container_name: khanero_phpmyadmin
     depends_on:
       - mysql
     restart: unless-stopped
@@ -76,24 +76,24 @@ services:
       - 9191:80 # 9191:80
     environment:
       MYSQL_ROOT_PASSWORD: 123
-      PMA_HOST: mysql
+      PMA_HOST: khanero_mysql
     networks:
-      - app-network
+      - khanero-app-network
 
   #redis
   redis:
     image: redis:alpine
-    container_name: redis1
+    container_name: khanero_redis
     command: redis-server --port 6379
     restart: unless-stopped
     tty: true
     #ports:
     #  - 6380:6380
     networks:
-      - app-network
+      - khanero-app-network
 #Docker Networks
 networks:
-  app-network:
+  khanero-app-network:
     driver: bridge
 #Volumes
 volumes:
