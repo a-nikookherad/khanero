@@ -12,3 +12,4 @@ yarn-error.log
 .env
 my-data/*
 public/Uploaded/Gallery/Img
+storage/framework
