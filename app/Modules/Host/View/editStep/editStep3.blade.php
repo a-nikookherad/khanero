@@ -109,12 +109,16 @@
             </div>
             @php
                 $g = $hostModel->getHostPossibilities;
+
                 $arr = [];
                 $arr_description = [];
                 foreach ($g as $key => $value) {
                     $arr[] = $value->option_id;
                     $arr_description[] = $value->description;
                 }
+
+                $array_combine = array_combine($arr,$arr_description);
+
             @endphp
 
             <div class="panel-body">
@@ -128,7 +132,9 @@
                             @foreach($optionModel as $key => $value)
                                 @if($counter == 2)
                                     @php($counter = 0)
+
                         </div>
+
                         <div class="row line-height-35">
                             @endif
                             <div class="col-md-6 rows">
@@ -140,7 +146,7 @@
                                         <label title="{{$value->description}}" for="slideThree{{$key+1}}">{{$value->name}}</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" value="" class="form-control @if(!in_array($value->id, $arr)) none @endif description input{{$key+1}}" name="" id="" placeholder="{{$value->description}}" />
+                                        <input type="text" class="form-control @if(!in_array($value->id, $arr)) none @endif description input{{$key+1}}" name="" id="" value="@if(in_array($value->id, $arr)) {{ $array_combine[$value->id] }} @else @endif" />
                                     </div>
                                 </div>
                             </div>
@@ -163,13 +169,13 @@
                             <div class="col-md-12 rows">
                                 <div class="row">
                                     <div class="col-md-1 text-right">
-                                        <input type="checkbox" value="{{$value->id}}" class="chk check-description" data-value="{{$key+1}}" id="slideThree_{{$key+1}}" name="check{{$key+1}}" />
+                                        <input type="checkbox" value="{{$value->id}}" @if(in_array($value->id, $arr)) checked @endif class="chk check-description" data-value="{{$key+1}}" id="slideThree_{{$key+1}}" name="check{{$key+1}}" />
                                     </div>
                                     <div class="col-md-3">
                                         <label title="{{$value->description}}" for="slideThree_{{$key+1}}">{{$value->name}}</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" value="" class="form-control none description input{{$key+1}}" name="" id="" placeholder="{{$value->description}}" />
+                                        <input type="text" class="form-control @if(!in_array($value->id, $arr)) none @endif description input{{$key+1}}" name="" id="" value="@if(in_array($value->id, $arr)) {{ $array_combine[$value->id] }} @else @endif" />
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +208,7 @@
         var descriptionArray = [];
         /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
         $(".chk:checked").each(function() {
-            var description = $(this).parent().parent().parent().parent().find('.description');
+            var description = $(this).parent().parent().parent().find('.description');
             chkArray.push($(this).val());
             descriptionArray.push( description.val());
         });
@@ -299,6 +305,7 @@
         var key = $(this).attr('data-value');
         var input = $(this).parent().parent().parent().find('.input'+key);
         input.toggleClass('show');
+
     });
 </script>
 

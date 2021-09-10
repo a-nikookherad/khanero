@@ -107,7 +107,7 @@
                             <label for="InputTypeRent2"> دربستی </label>
                         </div>
                         <div class="position-relative">
-                            <input type="radio" value="3" name="type_rent" @if($hostModel->type_rent == 3) checked @endif id="InputTypeRent3"/> 
+                            <input type="radio" value="3" name="type_rent" @if($hostModel->type_rent == 3) checked @endif id="InputTypeRent3"/>
                             <div class="check"></div>
                             <label for="InputTypeRent3"> اتاق خصوصی </label>
                         </div>
@@ -132,7 +132,7 @@
                     <label class="title-S" for="">شکل اقامتگاه</label>
                     <div class="each-Qt flex align-items-center oth-er">
                         <div class="position-relative">
-                            <input type="radio" value="1" name="shape_host" @if($hostModel->shape_host == 1) checked @elseif($hostModel->shape_host == null) checked @endif id="InputShapeHost1"/> 
+                            <input type="radio" value="1" name="shape_host" @if($hostModel->shape_host == 1) checked @elseif($hostModel->shape_host == null) checked @endif id="InputShapeHost1"/>
                             <div class="check"></div>
                             <label for="InputShapeHost1"> مسطح </label>
                         </div>
@@ -283,7 +283,6 @@
 
                         @foreach($hostModel->getRoom as $key => $value)
 
-                            @endphp
                             <div class="each-item col-md-12 box">
                                 <p class="some-title">اتاق شماره {{$key+1}}</p>
                                 <div class="boxs">

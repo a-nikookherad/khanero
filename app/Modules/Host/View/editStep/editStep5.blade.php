@@ -105,7 +105,11 @@
                 $arr = [];
                 foreach ($g as $key => $value) {
                     $arr[] = $value->rule_id;
+                    $arr_description[] = $value->description;
                 }
+
+                $array_combine = array_combine($arr,$arr_description);
+
             @endphp
             <div class="panel-body">
                 <div class="row">
@@ -119,7 +123,7 @@
                                     <label for="slideThree_{{$key+1}}">{{$value->name}}</label>
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control @if(!in_array($value->id, $arr)) none @endif  description input{{$key+1}}" name="" id="" placeholder="{{$value->description}}" />
+                                    <input type="text" class="form-control @if(!in_array($value->id, $arr)) none @endif  description input{{$key+1}}" name="" id="" value="@if(in_array($value->id, $arr)) {{ $array_combine[$value->id] }} @else @endif" />
                                 </div>
                             </div>
                         @endforeach

@@ -26,6 +26,7 @@ use App\Modules\Discount\Model\Discount;
 use App\Modules\Special\Model\Special;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use DB;
 use Morilog\Jalali\Facades\jDate;
@@ -154,21 +155,22 @@ class HostController extends Controller
         }
 //        return redirect(route('HostFactor'));
         $provinceModel = Province::where('country_id', 114)->where('active', 1)->get();
-        $optionModel = Option::where('active', 1)->get();
-        $hostModel = Host::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->first();
+        $optionModel   = Option::where('active', 1)->get();
+        $hostModel     = Host::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->first();
 //        return $hostModel;
         if (empty($hostModel) || (!empty($hostModel) && $hostModel->step == 100)) {
             $hostModel = new Host();
             $hostModel->user_id = auth()->user()->id;
             $hostModel->save();
         }
-        $galleryModel =Gallery::where('host_id', $hostModel->id)->get();
+        $galleryModel = Gallery::where('host_id', $hostModel->id)->get();
 //        dd($hostModel->getRoom);
         if (auth()->user()->confirm_rules != 0) {
-            return view('Host::createHost', compact('provinceModel',
-                'optionModel',
-                'hostModel',
-            'galleryModel'
+            return view('Host::createHost', compact(
+                    'provinceModel',
+                         'optionModel',
+                            'hostModel',
+                            'galleryModel'
             ));
         } else {
             return view('Host::rules');
@@ -201,21 +203,21 @@ class HostController extends Controller
     public function StoreHostStep1(Request $request)
     {
         $Message = [
-            'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
+            'host_id.required'          => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'building_type_id.required' => 'فیلد نوع اقامتگاه نمیتواند خالی باشد',
-            'standard_guest.required' => 'ظرفیت استاندارد اجباری است',
-            'count_guest.required' => 'حداکثر ظرفیت اجباری است',
-            'host_name.required' => 'عنوان نمیتواند خالی باشد',
-            'meter.required' => 'متراژ نمیتواند خالی باشد',
+            'standard_guest.required'   => 'ظرفیت استاندارد اجباری است',
+            'count_guest.required'      => 'حداکثر ظرفیت اجباری است',
+            'host_name.required'        => 'عنوان نمیتواند خالی باشد',
+            'meter.required'            => 'متراژ نمیتواند خالی باشد',
         ];
         $validator = Validator::make($request->all(),
             [
-                'host_id' => 'required',
+                'host_id'          => 'required',
                 'building_type_id' => 'required',
-                'standard_guest' => 'required',
-                'count_guest' => 'required',
-                'host_name' => 'required',
-                'meter' => 'required',
+                'standard_guest'   => 'required',
+                'count_guest'      => 'required',
+                'host_name'        => 'required',
+                'meter'            => 'required',
             ],
             $Message);
         if ($validator->fails()) {
@@ -248,34 +250,35 @@ class HostController extends Controller
         $hostModel->building_floor = $request->building_floor;
         $hostModel->reconstruction = $request->reconstruction;
         $hostModel->shape_host = $request->shape_host;
-        $hostModel->single_bed_reception = $request->single_bed_reception;
-        $hostModel->double_bed_reception = $request->double_bed_reception;
-        $hostModel->sofa_bed_reception = $request->sofa_bed_reception;
-        $hostModel->traditional_bedding_reception = $request->traditional_bedding_reception;
-        $hostModel->type_rent = $request->type_rent;
+        $hostModel->single_bed_reception = $request->single_bed_reception; //فضای حال تحت یک نفره
+        $hostModel->double_bed_reception = $request->double_bed_reception; // فضای حال تخت دو نفره
+        $hostModel->sofa_bed_reception = $request->sofa_bed_reception; // فضای حال مبل تخت خواب شو
+        $hostModel->traditional_bedding_reception = $request->traditional_bedding_reception; // فضای حال رختخواب کف
+        $hostModel->type_rent = $request->type_rent;// ۱ مجزا - ۲ دربستی - ۳ واحد خصوصی
         $hostModel->register_by = $request->register_by;
         $hostModel->units_per_floor = $request->units_per_floor;
         $hostModel->count_room = $request->count_room;
         $hostModel->standard_guest = $request->standard_guest;
         $hostModel->count_guest = $request->count_guest;
+        $hostModel->year = $request->year;
 
         $hostModel->save();
 
         // check room common after update host record
         Room::where('host_id', $request->host_id)->delete();
         $Room = json_decode($request->rooms);
-//        dd($Room);
+
         if (count($Room) > 0) {
             foreach ($Room as $key => $value) {
                 $data[] = [
-                    'host_id' => $request->host_id,
-                    'single_beds' => ($value[0]==null)?0:$value[0],
-                    'double_beds' =>($value[1]==null)?0:$value[1],
-                    'sofa_beds' =>($value[2]==null)?0:$value[2],
-                    'traditional_beds' => ($value[3]==null)?0:$value[3],
-                    'active' => 1,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'host_id'          => $request->host_id,
+                    'single_beds'      => ($value[0] == null) ? 0 : $value[0],
+                    'double_beds'      => ($value[1] == null) ? 0 : $value[1],
+                    'sofa_beds'        => ($value[2] == null) ? 0 : $value[2],
+                    'traditional_beds' => ($value[3] == null) ? 0 : $value[3],
+                    'active'           => 1,
+                    'created_at'       => date('Y-m-d H:i:s'),
+                    'updated_at'       => date('Y-m-d H:i:s')
                 ];
             }
             DB::table('rooms')->insert($data);
@@ -300,8 +303,6 @@ class HostController extends Controller
             }
         }
 
-
-
     }
 
     /***************
@@ -311,29 +312,29 @@ class HostController extends Controller
     {
 //        return $request->all();
         $Message = [
-            'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
+            'host_id.required'     => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'province_id.required' => 'استان نمیتواند خالی باشد',
             'township_id.required' => 'شهرستان نمیتواند خالی باشد',
-            'floor.required' => 'طبقه نمیتواند خالی باشد',
-            'address.required' => 'آدرس نمیتواند خالی باشد',
-//            'position_id.required'=>'فیلد موقعیت نمیتواند خالی باشد',
-            'latitude.required' => 'مختصات نقشه نمیتواند خالی باشد',
-            'longitude.required' => 'مختصات نقشه نمیتواند خالی باشد',
+            'floor.required'       => 'طبقه نمیتواند خالی باشد',
+            'address.required'     => 'آدرس نمیتواند خالی باشد',
+//           'position_id.required'=>'فیلد موقعیت نمیتواند خالی باشد',
+            'latitude.required'    => 'مختصات نقشه نمیتواند خالی باشد',
+            'longitude.required'   => 'مختصات نقشه نمیتواند خالی باشد',
         ];
         $validator = Validator::make($request->all(),
             [
-                'host_id' => 'required',
+                'host_id'     => 'required',
                 'province_id' => 'required',
                 'township_id' => 'required',
-                'floor' => 'required',
-                'address' => 'required',
-//                'position_id' => 'required',
-                'latitude' => 'required',
-                'longitude' => 'required',
+                'floor'       => 'required',
+                'address'     => 'required',
+//              'position_id' => 'required',
+                'latitude'    => 'required',
+                'longitude'   => 'required',
             ],
             $Message);
         if ($validator->fails()) {
-            $errors = $validator->errors();
+            $errors   = $validator->errors();
             $Response = ["Success" => "0", "Message" => $errors->first()];
             return response()->json($Response);
         }
@@ -352,25 +353,25 @@ class HostController extends Controller
                 ->first();
         }
 
-        $buffer_1 = explode(',', $request->select_array_1);
+        $buffer_1   = explode(',', $request->select_array_1);
         $position_1 = serialize($buffer_1);
 
         // fill record
-        $hostModel->province_id = $request->province_id;
-        $hostModel->township_id = $request->township_id;
-        $hostModel->floor = $request->floor;
-        $hostModel->plaque = $request->plaque;
-        $hostModel->postal_code = $request->postal_code;
-        $hostModel->unit = $request->unit;
-        $hostModel->district = $request->district;
-        $hostModel->address = $request->address;
-        $hostModel->position_array_1 = $position_1;
-        $hostModel->vision = $request->vision;
+        $hostModel->province_id       = $request->province_id;
+        $hostModel->township_id       = $request->township_id;
+        $hostModel->floor             = $request->floor;
+        $hostModel->plaque            = $request->plaque;
+        $hostModel->postal_code       = $request->postal_code;
+        $hostModel->unit              = $request->unit;
+        $hostModel->district          = $request->district;
+        $hostModel->address           = $request->address;
+        $hostModel->position_array_1  = $position_1; //بافت منطقه
+        $hostModel->vision            = $request->vision;
         $hostModel->distance_shopping = $request->distance_shopping;
-        $hostModel->parking = $request->parking;
-        $hostModel->other_position = $request->other_position;
-        $hostModel->latitude = $request->latitude;
-        $hostModel->longitude = $request->longitude;
+        $hostModel->parking           = $request->parking;
+        $hostModel->other_position    = $request->other_position;
+        $hostModel->latitude          = $request->latitude;
+        $hostModel->longitude         = $request->longitude;
 
         $hostModel->save();
 
@@ -398,15 +399,13 @@ class HostController extends Controller
      ***************/
     public function StoreHostStep3(Request $request)
     {
-
-//        dd($request->all());
         $Message = [
-            'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
+            'host_id.required'      => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'select_array.required' => 'انتخاب حداقل یک مورد از فیلد های زیر اجباری است',
         ];
         $validator = Validator::make($request->all(),
             [
-                'host_id' => 'required',
+                'host_id'      => 'required',
                 'select_array' => 'required',
             ],
             $Message);
@@ -434,11 +433,11 @@ class HostController extends Controller
         $buffer2 = explode(',', $request->description_array);
         foreach ($buffer as $key => $value) {
             $data[] = [
-                'host_id' => $hostModel->id,
-                'option_id' => $buffer[$key],
+                'host_id'     => $hostModel->id,
+                'option_id'   => $buffer[$key],
                 'description' => $buffer2[$key],
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s')
             ];
         }
         DB::table('host_possibilities')->insert($data);
@@ -502,7 +501,7 @@ class HostController extends Controller
         if ($hostModel->step == 3 && $hostModel->step != 100) {
             $hostModel->step = 4;
             if ($hostModel->save()) {
-                $Response = ["Success" => "1", "Message" => response()->json(view('Host::step.step5', compact('provinceModel', 'hostModel'))->render())];
+                $Response = ["Success" => "1", "Message" => response()->json(view('Host::step.step5', compact( 'hostModel'))->render())];
                 return response()->json($Response);
             }
         } elseif ($hostModel->step != 100) {
@@ -519,21 +518,21 @@ class HostController extends Controller
     {
 
         $Message = [
-            'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
+            'host_id.required'         => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'time_enter_from.required' => 'وارد کردن ساعت ورود اجباری است',
-            'time_enter_to.required' => 'وارد کردن ساعت ورود اجباری است',
-            'time_exit.required' => 'وارد کردن ساعت خروج اجباری است',
-            'min_reserve.required' => 'وارد کردن حداقل تعداد روز رزرو اجباری است',
-//            'select_array.required' => 'انتخاب حداقل یک فیلد از قوانین اجباری است',
+            'time_enter_to.required'   => 'وارد کردن ساعت ورود اجباری است',
+            'time_exit.required'       => 'وارد کردن ساعت خروج اجباری است',
+            'min_reserve.required'     => 'وارد کردن حداقل تعداد روز رزرو اجباری است',
+//            'select_array.required'  => 'انتخاب حداقل یک فیلد از قوانین اجباری است',
         ];
         $validator = Validator::make($request->all(),
             [
-                'host_id' => 'required',
+                'host_id'         => 'required',
                 'time_enter_from' => 'required',
-                'time_enter_to' => 'required',
-                'time_exit' => 'required',
-                'min_reserve' => 'required',
-//                'select_array' => 'required',
+                'time_enter_to'   => 'required',
+                'time_exit'       => 'required',
+                'min_reserve'     => 'required',
+//                'select_array'  => 'required',
             ],
             $Message);
         if ($validator->fails()) {
@@ -560,7 +559,6 @@ class HostController extends Controller
         }
 
 
-
         $hostModel->time_enter_from = $request->time_enter_from;
         $hostModel->time_enter_to = $request->time_enter_to;
         $hostModel->time_exit = $request->time_exit;
@@ -575,11 +573,11 @@ class HostController extends Controller
         if (!empty($buffer)) {
             foreach ($buffer as $key => $value) {
                 $data[] = [
-                    'host_id' => $hostModel->id,
-                    'rule_id' => $buffer[$key],
+                    'host_id'     => $hostModel->id,
+                    'rule_id'     => $buffer[$key],
                     'description' => $buffer2[$key],
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'created_at'  => date('Y-m-d H:i:s'),
+                    'updated_at'  => date('Y-m-d H:i:s')
                 ];
             }
             DB::table('host_rules')->insert($data);
@@ -616,27 +614,27 @@ class HostController extends Controller
 //        dd($dateString);
 //        return $request->all();
         $Message = [
-            'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
-            'price_saturday.required' => 'وارد کردن قیمت روز شنبه اجباری است',
-            'price_sunday.required' => 'وارد کردن قیمت روز یک شنبه اجباری است',
-            'price_monday.required' => 'وارد کردن قیمت روز دوشنبه اجباری است',
-            'price_tuesday.required' => 'وارد کردن قیمت روز سه شنبه اجباری است',
+            'host_id.required'         => 'فیلد آی دی آگهی نمیتواند خالی باشد',
+            'price_saturday.required'  => 'وارد کردن قیمت روز شنبه اجباری است',
+            'price_sunday.required'    => 'وارد کردن قیمت روز یک شنبه اجباری است',
+            'price_monday.required'    => 'وارد کردن قیمت روز دوشنبه اجباری است',
+            'price_tuesday.required'   => 'وارد کردن قیمت روز سه شنبه اجباری است',
             'price_wednesday.required' => 'وارد کردن قیمت روز چهارشنبه اجباری است',
-            'price_thursday.required' => 'وارد کردن قیمت روز پنج شنبه اجباری است',
-            'price_friday.required' => 'وارد کردن قیمت روز جمعه اجباری است',
+            'price_thursday.required'  => 'وارد کردن قیمت روز پنج شنبه اجباری است',
+            'price_friday.required'    => 'وارد کردن قیمت روز جمعه اجباری است',
 //            'price_special_day.required' => 'وارد کردن قیمت روزهای خاص تقویم اجباری است',
 //            'one_person_price.required' => 'وارد کردن قیمت به ازای هر نفر اجباری است',
         ];
         $validator = Validator::make($request->all(),
             [
-                'host_id' => 'required',
-                'price_saturday' => 'required',
-                'price_sunday' => 'required',
-                'price_monday' => 'required',
-                'price_tuesday' => 'required',
+                'host_id'         => 'required',
+                'price_saturday'  => 'required',
+                'price_sunday'    => 'required',
+                'price_monday'    => 'required',
+                'price_tuesday'   => 'required',
                 'price_wednesday' => 'required',
-                'price_thursday' => 'required',
-                'price_friday' => 'required',
+                'price_thursday'  => 'required',
+                'price_friday'    => 'required',
 //                'price_special_day' => 'required',
 //                'one_person_price' => 'required',
             ],
@@ -688,7 +686,7 @@ class HostController extends Controller
         DB::table('price_days')->insert($data_3);
 
 
-        $priceSpecial = str_replace(',', '', $request->price_special_day); // صفر ارسال می شود
+        $priceSpecial   = str_replace(',', '', $request->price_special_day); // صفر ارسال می شود
         $onePersonPrice = str_replace(',', '', $request->price_one_person);
         $hostModel->special_price = $priceSpecial ;
         $hostModel->one_person_price = $onePersonPrice * 1000;
@@ -697,41 +695,42 @@ class HostController extends Controller
         Discount::where('host_id', $hostModel->id)->delete();
         if($request->day_discount != 0 && $request->percent_discount != 0) {
             $discountModel = new Discount();
-            $discountModel->host_id = $hostModel->id;
+            $discountModel->host_id     = $hostModel->id;
             $discountModel->number_days = $request->day_discount;
-            $discountModel->percent = $request->percent_discount;
+            $discountModel->percent     = $request->percent_discount;
             $discountModel->save();
         }
         if($request->day_discount_2 != 0 && $request->percent_discount_2 != 0) {
-            $discountModel = new Discount();
-            $discountModel->host_id = $hostModel->id;
+            $discountModel              = new Discount();
+            $discountModel->host_id     = $hostModel->id;
             $discountModel->number_days = $request->day_discount_2;
-            $discountModel->percent = $request->percent_discount_2;
+            $discountModel->percent     = $request->percent_discount_2;
             $discountModel->save();
         }
 
 
         // ثبت بازه تخفیف دار
+        //موقتا حذف میشود - البته در این قسمت کدتاریخ به درستی در دیتابیس ثبت نمیشود
 
         if($request->turn_discount != '' && $request->day_turn_discount_from != '' && $request->day_turn_discount_to != '') {
 //            $dateTime_1 = jDateTime::ConvertToGeorgian($request->day_turn_discount_from,date('H:i:s'));
 //            $buffer_1 = explode(' ', $dateTime_1);
-            $buffer_1=\Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y-m-d'); //2016-05-8
+            $buffer_1 = \Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y-m-d'); //2016-05-8
 //            dd($dateString);
             $dayTimeFrom = $buffer_1.' 00:00:00';
 
 //            $dateTime_2= jDateTime::ConvertToGeorgian($request->day_turn_discount_to,date('H:i:s'));
 //            $buffer_2 = explode(' ', $dateTime_2);
-            $buffer_2=\Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y-m-d'); //2016-05-8
+            $buffer_2 = \Morilog\Jalali\jDateTime::createCarbonFromFormat('Y/m/d', $request->day_turn_discount_from)->format('Y-m-d'); //2016-05-8
 //
-            $dayTimeTo = $buffer_2.' 00:00:00';
+            $dayTimeTo = $buffer_2 .' 00:00:00';
 
-            $specialModel = new Special();
-            $specialModel->host_id = $hostModel->id;
-            $specialModel->date_from = $dayTimeFrom;
-            $specialModel->date_to = $dayTimeTo;
-            $specialModel->percent = $request->turn_discount;
-            $specialModel->save();
+//            $specialModel = new Special();
+//            $specialModel->host_id = $hostModel->id;
+//            $specialModel->date_from = $dayTimeFrom;
+//            $specialModel->date_to = $dayTimeTo;
+//            $specialModel->percent = $request->turn_discount;
+//            $specialModel->save();
         }
 
         if($request->has('edit_host')) { // edit host
@@ -763,14 +762,14 @@ class HostController extends Controller
     public function StoreHostStep7(Request $request)
     {
         $Message = [
-            'host_id.required' => 'فیلد آی دی آگهی نمیتواند خالی باشد',
+            'host_id.required'   => 'فیلد آی دی آگهی نمیتواند خالی باشد',
             'host_name.required' => 'وارد کردن نام اقامتگاه اجباری است',
 //            'cancel_rule_id.required' => 'انتخاب قوانین لغو رزرو اجباری است',
 //            'cancel_rule_id.numeric' => 'انتخاب قوانین لغو رزرو اجباری است',
         ];
         $validator = Validator::make($request->all(),
             [
-                'host_id' => 'required',
+                'host_id'   => 'required',
                 'host_name' => 'required',
 //                'cancel_rule_id' => 'required',
 //                'cancel_rule_id' => 'numeric',
@@ -843,6 +842,7 @@ class HostController extends Controller
         $validator = Validator::make($request->all(), [
             'img' => 'required|mimes:png,jpg,jpeg', //max:5000
         ], $Message);
+
         if ($validator->fails()) {
             $errors = $validator->errors();
             $Response = ["Success" => "0", "Message" => $errors->first()];
@@ -867,8 +867,8 @@ class HostController extends Controller
                     $galleryModel->host_id = $hostModel->id;
                     $galleryModel->img = $title;
                     if ($galleryModel->save()) {
-                        $id = $galleryModel->id;
-                        $hostId = $hostModel->id;
+                        $id       = $galleryModel->id;
+                        $hostId   = $hostModel->id;
                         $Response = ["Success" => "1", "Message" => "true", "url" => response()->json(view('Host::Ajax.GalleryStep1', compact('title', 'id', 'hostId', 'countGallery'))->render()), "id" => $id];
                         return response()->json($Response);
                     } else {
@@ -889,11 +889,13 @@ class HostController extends Controller
 
     public function RemoveImageHost(Request $request) {
         $galleryModel = Gallery::where('host_id', $request->host_id)
-            ->where('id', $request->id)->delete();
-//        if(file_exists('Uploaded/Gallery/Img/'.$galleryModel->img))
-//        {
-//            unlink('Uploaded/Gallery/Img/'.$galleryModel->img);
-//        }
+            ->where('id', $request->id)->first();
+        if(file_exists('Uploaded/Gallery/Img/'.$galleryModel->img))
+        {
+            unlink('Uploaded/Gallery/Img/'.$galleryModel->img);
+            File::delete('Uploaded/Gallery/Img/'.$galleryModel->img);
+        }
+        $galleryModel->delete();
         return $request->id;
     }
 
