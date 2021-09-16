@@ -73,7 +73,7 @@
     <script type="text/javascript" src="{{asset('backend/js/dataTables.bootstrap.js')}}"></script>
     <script type="text/javascript" src="{{asset('backend/js/editable-datatables.js')}}"></script>
     <script type="text/javascript" src="{{asset('backend/js/editable-datatables.js')}}"></script>
-    <script type="text/javascript" src="{{asset('backend/assets/checkbox/js/script.css')}}"></script>
+    <script type="text/javascript" src="{{asset('backend/assets/checkbox/js/script.js')}}"></script>
     <script type="text/javascript" src="{{asset('backend/js/number.js')}}"></script>
 
     <script>

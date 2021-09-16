@@ -220,32 +220,38 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>چشم انداز</label>
+                            <div class="each-item col-md-12">
+                                <label class="title-S">چشم انداز</label>
+                                <select class="each-Qt form-control" id="InputVision">
+                                    @foreach($positionTypeModel2 as  $value)
+                                        <option value="{!! $value->id !!}" {{ $value->id == $hostModel->vision ? 'selected' : '' }}>{!! $value->name !!}</option>
+                                    @endforeach
+                                </select>
+                            <!--
                                     <div class="row">
                                         <textarea id="InputVision" rows="2" class="form-control" placeholder="چشم انداز اقامتگاه ...">{{$hostModel->vision}}</textarea>
                                     </div>
+                                    -->
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>فاصله تا مرکز خرید این اقامتگاه</label>
+                                    <div class="row">
+                                        <textarea id="InputDistanceShopping" rows="4" class="form-control" placeholder="فاصله تا مرکز خرید">{{ $hostModel->distance_shopping }}</textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <!--<div class="col-md-8">-->
-                            <!--    <div class="form-group">-->
-                            <!--        <label>فاصله تا مرکز خرید این اقامتگاه</label>-->
-                            <!--        <div class="row">-->
-                            <!--            <textarea id="InputDistanceShopping" rows="4" class="form-control" placeholder="فاصله تا مرکز خرید"></textarea>-->
-                            <!--        </div>-->
-                            <!--    </div>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-4">-->
-                            <!--    <div class="form-group">-->
-                            <!--        <label for="">وضعیت پارکینگ عمومی و غیره</label>-->
-                            <!--        <br/>-->
-                            <!--        <input type="radio" value="1" name="parking" checked id="InputParking1"/>-->
-                            <!--        <label for="InputParking1">  دارد </label>-->
-                            <!--        <input type="radio" value="2" name="parking" id="InputParking2"/>-->
-                            <!--        <label for="InputParking2"> ندارد </label>-->
-                            <!--    </div>-->
-                            <!--</div>-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">وضعیت پارکینگ عمومی و غیره</label>
+                                    <br/>
+                                    <input type="radio" value="1" name="parking" {{ $hostModel->parking == 1 ? 'checked' : '' }} id="InputParking1"/>
+                                    <label for="InputParking1">  دارد </label>
+                                    <input type="radio" value="2" name="parking" {{ $hostModel->parking == 2 ? 'checked' : '' }} id="InputParking2"/>
+                                    <label for="InputParking2"> ندارد </label>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="TextAreaOtherPosition">اطلاعات جغرافیایی دیگر</label>

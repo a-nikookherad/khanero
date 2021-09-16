@@ -131,7 +131,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="InputMaxDaysForShowCalendar">مهمانان تا چند روز بعد میتوانند رزرو کنند؟</label>
+                                    <label for="InputMaxDaysForShowCalendar">مهمانان تا چه مدت آینده را می توانند در تقویم رزرو کنند ؟</label>
                                     <select class="form-control" name="" id="InputMaxDaysForShowCalendar">
                                         <option value="45" @if($hostModel->max_day_show_calendar == 45) selected @endif>45 روز</option>
                                         <option value="90" @if($hostModel->max_day_show_calendar == 90) selected @endif>سه ماه</option>
@@ -246,22 +246,30 @@
                                     درصد تخفیف
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="checkbox" id="InputCheck3"> تخفیف بازه زمانی خاص
-                            </div>
-                            <div class="col-md-9 b-3 box-none-3">
-                                <div class="form-group">
-                                    تخفیف بازه زمانی خاص از
-                                    <input readonly type="text" style="width: 100px;display: inline-block;" id="InputDayTurnDiscountFrom" class="text-center form-control" placeholder="از تاریخ" />
-                                    تا
-                                    <input readonly type="text" style="width: 100px;display: inline-block;" id="InputDayTurnDiscountTo" class="text-center form-control" placeholder="تا تاریخ" />
-                                    تخفیف
-                                    <input type="number" style="width: 60px;display: inline-block;" id="InputTurnDiscount" maxlength="2" class="text-center form-control" placeholder="00" />
-                                    درصد
-                                </div>
-                            </div>
+
+{{--    شروع تخفیف بازه زمانی خاص      --}}
+
+{{--                            <div class="col-md-3">--}}
+{{--                                <input type="checkbox" id="InputCheck3"> تخفیف بازه زمانی خاص--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-9 b-3 box-none-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    تخفیف بازه زمانی خاص از--}}
+{{--                                    <input readonly type="text" style="width: 100px;display: inline-block;" id="InputDayTurnDiscountFrom" class="text-center form-control" placeholder="از تاریخ" />--}}
+{{--                                    تا--}}
+{{--                                    <input readonly type="text" style="width: 100px;display: inline-block;" id="InputDayTurnDiscountTo" class="text-center form-control" placeholder="تا تاریخ" />--}}
+{{--                                    تخفیف--}}
+{{--                                    <input type="number" style="width: 60px;display: inline-block;" id="InputTurnDiscount" maxlength="2" class="text-center form-control" placeholder="00" />--}}
+{{--                                    درصد--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--     پایان تخفیف بازه زمانی خاص   --}}
+
                         </div>
                     </div>
+
+
                     {{--                    <div class="col-md-4">--}}
                     {{--                        <div class="box-information">--}}
                     {{--                            <p class="title-info">--}}
@@ -529,9 +537,9 @@
             formData.append('percent_discount_2', $('#InputNumberPercent2').val()); // درصد تخفیف بلند مدت
 
 
-            formData.append('day_turn_discount_from', $('#InputDayTurnDiscountFrom').val()); // تخفیف بازه زمانی
-            formData.append('day_turn_discount_to', $('#InputDayTurnDiscountTo').val()); // تخفیف بازه زمانی
-            formData.append('turn_discount', $('#InputTurnDiscount').val()); // تخفیف بازه زمانی
+            // formData.append('day_turn_discount_from', $('#InputDayTurnDiscountFrom').val()); // تخفیف بازه زمانی
+            // formData.append('day_turn_discount_to', $('#InputDayTurnDiscountTo').val()); // تخفیف بازه زمانی
+            // formData.append('turn_discount', $('#InputTurnDiscount').val()); // تخفیف بازه زمانی
 
             formData.append('edit_host',1);
             $.ajaxSetup({

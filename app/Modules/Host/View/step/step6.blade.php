@@ -18,7 +18,7 @@
             </span>
         </div>
         <div class="each-item col-md-4">
-            <label class="title-S" for="InputMaxDaysForShowCalendar">مهمانان تا چند روز بعد میتوانند رزرو کنند؟</label>
+            <label class="title-S" for="InputMaxDaysForShowCalendar"> مهمانان تا چه مدت آینده را می توانند در تقویم رزرو کنند ؟ </label>
             <select class="each-Qt form-control" name="" id="InputMaxDaysForShowCalendar">
                 <option value="45">45 روز</option>
                 <option value="90">سه ماه</option>
@@ -94,28 +94,37 @@
                                     درصد تخفیف
                                 </div>
                             </div>
-        <div class="each-item col-md-12">
-            <span class="neccry-star">*</span>
-            <span class="describ-extra">
-            شما میتوانید برای یک دوره زمانی خاص تخفیف در نظر بگیرید
-            </span>
-        </div>
-        <div class="col-md-3 each-option-1">
-            <input type="checkbox" id="InputCheck3">
-            <span class="checkmark"></span>
-            <label class="title-S m-0">تخفیف بازه زمانی خاص</label>
-        </div>
-        <div class="col-md-9 b-3 box-none-3">
-                                <div class="form-group">
-                                    تخفیف بازه زمانی خاص از
-                                    <input readonly type="text" style="width: 100px;display: inline-block;margin:0 3px;" id="InputDayTurnDiscountFrom" class="each-Qt text-center form-control" placeholder="از تاریخ" />
-                                    تا
-                                    <input readonly type="text" style="width: 100px;display: inline-block;margin:0 3px;" id="InputDayTurnDiscountTo" class="each-Qt text-center form-control" placeholder="تا تاریخ" />
-                                    تخفیف
-                                    <input type="number" style="width: 60px;display: inline-block;margin:0 3px;" id="InputTurnDiscount" maxlength="2" class="each-Qt text-center form-control" placeholder="00" />
-                                    درصد
-                                </div>
-                            </div>
+
+{{--   شروع تخفیف بازه زمانی خاص  --}}
+
+{{--        <div class="each-item col-md-12">--}}
+{{--            <span class="neccry-star">*</span>--}}
+{{--            <span class="describ-extra">--}}
+{{--            شما میتوانید برای یک دوره زمانی خاص تخفیف در نظر بگیرید--}}
+{{--            </span>--}}
+{{--        </div>--}}
+{{--        <div class="col-md-3 each-option-1">--}}
+{{--            <input type="checkbox" id="InputCheck3">--}}
+{{--            <span class="checkmark"></span>--}}
+{{--            <label class="title-S m-0">تخفیف بازه زمانی خاص</label>--}}
+{{--        </div>--}}
+{{--        <div class="col-md-9 b-3 box-none-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    تخفیف بازه زمانی خاص از--}}
+{{--                                    <input readonly type="text" style="width: 100px;display: inline-block;margin:0 3px;" id="InputDayTurnDiscountFrom" class="each-Qt text-center form-control" placeholder="از تاریخ" />--}}
+{{--                                    تا--}}
+{{--                                    <input readonly type="text" style="width: 100px;display: inline-block;margin:0 3px;" id="InputDayTurnDiscountTo" class="each-Qt text-center form-control" placeholder="تا تاریخ" />--}}
+{{--                                    تخفیف--}}
+{{--                                    <input type="number" style="width: 60px;display: inline-block;margin:0 3px;" id="InputTurnDiscount" maxlength="2" class="each-Qt text-center form-control" placeholder="00" />--}}
+{{--                                    درصد--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--  پایان تخفیف بازی زمانی خاص  --}}
+
+
+
+
 {{--    <div class="col-md-4">--}}
 {{--                        <div class="box-information">--}}
 {{--                            <p class="title-info">--}}
@@ -382,9 +391,9 @@
              formData.append('percent_discount_2', $('#InputNumberPercent2').val()); // درصد تخفیف بلند مدت
             
             
-            formData.append('day_turn_discount_from', $('#InputDayTurnDiscountFrom').val()); // تخفیف بازه زمانی
-            formData.append('day_turn_discount_to', $('#InputDayTurnDiscountTo').val()); // تخفیف بازه زمانی
-            formData.append('turn_discount', $('#InputTurnDiscount').val()); // تخفیف بازه زمانی
+            // formData.append('day_turn_discount_from', $('#InputDayTurnDiscountFrom').val()); // تخفیف بازه زمانی
+            // formData.append('day_turn_discount_to', $('#InputDayTurnDiscountTo').val()); // تخفیف بازه زمانی
+            // formData.append('turn_discount', $('#InputTurnDiscount').val()); // تخفیف بازه زمانی
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
