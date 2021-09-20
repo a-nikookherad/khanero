@@ -52,7 +52,7 @@
                                 <div class="datepersian">
                                     <span class="icon-calender"></span>
                                     <span class="input-calender">
-                                    <input class="range-from" placeholder=" تاریخ ورود" name="data_from"/>
+                                    <input class="range-from" placeholder=" تاریخ ورود" name="date_from"/>
 						 <!-- <input class="Q-bx date-enter input-date1" type="" id="InputFromDate" placeholder=" تاریخ ورود" name=""> -->
 					 </span>
                                 </div>
@@ -60,7 +60,7 @@
                                     <span class="icon-calender"></span>
                                     <span class="input-calender">
                                 
-                                    <input class="range-to" placeholder=" تاریخ خروج" name="data_to"/>
+                                    <input class="range-to" placeholder=" تاریخ خروج" name="date_to"/>
 						   <!-- <input class="Q-bx date-exit input-date2" type="" id="InputToDate" placeholder=" تاریخ خروج" name=""> -->
 					 </span>
                                 </div>

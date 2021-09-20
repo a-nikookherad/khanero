@@ -26,6 +26,11 @@ class Host extends Model
 {
     protected $table = 'hosts';
 
+    const INCOMPLETE_STATUS  = 0;
+    const IN_PROGRESS_STATUS = 1;
+    const ACTIVE_STATUS      = 2;
+    const INACTIVE_STATUS    = -1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -38,7 +43,7 @@ class Host extends Model
     ];
 
     public function getReserves() {
-        return $this->hasMany(Reserve::class,'hosts.id','reserves.host_id');
+        return $this->hasMany(Reserve::class,'id','reserves.host_id');
     }
 
     public function getUser() {

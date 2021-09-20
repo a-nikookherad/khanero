@@ -9,7 +9,6 @@
     <meta property="og:url" content="{{$actual_link}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
-    <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/bootstrap-theme.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('frontend/css/owl.carousel.min.css')}}">

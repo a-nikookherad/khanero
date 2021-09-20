@@ -3,6 +3,7 @@
 namespace App\Modules\Host\Controllers;
 
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Modules\Host\Model\Host;
 use App\Modules\Host\Model\Integrated;
@@ -1860,6 +1861,7 @@ class HostController extends Controller
 
     /**
      * Status Host
+     * Update host status by admin in index/host/all page
      */
     public function StatusHost($id, $status)
     {
@@ -2915,8 +2917,6 @@ class HostController extends Controller
     }
 
 
-
-
     public function VisitedCity($id) {
         $townshipModel = Township::where('id', $id)->first();
         if(!empty($townshipModel)) {
@@ -3111,66 +3111,72 @@ class HostController extends Controller
     }
 
 
-    public function SearchHost(Request $request) {
+    /**
+     * gets city(format = تهران - تهران or تهران), date_from, date_to, number from main page
+     */
 
-        $dif=0;
-        $dateList=[];
+    public function SearchHost(Request $request)
+    {
+        $dif = 0;
+        $dateList = [];
+
+        //حتما باید نام شهر انتخاب شود و برای نمایش خطا با برنامه نویس فرانت هماهنگ شود.
+        $this->validate($request, [
+            'city' => 'required'
+        ], [
+            'city.required' => 'لطفا شهر را انتخاب کنید.'
+        ]);
 
         $hostModelList = Host::query()->with(['getProvince','getTownship','getGalleryFirst','getReserves'])
             ->where('hosts.active', 1)
-            ->where('hosts.status', 1);
+            ->where('hosts.status', Host::ACTIVE_STATUS);
 
+        if (isset($request->date_from) && isset($request->date_to)) {
+            $from = $this->Convertnumber2english($request->date_from);
+            $to   = $this->Convertnumber2english($request->date_to);
 
+            $from = DateHelper::SolarToGregorian($from);
+            $to   = DateHelper::SolarToGregorian($to);
 
-        if (isset($request->data_from) && isset($request->data_to)) {
-            $from = $this->Convertnumber2english($request->data_from);
-            $to = $this->Convertnumber2english($request->data_to);
+            $date_from = date_create($from);
 
+            $date_to = date_create($to);
+            $dif = date_diff($date_from,$date_to)->format('%d');
 
-            $from1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$from)->format('Y-m-d'); //2016-05-8
-            $to1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$to)->format('Y-m-d'); //2016-05-8
-
-            $data_from = date_create($from1);
-
-            $data_to = date_create($to1);
-            $dif=date_diff($data_from,$data_to)->format('%d');
-
-            for ($i=0;$i<=$dif;$i++){
-                $from3 = \Morilog\Jalali\jDate::forge($from1)->reforge('+'.$i.'days')->format('date');
-                $from2=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d',$from3)->format('Y-m-d'); //2016-05-8
+            for ($i = 0; $i <= $dif; $i++){
+                $from3 = \Morilog\Jalali\jDate::forge($from)->reforge('+'. $i .'days')->format('date');
+                $from2 = \Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d', $from3)->format('Y-m-d'); //2016-05-8
                 $data_from = date_create($from2)->format("Y-m-d H:i:s ");
-                 array_push($dateList,$data_from);
+                 array_push($dateList, $data_from);
             }
-
-
         }
 
-        if (isset($request->data_from) && isset($request->data_to)) {
+        if (isset($request->date_from) && isset($request->date_to)) {
             $hostModelList
                 ->where("hosts.min_reserve_day",'>=',$dif)
                 ->where("hosts.max_day_show_calendar",'>=',$dif);
         }
 
-
-
         $hostModelList
-            ->where(DB::raw("hosts.standard_guest + hosts.count_guest"),'>=',$request->number);
+            ->where(\DB::raw("hosts.standard_guest + hosts.count_guest"),'>=', $request->number);
 
         if (!is_null($request->city)) {
 
-            $city=explode('-',$request->city);
-            if (count($city)==1) {
-                $city[1]=$city[0];
+            $city = explode('-',$request->city);
+
+            if (count($city) == 1) {
+                $city[1] = $city[0]; // در صورتی که یک شهر وارد شده باشد شهر و استان را یکی در نظر میگیرد
             }
+
             $hostModelList
                 ->select('hosts.*')
                 ->leftJoin('provinces','provinces.id','=','hosts.province_id')
                 ->leftJoin('townships','townships.id','=','hosts.township_id')
-                ->where('provinces.name','LIKE',"%{$city[0]}%")
-                ->where('townships.name','LIKE',"%{$city[1]}%");
+                ->where('provinces.name', 'LIKE', '%'.trim($city[0]).'%')
+                ->where('townships.name', 'LIKE', '%'.trim($city[1]).'%');
         }
-        $hostModel = $hostModelList->get();
 
+        $hostModel = $hostModelList->get();
 
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }

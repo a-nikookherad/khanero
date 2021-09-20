@@ -39,20 +39,40 @@ class AppController extends Controller
     {
         $slideShowModel = SlideShow::all();
 
+        $townshipSearchData = []; // جهت نمایش شهر - استان در صفحه اصلی
+
+        $busyDestinations = [ // مقاصد پر بازدید
+            'تهران - تهران',
+            'اصفهان - اصفهان',
+            'خراسان رضوی - مشهد',
+            'فارس - شیراز',
+            'کردان -البرز',
+            'رامسر - مازندران',
+            'هرمزگان - کیش'
+        ];
+
+        GetProvince()->each(function($province) use(&$townshipSearchData){
+             GetTownship($province->id)->each(function($town) use($province, &$townshipSearchData){
+                array_push($townshipSearchData,  $town->name . ' - '. $province->name );
+            });
+        });
+
         return view('frontend.Page.HomePage', compact(
-            'slideShowModel'
+            'slideShowModel',
+                    'townshipSearchData',
+                        'busyDestinations'
         ));
     }
 
+    /**
+     * view details of host after showing search result etc
+     */
     public function DetailHost($id)
     {
-//        return $id;
-
-
         $hostModel = Host::query()
             ->where('id', $id)
             ->where('active', 1)
-            ->where('status', 1)
+            ->where('status', Host::ACTIVE_STATUS)
             ->where('step', 100)
             ->with('getRate')
             ->with('getHostPossibilities.getOption')
@@ -107,7 +127,7 @@ class AppController extends Controller
         $ruleModel = Rule::where('active', 1)->get();
 
         //قوانین و مقرراتی که باید برای این خانه رعایت شود
-        $arr_rule[]=null;
+        $arr_rule[] = null;
         foreach ($hostModel->getHostRules as $key => $value) {
             $arr_rule[] = $value->rule_id;
         }
@@ -117,7 +137,7 @@ class AppController extends Controller
         if (auth()->check()) {
             $reserveModel = Reserve::where('user_id', auth()->user()->id)
                 ->where('submit_rate', 0)
-                ->where('status', 2)
+                ->where('status', Host::IN_PROGRESS_STATUS)
                 ->where('host_id', $hostModel->id)
                 ->first();
             if (empty($reserveModel)) {
@@ -132,7 +152,7 @@ class AppController extends Controller
             ->where('building_type_id', $hostModel->building_type_id)
             ->where('id', '!=', $hostModel->id)
             ->where('active', 1)
-            ->where('status', 1)
+            ->where('status', Host::ACTIVE_STATUS)
             ->where('step', 100)
             ->get();
 
@@ -153,8 +173,8 @@ class AppController extends Controller
         $last_date_month_jalali = '' . $nowYearJalali . '/' . $nowMonthJalali . '/' . $month_model->number_day; // get count day now monthz
 
 
-        $first_date_month_miladi =$JdateInstance->createCarbonFromFormat('Y/m/d',$first_date_month_jalali)->format('Y/m/d'); // change first day now month jalali to miladi(AD)
-        $last_date_month_miladi =$JdateInstance->createCarbonFromFormat('Y/m/d',$last_date_month_jalali)->format('Y/m/d'); // change first day now month jalali to miladi(AD)
+        $first_date_month_miladi = $JdateInstance->createCarbonFromFormat('Y/m/d',$first_date_month_jalali)->format('Y/m/d'); // change first day now month jalali to miladi(AD)
+        $last_date_month_miladi = $JdateInstance->createCarbonFromFormat('Y/m/d',$last_date_month_jalali)->format('Y/m/d'); // change first day now month jalali to miladi(AD)
 
 
 
@@ -316,7 +336,7 @@ class AppController extends Controller
             }
             // نشان دهنده اینه که روزی که رزرو شده با روزی که رزور کردم یکیه
             $blockedDayReserve = Reserve::where('host_id', $id)
-                ->whereIn('status', [1,2])->get(); // array(1,2)
+                ->whereIn('status', [1,2])->get(); // array(1,2) Active and inprogress status
             foreach ($blockedDayReserve as $key => $value) {
                 if ($value->reserve_date == $dayCalendarMiladi) {
                     $blockDay = 1;
@@ -360,11 +380,6 @@ class AppController extends Controller
         ));
 
         /*********** End Calendar **********/
-
-
-
-
-
 
 
         return view('frontend.Page.Host.DetailHost', compact(
@@ -413,7 +428,7 @@ class AppController extends Controller
             })
                 ->with('getRate')
                 ->where('name', 'like', '%' . $request->word . '%')
-                ->where('active', 1)->where('status', 1)->where('step', 100)->get();
+                ->where('active', 1)->where('status', Host::ACTIVE_STATUS)->where('step', 100)->get();
 
             $galleryModel = Gallery::where('active', 1)->get();
             if ($request->building_type > 0) {
@@ -544,7 +559,7 @@ class AppController extends Controller
             })
                 ->with('getRate')
                 ->where('name', 'like', '%' . $request->word . '%')
-                ->where('active', 1)->where('status', 1)->where('step', 100)->get();
+                ->where('active', 1)->where('status', Host::ACTIVE_STATUS)->where('step', 100)->get();
             $galleryModel = Gallery::where('active', 1)->get();
 
             if ($request->building_type > 0) {
@@ -652,7 +667,7 @@ class AppController extends Controller
         $hostModel = Host::where('id', $request->code)
 //            ->with('getRate')
             ->where('active', 1)
-            ->where('status', 1)
+            ->where('status', Host::ACTIVE_STATUS)
             ->where('step', 100)
             ->first();
         if (!empty($hostModel)) {
@@ -671,7 +686,7 @@ class AppController extends Controller
         $word = $request->word;
         $hostModel = Host::where('name', 'like', '%' . $word . '%')
             ->where('active', 1)
-            ->where('status', 1)
+            ->where('status', Host::ACTIVE_STATUS)
             ->where('step', 100)
             ->get();
         $galleryModel = Gallery::where('active', 1)->get();
