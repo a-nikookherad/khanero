@@ -122,4 +122,17 @@ class Host extends Model
         return $this->hasOne(LastMinuteReserve::class, 'host_id', 'id');
     }
 
+    public function getPositionsType1Attribute()
+    {
+        if($this->position_array_1 != 'a:1:{i:0;s:0:"";}') {
+            $arr = unserialize($this->position_array_1);
+        } else {
+            $arr = 0;
+        }
+
+        return  PositionType::whereIn('id', $arr)->get();
+
+
+    }
+
 }

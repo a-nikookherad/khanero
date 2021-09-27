@@ -9,7 +9,7 @@
         "intervention/image": "^2.5",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "melipayamak/laravel": "^0.1.0",
+        "melipayamak/laravel": "1.0.0",
         "mews/captcha": "^2.1",
         "morilog/jalali": "2.2"
     },

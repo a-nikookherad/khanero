@@ -40,8 +40,6 @@ class AuthController extends Controller
 
     public function ActivityUser(Request $request)
     {
-
-
         $activeUser = UserActivation::where('token', $request->code)->first();
         if (!empty($activeUser)) {
             $userModel = User::find($activeUser->user_id);
@@ -196,7 +194,7 @@ class AuthController extends Controller
 
 
     /*
-     * Ajax Login
+     * ارسال اس ام اس ثبت نام
      * */
     public function CheckUserAjax(Request $request)
     {
@@ -208,13 +206,13 @@ class AuthController extends Controller
                 /*
                  * send sms
                  * */
-//                SmsController::SendSMSRegister($userModel->first_name.' '.$userModel->last_name,$userModel->mobile,$Token);
+//                SmsController::SendSMSRegister($userModel->first_name.' '.$userModel->last_name, $userModel->mobile, $Token);
                 $smsController = new \App\Http\Controllers\SMSController();
                 $smsController->register($userModel->mobile, $Token);
                 UserActivation::where('user_id', $userModel->id)->delete();
                 $Activation = new UserActivation([
                     'user_id' => $userModel->id,
-                    'token' => $Token
+                    'token'   => $Token
                 ]);
                 if ($Activation->save()) {
                     $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.Sms')->render()];
@@ -242,7 +240,7 @@ class AuthController extends Controller
                 $smsController->register($userModel->mobile, $Token);
                 $Activation = new UserActivation([
                     'user_id' => $userModel->id,
-                    'token' => $Token
+                    'token'   => $Token
                 ]);
                 if ($Activation->save()) {
                     $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.Sms')->render()];
@@ -260,14 +258,22 @@ class AuthController extends Controller
     {
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
-            $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.NewPassword')->render()];
-            return response()->json($Response);
+
+            if($userModel->userActivation->token == $request->code)
+            {
+                $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.NewPassword')->render()];
+                return response()->json($Response);
+            } else {
+                //پیغام خطا مجددا از سمت فرانت بررسی شود.
+                $Response = ["Success" => "0", "Message" => "کد وارد شده با کد مورد نظر مطابقت ندارد."];
+                return response()->json($Response);
+            }
         }
     }
 
 
     /*
-     * Register New User
+     * ذخیره رمز عبور جدید بعد از ارزیابی کد ۵ رقمی ارسال شده
      * */
     public function RegisterAjaxUser(Request $request)
     {
@@ -278,6 +284,7 @@ class AuthController extends Controller
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
             $userModel->password = bcrypt($request->password);
+            $userModel->active = true;
             if ($userModel->save()) {
                 auth()->loginUsingId($userModel->id);
                 $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.Header')->render()];

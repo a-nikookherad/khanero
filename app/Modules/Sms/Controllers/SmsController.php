@@ -12,29 +12,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Melipayamak;
+use Melipayamak\Laravel\Facade;
 
 
 class SmsController extends Controller
 {
-    public static function SendSMSRegister($Name=null, $Mobile, $Token)
+
+    public static function SendSMSRegister($Name = null, $Mobile, $Token)
     {
-/*        try {
-            $sms = melipayamak::sms();
-            $to = $Mobile;
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
             $from = '10007514';
 
-            $text = ''.$Name.' عزیز
-به سایت رنت خوش آمدید
-کد فعالسازی "رنت" :'.$Token.'
-راهنمای نحوه رزرو :
-کانال تلگرام :
-شماره پشتیبانی :';
+            $text = 'به خانه رو خوش آمدید !
+کد فعالسازی شما :' . $Token . '
+www.khanero.com';
+
             $sms->send($to, $from, $text);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
-        return true;*/
+        return true;
     }
     public static function SendSMSRegister2($Mobile, $Token)
     {

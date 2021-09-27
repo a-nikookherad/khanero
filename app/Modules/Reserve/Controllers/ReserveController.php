@@ -173,7 +173,7 @@ class ReserveController extends Controller
             return response()->json($Response);
         }
         if ($request->count_guest > ($hostModel->count_guest + $hostModel->standard_guest) || $request->count_guest == 0) {
-            $Response = ["Success" => "0", "Message" => "لطفا تعداد نفرات را مشخص کنید"];
+            $Response = ["Success" => "0", "Message" => "تعداد نفرات بیش از حد مجاز است."];
             return response()->json($Response);
         }
 
@@ -185,7 +185,7 @@ class ReserveController extends Controller
         $extraPriceForPerson = 0; // Extra person
         $total_sum_guest = 0;
         if($countRequestGuest > $standardGuest) {
-            $sum_max = $countGuest+$standardGuest;
+            $sum_max = $countGuest + $standardGuest;
             if($countRequestGuest > $sum_max) { // درخواست بیش از حداکثر اقامتگاه
                 $Response = ["Success" => "0", "Message" => "درخواست تعداد نفرات مهمان بیش از حداکثر اقامتگاه می باشد."];
                 return response()->json($Response);

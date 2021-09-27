@@ -76,7 +76,7 @@
                             date{{$value['day']}}"
                     >
                         <span class="number-day calendar-day-item-date">{{$value['day']}}</span>
-                        <span class="price-day">{{substr($value['price'],0,-3)}}</span>
+                        <span class="price-day">{{number_format(substr($value['price'],0,-1))}}</span>
                     </li>
                 @endforeach
                 @for($i = 0; $i < $future_day; $i++)

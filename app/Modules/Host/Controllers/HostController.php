@@ -666,7 +666,7 @@ class HostController extends Controller
 
         DB::table('price_days')->where('host_id', $hostModel->id)->delete();
         foreach ($request->all() as $key => $value) {
-            if ($key == 'host_id' || $key == 'percent_discount' || $key == 'day_discount' || $key == 'percent_discount_2' || $key == 'day_discount_2' || $key == 'max_day_show_calendar' || $key == 'price_one_person' || $key == 'price_special_day' || $key == 'day_turn_discount_from' || $key == 'day_turn_discount_to' || $key == 'turn_discount') {
+            if ($key == 'host_id' || $key == 'percent_discount' || $key == 'day_discount' || $key == 'percent_discount_2' || $key == 'day_discount_2' || $key == 'max_day_show_calendar' || $key == 'price_one_person' || $key == 'price_special_day' || $key == 'day_turn_discount_from' || $key == 'day_turn_discount_to' || $key == 'turn_discount' || $key == 'edit_host') {
                 continue;
             }
             if($value == 'NaN') {
@@ -677,7 +677,7 @@ class HostController extends Controller
             $data_3[] = [
                 'host_id' => $request->host_id,
                 'week_id' => $i,
-                'price' => $price * 1000,
+                'price' => $price * 10,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
@@ -690,7 +690,7 @@ class HostController extends Controller
         $priceSpecial   = str_replace(',', '', $request->price_special_day); // صفر ارسال می شود
         $onePersonPrice = str_replace(',', '', $request->price_one_person);
         $hostModel->special_price = $priceSpecial ;
-        $hostModel->one_person_price = $onePersonPrice * 1000;
+        $hostModel->one_person_price = $onePersonPrice * 10;
         $hostModel->max_day_show_calendar = $request->max_day_show_calendar;
         $hostModel->save();
         Discount::where('host_id', $hostModel->id)->delete();
@@ -3135,30 +3135,32 @@ class HostController extends Controller
             $from = $this->Convertnumber2english($request->date_from);
             $to   = $this->Convertnumber2english($request->date_to);
 
-            $from = DateHelper::SolarToGregorian($from);
-            $to   = DateHelper::SolarToGregorian($to);
+            $from = DateHelper::SolarToGregorian($from, '/');
+            $to   = DateHelper::SolarToGregorian($to, '/');
 
             $date_from = date_create($from);
 
             $date_to = date_create($to);
             $dif = date_diff($date_from,$date_to)->format('%d');
 
-            for ($i = 0; $i <= $dif; $i++){
+            for ($i = 0; $i <= $dif; $i++) {
                 $from3 = \Morilog\Jalali\jDate::forge($from)->reforge('+'. $i .'days')->format('date');
                 $from2 = \Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d', $from3)->format('Y-m-d'); //2016-05-8
-                $data_from = date_create($from2)->format("Y-m-d H:i:s ");
-                 array_push($dateList, $data_from);
+                $date_from = date_create($from2)->format("Y-m-d H:i:s");
+                 array_push($dateList, $date_from);
             }
         }
 
+
+
         if (isset($request->date_from) && isset($request->date_to)) {
             $hostModelList
-                ->where("hosts.min_reserve_day",'>=',$dif)
-                ->where("hosts.max_day_show_calendar",'>=',$dif);
+                ->where("min_reserve_day",'<=', $dif +1 )
+                ->where("max_day_show_calendar",'>=',$dif +1 );
         }
 
         $hostModelList
-            ->where(\DB::raw("hosts.standard_guest + hosts.count_guest"),'>=', $request->number);
+            ->where("hosts.count_guest",'>=', $request->number);
 
         if (!is_null($request->city)) {
 
@@ -3176,7 +3178,26 @@ class HostController extends Controller
                 ->where('townships.name', 'LIKE', '%'.trim($city[1]).'%');
         }
 
-        $hostModel = $hostModelList->get();
+        //چک کردن رزورها در صورت انتخاب بازه زمانی خاص
+        if(empty(!$dateList)) {
+            $hostModel = $hostModelList->get()->filter(function ($host) use($from, $dateList) {
+                $reserved_in_date = false;
+                $reserved_dates = $host->getReserve->where('reserve_date', '>=', new Carbon($from))->pluck('reserve_date');
+                $reserved_dates->each(function($date) use($dateList, &$reserved_in_date){
+                    if(in_array(date_create($date)->format("Y-m-d 00:00:00"), $dateList)){
+                        $reserved_in_date = true;
+                    }
+                });
+                if($reserved_in_date){
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+        } else {
+            $hostModel = $hostModelList->get();
+        }
 
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }

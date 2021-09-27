@@ -18,13 +18,13 @@
             <li class="itm-01 main-name">{{$value->name}}</li>
             <li class="itm-01 some-info bord-btm">
                 <span class="prop">آپارتمان {{count($value->getRoom)}} خواب</span>,
-                <span class="prop">تا {{$value->standard_guest + $value->count_guest}} نفر</span>
+                <span class="prop">تا {{ $value->count_guest }} نفر</span>
             </li>
             <li class="ftr-01 row align-items-center">
                 <span class="col-sm-2 num-reserve">{{GetCountReserve($value->id)}} رزرو</span>
                 <span class="col-sm-10 px-0 night-price d-flex align-items-center">
                                             هر شب از
-                                            <span class="num-price">300,000</span>
+                                            <span class="num-price">{{number_format(GetMinPrice($value->id)/10)}}</span>
                                             تومان
                                         </span>
             </li>

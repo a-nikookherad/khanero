@@ -5,6 +5,7 @@ namespace App;
 use App\Modules\City\Model\City;
 use App\Modules\City\Model\Province;
 use App\Modules\City\Model\Township;
+use App\Modules\MultiAuth\Model\UserActivation;
 use App\Modules\User\Model\Document;
 use App\Modules\Payment\Model\Account;
 use Illuminate\Notifications\Notifiable;
@@ -61,4 +62,14 @@ class User extends Authenticatable
 //    public function getProvince() {
 //        return $this->hasOne(Province::class, 'id', 'city_id');
 //    }
+
+    public function userActivation()
+    {
+        return $this->hasOne(UserActivation::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

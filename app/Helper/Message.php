@@ -10,6 +10,7 @@ function AuthUser() {
     return auth()->user();
 }
 
+use App\Modules\Possibilities\Model\PositionType;
 use App\User;
 function GetUserById($id) {
     return User::where('id', $id)->first();
@@ -71,7 +72,7 @@ function GetMinPrice($host_id) {
 
 function GetHost($type='default') {
     $hostModel = Host::where('active', 1)
-        ->where('status', 1)->take(6)->orderBy('id', 'DESC')->get();
+        ->where('status', Host::ACTIVE_STATUS)->take(6)->orderBy('id', 'DESC')->get();
     return $hostModel;
 }
 
@@ -854,5 +855,11 @@ function jalali_to_gregorian($jy,$jm,$jd,$mod=''){
         $gd-=$v;
     }
     return($mod==='')?array($gy,$gm,$gd):$gy .$mod .$gm .$mod .$gd;
+}
+
+function getVisionName($vision_id)
+{
+    $vision_name = PositionType::where('id', $vision_id)->first()->name;
+    return $vision_name;
 }
 
