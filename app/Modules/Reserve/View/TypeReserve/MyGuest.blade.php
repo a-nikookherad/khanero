@@ -1,6 +1,6 @@
 @php
-    $reserveModel = GetReserveByCode($key);
-    $hostModel = GetHostByCode($key);
+    $reserveModel = GetReserveByCode($value['group_code']);
+    $hostModel = GetHostByCode($value['group_code']);
     $JdateInstance2 = new App\Logic\moriJalali\moriJalaiAdaptor(new App\Logic\moriJalali\moriJalaiLogic());
 @endphp
 

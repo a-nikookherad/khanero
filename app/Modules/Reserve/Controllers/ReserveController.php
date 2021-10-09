@@ -2,6 +2,7 @@
 
 namespace App\Modules\Reserve\Controllers;
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\Host\Model\Host;
@@ -15,6 +16,7 @@ use App\Modules\Discount\Model\Discount;
 use App\Modules\Message\Model\Message;
 use App\Modules\Payment\Model\Payment;
 use App\Modules\Payment\Model\Wallet;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Morilog\Jalali\Facades\jDate;
 use Morilog\Jalali\Facades\jDateTime;
@@ -67,27 +69,26 @@ class ReserveController extends Controller
 //            ->orWhere('host_id',auth()->user()->id)
 //            ->get()->groupBy('group_code');
 
-        $reserveModel =DB::table('reserves')
+        $reserveModel = DB::table('reserves')
             ->select('group_code')
             ->groupBy('group_code')
             ->leftJoin('hosts','reserves.host_id','=','hosts.id')
-            ->where('hosts.user_id','=',auth()->user()->id)
-            ->orWhere('reserves.user_id','=',auth()->user()->id)
+            ->where('hosts.user_id','=',Auth::id())
+            ->orWhere('reserves.user_id','=',Auth::id())
             ->get();
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
         foreach ($reserveModel as $key => $value) {
-
-            $res = Reserve::where('group_code', $key)->first();
+            $res = Reserve::where('group_code', $value->group_code)->first();
             if($res->user_id == auth()->user()->id) {
                 $type = 'my-reserve';
             } else {
                 $type = 'my-guest';
             }
-            $reserve[$key] = array('type' => $type, 'group_code' => $res->group_code);
+            $reserve[$res->host_id] = array('type' => $type, 'group_code' => $res->group_code);
         }
-           
+
         return view('Reserve::indexReserve', compact('reserve'));
     }
 
@@ -200,41 +201,22 @@ class ReserveController extends Controller
 //        $bufferFrom = explode(' ', $from);
 //        $dateFrom = $bufferFrom[0] . ' 00:00:00';
 
-        $t =$request->from_date;
-        $t =explode('/',$t);
-        $dateFrom = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]);
-        $dateFrom =$dateFrom[0].'/'.$dateFrom[1].'/'.$dateFrom[2].' '.'00:00:00';
 
-
-
-
-
-
+         $dateFrom = DateHelper::SolarToGregorian($request->from_date, '/', '/') . ' 00:00:00';
 //
 //        $to = jDateTime::ConvertToGeorgian($request->to_date, date('H:i:s'));
 //        $to = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
 //        $bufferTo = explode(' ', $to);
 //        $dateTo = $bufferTo[0] . ' 00:00:00';
 
-        $t =$request->to_date;
-        $t =explode('/',$t);
-        $to = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]-1);
-        $dateTo =$to[0].'/'.$to[1].'/'.$to[2].' '.'00:00:00';
 
-
-
-
-
-
+        $dateTo = DateHelper::SolarToGregorian($request->to_date, '/' , '/'). ' 00:00:00';
 
 
 //        $dateTo = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
 
 
         $nowDate = date('Y-m-d 00:00:00');
-
-
-
 
         if ($dateFrom > $dateTo) { // چک کردن بزرگ نبودن تاریخ شروع از پایان
             $Response = ["Success" => "0", "Message" => array()];
@@ -244,8 +226,6 @@ class ReserveController extends Controller
             $Response = ["Success" => "1", "Message" => array()];
             return response()->json($Response);
         }
-
-
 
         $date_from = Carbon::parse($dateFrom);
         $date_to = Carbon::parse($dateTo);
@@ -259,7 +239,6 @@ class ReserveController extends Controller
             return response()->json($Response);
         }
 
-
         $array_day_reserve = array();
         // وارد کردن روزهای انتخاب شده در آرایه
         for ($i = 0; $i <= $countDayReserve; $i++) {
@@ -270,8 +249,9 @@ class ReserveController extends Controller
         foreach ($array_day_reserve as $key => $value) {
             $blockedDayModel = BlockedDay::where('host_id', $hostModel->id)
                 ->where('date', $value)->first();
+
             if(!empty($blockedDayModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". jDate::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
             $reserveModel = Reserve::where('host_id', $hostModel->id)
@@ -280,11 +260,10 @@ class ReserveController extends Controller
 //                ->whereIn('step', array()) // چک کردن مرحله رزرو
                 ->first();
             if(!empty($reserveModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". jDate::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
         }
-
 
         // چک کردن تخفیف برای چند روز رزرو
         $discountModel = Discount::where('host_id', $hostModel->id)
@@ -292,7 +271,7 @@ class ReserveController extends Controller
             ->where('number_days', '<=', count($array_day_reserve))
             ->first();
         $total_price_reserve = 0; // قیمت کل رزرو
-        $array_price_date = array();
+        $array_price_date    = array();
 
 
         foreach ($array_day_reserve as $key => $value) {
@@ -329,6 +308,8 @@ class ReserveController extends Controller
 //                ->first();
             $special_price = 0;
             $check_special = 0;
+
+            // مجدد چک شود
             if(!empty($specialDayModel)) { // چک کردن تاریخ در روزهای ویژه
 //                $special_price = $specialDayModel->price;
 //                $check_special = 1;
@@ -342,6 +323,8 @@ class ReserveController extends Controller
                     $description = $specialDateModel->description;
                 }
             }
+
+
             /** ****************************************************************************/
             // در صورت داشتن اولویت برای تخفیف ها و روزهای ویژه این قسمت تغییر باید تغییر کند
             /** ****************************************************************************/
@@ -352,6 +335,7 @@ class ReserveController extends Controller
                 $final_price = $final_price - $percentPrice;
                 $percent = $discountModel->percent;
             }
+
             $array_price_date[] = array(
                 'date' => $value,
                 'host_id' => $hostModel->id,
@@ -456,13 +440,13 @@ class ReserveController extends Controller
                 $Activation->token = $Token;
                 $Activation->token_cancel = $TokenCancel;
                 $Activation->save();
-                // send sms for users
-                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile);
-                $userModel = User::where('id', $hostModel->user_id)->first();
                 $reserveIdModel = Reserve::where('group_code', $groupCode)->first();
                 $reserveId = $reserveIdModel->id;
+                // send sms for users
+//                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
+                $userModel = User::where('id', $hostModel->user_id)->first();
                 $total_price_reserve = $total_price_reserve + ($extraPriceForPerson * count($array_price_date));
-                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $request->from_date, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
+//                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
                 return 1;
             }
         }

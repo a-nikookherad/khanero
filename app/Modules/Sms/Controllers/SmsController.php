@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Melipayamak\Laravel\Facade;
+use Morilog\Jalali\Facades\jDate;
 
 
 class SmsController extends Controller
@@ -91,47 +92,74 @@ www.khanero.com';
     }
 
 
-    public static function SendSMSWaitReserveCustomer($Mobile)
+    public static function SendSMSWaitReserveCustomer($Mobile,$reserveId, $hostId)
     {
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ''.auth()->user()->first_name . ' ' . auth()->user()->last_name.' عزیز
-//درخواست شما با موفقیت در سیستم ثبت گردید و وضعیت رزرو شما حداکثر تا 3 ساعت کاری آینده از طریق پیامک به اطلاع شما خواهد رسید
-//پیگیری رزرو : http://www.rentt.ir/index/reserve
-//شماره پشتیبانی :';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '10007514';
+
+            $text = 'سایت خانه رو
+درخواست رزرو '. $reserveId.' با کد ملک '. $hostId.' جهت بررسی به میزبان ارسال و تا 30 دقیقه آینده نتیجه آن به اطلاع شما خواهد رسید.
+Khanero.com'
+            ;
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
         return true;
     }
 
     public static function SendSMSWaitReserveHost($Mobile, $HostId, $HostName, $CountDayReserve, $DateFrom, $DateTo, $TotalPrice, $Token, $TokenCancel, $CountGuest,$reserveId)
     {
-//        $userModel = User::where('mobile', $Mobile)->first();
-//        $percent = $TotalPrice*5 / 100;
-//        $TotalPrice = $TotalPrice - $percent;
-//        $perDay = $TotalPrice / $CountDayReserve;
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ''.$userModel->first_name . ' ' . $userModel->last_name.' عزیز
-//مهمانی با قیمت خالص '.$TotalPrice.' تومان با میانگین شبی '.round($perDay).' تومان اقامتگاه '.$HostName.' شما را به مدت '.$CountDayReserve.' شب از تاریخ '.$DateFrom.' تا تاریخ '.$DateTo.' با '.$CountGuest.' مهمان درخواست رزرو کرده است
-//در صورتی که امکان اراِئه سرویس به این مهمان را دارید تا 2 ساعت آینده وقت دارید به این پیام پاسخ دهید تا لینک پرداخت برای مهمان ارسال شود
-//در صورت تایید کد : '. $Token .'
-//عدم تایید کد : '.$TokenCancel.'
-//را به همین شماره ارسال کنید
-//توجه داشته باشید دیر پاسخ دادن به درخواست ممکن است مهمان منزل دیگری را انتخاب کند
-//شماره رزرو :'.$reserveId.'
-//شماره پشتیبانی :
-//     ';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
+
+        $fromDate = jDate::forge($DateFrom)->format('%A %d %B %Y');
+
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '10007514';
+
+            $text = 'سایت خانه رو：
+درخواست بررسی رزرو
+ "'. $HostName .'" 
+کد اقامتگاه  '. $HostId .'
+ورود '. $fromDate .' ،  مدت '. $CountDayReserve .' شب،  تعداد 2 نفر
+مبلغ رزرو (تسویه با سایت) : '. $TotalPrice/10 .' تومان
+جهت تایید یا عدم تایید بصورت آنلاین از طریق لینک زیر اقدام نمایید:
+';
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+        return true;
+
+
+
+        $userModel = User::where('mobile', $Mobile)->first();
+        $percent = $TotalPrice*5 / 100;
+        $TotalPrice = $TotalPrice - $percent;
+        $perDay = $TotalPrice / $CountDayReserve;
+        try {
+            $sms = melipayamak::sms();
+            $to = $Mobile;
+            $from = '10007514';
+            $text = ''.$userModel->first_name . ' ' . $userModel->last_name.' عزیز
+مهمانی با قیمت خالص '.$TotalPrice.' تومان با میانگین شبی '.round($perDay).' تومان اقامتگاه '.$HostName.' شما را به مدت '.$CountDayReserve.' شب از تاریخ '.$DateFrom.' تا تاریخ '.$DateTo.' با '.$CountGuest.' مهمان درخواست رزرو کرده است
+در صورتی که امکان اراِئه سرویس به این مهمان را دارید تا 2 ساعت آینده وقت دارید به این پیام پاسخ دهید تا لینک پرداخت برای مهمان ارسال شود
+در صورت تایید کد : '. $Token .'
+عدم تایید کد : '.$TokenCancel.'
+را به همین شماره ارسال کنید
+توجه داشته باشید دیر پاسخ دادن به درخواست ممکن است مهمان منزل دیگری را انتخاب کند
+شماره رزرو :'.$reserveId.'
+شماره پشتیبانی :
+     ';
+            $sms->send($to, $from, $text);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
         return true;
     }
 

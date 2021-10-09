@@ -38,7 +38,7 @@
             جمع کل (<span data-toggle="modal" data-target="#myModalShodDetail">جزئیات</span>)
         </div>
         <div class="col-md-6 text-left">
-            <span class="text-danger">{{number_format($total_price_reserve + ($extraPriceForPerson * count($array_price_date)))}} تومان</span>
+            <span class="text-danger">{{number_format(($total_price_reserve + ($extraPriceForPerson * count($array_price_date)))/10)}} تومان</span>
         </div>
     </div>
 </div>

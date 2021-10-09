@@ -116,6 +116,7 @@ function GetReserveByCode($code) {
 }
 
 function GetHostByCode($code) {
+
     $reserve = Reserve::where('group_code', $code)->first();
     return Host::where('id', $reserve->host_id)->first();
 }
@@ -859,7 +860,11 @@ function jalali_to_gregorian($jy,$jm,$jd,$mod=''){
 
 function getVisionName($vision_id)
 {
-    $vision_name = PositionType::where('id', $vision_id)->first()->name;
-    return $vision_name;
+    $vision = PositionType::where('id', $vision_id)->first();
+    if($vision) {
+        return $vision->name;
+    }
+
+    return 'ندارد';
 }
 

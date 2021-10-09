@@ -12,7 +12,7 @@ use Morilog\Jalali\jDateTime;
 
 class DateHelper
 {
-    public static function SolarToGregorian($date, $delimeter = '/')
+    public static function SolarToGregorian($date, $delimeter = '/', $imploder = '-')
     {
        $date = explode($delimeter, $date);
 
@@ -25,7 +25,7 @@ class DateHelper
             array_push($gregorian_date, $gregorian_index);
         });
 
-       return implode('-', $gregorian_date);
+       return implode($imploder, $gregorian_date);
 
     }
 
