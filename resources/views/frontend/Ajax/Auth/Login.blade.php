@@ -1,23 +1,23 @@
-<div class="row">
-    <div class="col-md-12">
+<div>
+    <div >
         <div class="form-group">
             <p class="text-right">رمز ورود را وارد کنید.</p>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group text-right">
+    <div >
+        <div class="form-group mb-0">
             <input type="text" autocomplete="off" class="form-control" id="InputPassword" placeholder="رمز ورود">
-            <span class="message text-danger"></span>
+            <span class="message text-danger mb-3 float-right"></span>
         </div>
     </div>
-    <div class="col-md-12">
+    <div >
         <div class="form-group text-right">
-            <a class="btn-edit-mobile">ویرایش شماره همراه</a>
+            <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
         </div>
     </div>
-    <div class="col-md-12">
+    <div >
         <div class="form-group">
-            <button type="button" id="BtnLogin" class="btn btn-block">ورود</button>
+            <button type="button" id="BtnLogin" class="btn btn-block btn_bgCustom">ورود</button>
         </div>
     </div>
 </div>

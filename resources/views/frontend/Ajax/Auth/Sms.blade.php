@@ -1,24 +1,31 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <p class="text-right">یک کد 5 رقمی برای شماره شما ارسال کردیم لطفا آن را در فرم زیر وارد کنید.</p>
+<div >
+    <div>
+        <div class="form-group mb-5">
+            <p class="text-right font_14">یک کد 5 رقمی برای شماره شما ارسال کردیم لطفا آن را وارد کنید.</p>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group text-right">
+    <div >
+        <div class="form-group mb-0">
             <input type="text" autocomplete="off" class="form-control" id="InputCode" placeholder="کد ارسال شده">
-            <span class="message text-danger"></span>
+            <span class="message text-danger float-right"></span>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group text-right">
-            <a class="btn-edit-mobile text-success">ویرایش شماره همراه</a>
-        </div>
-    </div>
-    <div class="col-md-12">
+    <div >
         <div class="form-group">
-            <button type="button" id="BtnSendSms" class="btn btn-block">بررسی</button>
+            <button type="button" id="BtnSendSms" class="btn btn-block btn_bgCustom">بررسی</button>
         </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between border-bottom mb-2">
+        <div class="form-group text-right">
+            <a class="btn-edit-mobile">فراموشی رمز عبور</a>
+        </div>
+        <div class="form-group text-right">
+            <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
+        </div>
+    </div>
+    
+    <div class="text-right">
+        <a class="text_actionlogin">ورود با رمز یکبار مصرف  </a>
     </div>
 </div>
 

@@ -2790,9 +2790,12 @@ span.line-login {
   top: 0;
   transition: top .3s;
   position: absolute;
-   background: #ffffff;
+   background: #A6ABBD;
   padding: 10px 0;
 }	
+/* .top1.border-bottom{
+  border: 0 none;
+} */
 	div#logo {
     width: 32%;
 }
@@ -3419,14 +3422,12 @@ margin-bottom: 10px;
     margin-top: 25px;
 }
 .modal-header {
-    background-color: #007dec;
-    color: #fff;
-    text-align: center;
     border-radius: 5px 5px 0 0;
+    border: 0 none;
 }
 .modal-header .close {
     margin-top: -2px;
-    color: #fff;
+    /* color: #fff; */
     opacity: 1 !important;
     float: left;
 }
@@ -3743,4 +3744,97 @@ li.moore.col-sm-12.text-center {
 .user-style {
   color: #000000 !important;
    white-space: nowrap !important;
+}
+/*  */
+.form-control{
+  border: 1px solid #e9e9e9;
+    box-shadow: none;
+    border-radius: 8px;
+}
+.form-control input:focus{
+  border: 1px solid #00C6E6;
+}
+.form-control::placeholder{
+  text-align: right;
+  letter-spacing: 0;
+}
+.form-control#InputMobile ,.form-control#InputCode ,#InputPassword,#InputFName{
+  text-align: left;
+  height: 44px;
+    border-radius: 30px;
+    padding: 10px 15px;
+}
+
+.btn_bgCustom{
+  background: rgba(0,125,236,.8);
+  color: #f9f9f9;
+  border-radius: 30px;
+  padding: 11px;
+}
+.btn_bgCustom:hover{
+  color: #fff;
+  background: #007DEC;
+}
+.text_actionlogin{
+  color: #007DEC !important;
+}
+
+
+.GenderInLogin {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.item_Gender input[type=radio]:checked + .lable_GenderInLogin {
+  background: #8766CA;
+  color: #fff;
+}
+.lable_GenderInLogin {
+  cursor: pointer;
+  padding: 5px 35px;
+  background: #eee;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* General */
+.mb-0{
+  margin-bottom: 0;
+}
+.font_14{
+  font-size: 14px;
+}
+.m-auto{
+  margin: auto;
+}
+.mt_10{
+  margin-top: 10px;
+}
+.justify-content-between{
+  justify-content: space-between;
+}
+.mb-10{
+  margin-bottom: 10px;
 }
