@@ -36,6 +36,24 @@ www.khanero.com';
         }
         return true;
     }
+
+
+    public static function SendSMSForLogin($Mobile, $Token)
+    {
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '10007514';
+
+            $text =  ' میباشد.'. $Token . 'کد فعالسازی شما در خانه رو ';
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+        return true;
+    }
+
     public static function SendSMSRegister2($Mobile, $Token)
     {
 //        try {

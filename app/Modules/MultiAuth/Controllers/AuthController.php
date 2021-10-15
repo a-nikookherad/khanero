@@ -206,7 +206,7 @@ class AuthController extends Controller
                 /*
                  * send sms
                  * */
-//                SmsController::SendSMSRegister($userModel->first_name.' '.$userModel->last_name, $userModel->mobile, $Token);
+                SmsController::SendSMSRegister($userModel->first_name.' '.$userModel->last_name, $userModel->mobile, $Token);
                 $smsController = new \App\Http\Controllers\SMSController();
                 $smsController->register($userModel->mobile, $Token);
                 UserActivation::where('user_id', $userModel->id)->delete();
@@ -230,12 +230,13 @@ class AuthController extends Controller
             $userModel->role_id = 2;
             $userModel->mobile = $request->mobile;
             $userModel->active = 0;
+            $userModel->sex = $request->sex;
             if ($userModel->save()) {
                 $Token = (rand(10000, 99999));
                 /*
                  * send sms
                  * */
-//                SmsController::SendSMSRegister($userModel->first_name . ' ' . $userModel->last_name, $userModel->mobile, $Token);
+                SmsController::SendSMSRegister($userModel->first_name . ' ' . $userModel->last_name, $userModel->mobile, $Token);
                 $smsController = new \App\Http\Controllers\SMSController();
                 $smsController->register($userModel->mobile, $Token);
                 $Activation = new UserActivation([
@@ -321,6 +322,55 @@ class AuthController extends Controller
                 $Response = ["Message" => "not-found", "Content" => ""];
                 return response()->json($Response);
             }
+        }
+    }
+
+    /**
+     * درخواست لاگین با کد یکبار مصرف
+     */
+    public function loginWithSms(Request $request)
+    {
+        $userModel = User::where('mobile', $request->mobile)->first();
+        if (!empty($userModel)) {
+            $Token = (rand(10000, 99999));
+            /*
+             * send sms
+             * */
+            SmsController::SendSMSForLogin($userModel->mobile, $Token);
+            $smsController = new \App\Http\Controllers\SMSController();
+            $smsController->register($userModel->mobile, $Token);
+            UserActivation::where('user_id', $userModel->id)->delete();
+            $Activation = new UserActivation([
+                'user_id' => $userModel->id,
+                'token'   => $Token
+            ]);
+
+            if ($Activation->save()) {
+                $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.Sms')->render()];
+                return response()->json($Response);
+            }
+
+        } else {
+                $Response = ["Message" => "user not found"];
+                return response()->json($Response, 404);
+        }
+    }
+
+    public function loginWithSmsCode(Request $request)
+    {
+        $userModel = User::where('mobile', $request->mobile)->first();
+        if (!empty($userModel)) {
+
+            if ($userModel->userActivation->token == $request->code) {
+                $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.NewPassword')->render()];
+                return response()->json($Response);
+            } else {
+                $Response = ["Message" => "wrong code"];
+                return response()->json($Response, 403);
+            }
+        } else {
+            $Response = ["Message" => "user not found"];
+            return response()->json($Response, 404);
         }
     }
 
