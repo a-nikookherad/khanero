@@ -285,7 +285,10 @@ class AuthController extends Controller
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
             $userModel->password = bcrypt($request->password);
+            $userModel->sex = $request->gender;
             $userModel->active = true;
+            $userModel->first_name = $request->firstName;
+            $userModel->last_name = $request->lastName;
             if ($userModel->save()) {
                 auth()->loginUsingId($userModel->id);
                 $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.Header')->render()];
