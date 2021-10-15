@@ -128,19 +128,19 @@
                                         {{--                                                </div>--}}
                                         {{--                                                <input type="hidden" id="MobileUser">--}}
                                         {{--                                                <div class="modal-body box-login-register">--}}
-                                        {{--                                                    <div class="row">--}}
-                                        {{--                                                        <div class="col-md-12">--}}
+                                        {{--                                                    <div >--}}
+                                        {{--                                                        <div >--}}
                                         {{--                                                            <div class="form-group">--}}
                                         {{--                                                                <p class="text-right">جهت ورود یا ثبت نام شماره همراه خود را وارد کنید</p>--}}
                                         {{--                                                            </div>--}}
                                         {{--                                                        </div>--}}
-                                        {{--                                                        <div class="col-md-12">--}}
+                                        {{--                                                        <div>--}}
                                         {{--                                                            <div class="form-group text-right">--}}
                                         {{--                                                                <input type="text" autocomplete="off" maxlength="11" class="form-control" id="InputMobile" placeholder="شماره همراه">--}}
                                         {{--                                                                <span class="message text-danger"></span>--}}
                                         {{--                                                            </div>--}}
                                         {{--                                                        </div>--}}
-                                        {{--                                                        <div class="col-md-12">--}}
+                                        {{--                                                        <div >--}}
                                         {{--                                                            <div class="form-group">--}}
                                         {{--                                                                <button type="button" id="BtnCheckUser" class="btn btn-block">ادامه</button>--}}
                                         {{--                                                            </div>--}}
@@ -276,31 +276,31 @@
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;
-                                                    </button>
-                                                    <h4 class="modal-title">ورود یا ثبت نام</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times; </button>
+                                                    <img src="{{asset('frontend/images/logo-f.png')}}" alt="logo" class="img-footer mx-auto">
+                                                     <!-- <h4 class="modal-title mt_10 text-center">ورود / ثبت نام</h4> -->
                                                 </div>
                                                 <input type="hidden" id="MobileUser">
                                                 <div class="modal-body box-login-register">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <p class="text-right">جهت ورود یا ثبت نام شماره همراه
+                                                    <div >
+                                                        <div >
+                                                            <div class="form-group mb-5">
+                                                                <p class="text-right font_14">جهت ورود / ثبت نام شماره همراه
                                                                     خود را وارد کنید</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group text-right">
+                                                        <div >
+                                                            <div class="form-group mb-0">
                                                                 <input type="text" autocomplete="off" maxlength="11"
                                                                        class="form-control" id="InputMobile"
                                                                        placeholder="شماره همراه">
-                                                                <span class="message text-danger"></span>
+                                                                <span class="message text-danger mb-3 float-right"></span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <div >
                                                             <div class="form-group">
                                                                 <button type="button" id="BtnCheckUser"
-                                                                        class="btn btn-block">ادامه
+                                                                        class="btn btn-block btn_bgCustom">ادامه
                                                                 </button>
                                                             </div>
                                                         </div>
