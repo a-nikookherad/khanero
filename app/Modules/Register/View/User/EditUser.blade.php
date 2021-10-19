@@ -362,13 +362,13 @@
                                 <div class="row">
                                     <div class="each-item col-md-4">
                                             <label class="title-S" for="InputNewPassword"><span class="nececery">*</span>رمز  فعلی</label>
-                                            <input type="password" name="password" class="each-Qt form-control primary input-sm"
-                                                   dir="rtl" id="InputNewPassword"
+                                            <input type="password" name="current_password" class="each-Qt form-control primary input-sm"
+                                                   dir="rtl" id="InputCurrentPassword"
                                                    placeholder="رمز عبور فعلی را وارد کنید">
                                     </div>
                                     <div class="each-item col-md-4">
                                             <label class="title-S" for="InputNewPassword"><span class="nececery">*</span>رمز عبور جدید</label>
-                                            <input type="password" name="password" class="each-Qt form-control primary input-sm"
+                                            <input type="password" name="new_password" class="each-Qt form-control primary input-sm"
                                                    dir="rtl" id="InputNewPassword"
                                                    placeholder="رمز عبور جدید را وارد کنید">
                                             @if($errors->has('password'))

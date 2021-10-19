@@ -168,20 +168,30 @@ class AuthController extends Controller
 
     }
 
-
+    /**
+     * change password
+     */
     public function ResetPassword(Request $request)
     {
         $Message = [
-            'password.required' => 'وارد کردن رمز جدید الزامی است',
-            'password.min' => 'رمز ورود باید بیش از 6 رقم باشد',
+            'current_password.required' => 'وارد کردن رمز فعلی الزامی است.',
+            'new_password.required' => 'وارد کردن رمز جدید الزامی است',
+            'new_password.min' => 'رمز ورود باید بیش از 6 رقم باشد',
         ];
         $this->validate($request, [
-            'password' => 'required|min:6',
+            'new_password' => 'required|min:6',
+            'current_password' => 'required'
         ], $Message);
 
         $userModel = User::where('id', auth()->user()->id)->first();
-        if ($request->password == $request->confirm_password) {
-            $userModel->password = bcrypt($request->password);
+
+        if(!\Hash::check($request->current_password, $userModel->password)) {
+            PrintMessage('رمز فعلی شما صحیح نمیباشد.', 'danger');
+            return back();
+        }
+
+        if ($request->new_password == $request->confirm_password) {
+            $userModel->password = bcrypt($request->new_password);
             if ($userModel->save()) {
                 PrintMessage('اطلاعات شما با موفقیت ویرایش گردید', 'success');
                 return back();
