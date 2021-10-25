@@ -3806,14 +3806,63 @@ li.moore.col-sm-12.text-center {
 }
 
 
+.img_documentUser{
+  width: 250px;
+  height: 250px;
+}
 
+.img_documentUser img{
+  width: 100%;
+  height: 100%;
+}
 
+.submit_ok:after{
+content: '';
+position: absolute;
+width: 20px;
+height: 20px;
+background: #05D259;
+border-radius: 50%;
+top: 0;
+left: 0;
+}
 
+/* .submit_ok:before{
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  }
+   */
+.submit_read:after{
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #D8FF00;
+  border-radius: 50%;
+  top: 0;
+left: 0;
+}
 
+.submit_reject:after{
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #BD0707;
+  border-radius: 50%;
+  top: 0;
+left: 0;
+}
 
-
-
-
+.panel-body #myTab li a i{
+  margin-left: 8px;
+}
 
 
 
@@ -3837,4 +3886,7 @@ li.moore.col-sm-12.text-center {
 }
 .mb-10{
   margin-bottom: 10px;
+}
+.position-relative{
+  position: relative;
 }

@@ -1,18 +1,18 @@
 <div class="row">
-    <div class="col-md-12">
+    <div >
         <div class="form-group">
             <p class="text-right">جهت ورود یا ثبت نام شماره همراه خود را وارد کنید</p>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group text-right">
+    <div >
+        <div class="form-group mb-0">
             <input type="text" autocomplete="off" value="{{$request->mobile}}" maxlength="11" class="form-control" id="InputMobile" placeholder="شماره همراه">
-            <span class="message text-danger"></span>
+            <span class="message text-danger mb-3 float-right"></span>
         </div>
     </div>
-    <div class="col-md-12">
+    <div >
         <div class="form-group">
-            <button type="button" id="BtnCheckUser" class="btn btn-block">ادامه</button>
+            <button type="button" id="BtnCheckUser" class="btn btn-block btn_bgCustom">ادامه</button>
         </div>
     </div>
 </div>

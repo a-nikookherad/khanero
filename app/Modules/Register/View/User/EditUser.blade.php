@@ -347,8 +347,13 @@
                             </form>
                             <div class="row">
                                 @foreach($userModel->getDocument as $key => $value)
-                                    <div class="col-md-3">
-                                        <img style="width: 100%" src="{{asset('Uploaded/Document/File/'.$value->file)}}" />
+                                    <div class="col-md-3 position-relative">
+                                        <!-- اگر عکس تایید شده است به دایو زیر کلاس submit_ok اضافه شود -->
+                                        <!-- اگر عکس در حال بررسی است به دایو زیر کلاس submit_read اضافه شود -->
+                                        <!-- اگر عکس در حال رد شده است به دایو زیر کلاس submit_reject اضافه شود -->
+                                        <div class="img_documentUser " data-toggle="tooltip" data-placement="top" title="اگر رد شده دلیل اینجا نوشته شود">
+                                            <img src="{{asset('Uploaded/Document/File/'.$value->file)}}" />
+                                        </div>
                                         <p class="text-center">{{GetTypeDocument($value->type)}}</p>
                                     </div>
                                 @endforeach

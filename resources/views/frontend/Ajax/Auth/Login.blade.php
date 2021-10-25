@@ -10,9 +10,12 @@
             <span class="message text-danger mb-3 float-right"></span>
         </div>
     </div>
-    <div >
+    <div class="d-flex justify-content-between">
         <div class="form-group text-right">
             <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
+        </div>
+        <div class="form-group text-right">
+            <a class="btn-forget-pass ">فراموشی رمز عبور</a>
         </div>
     </div>
     <div >
