@@ -15,19 +15,24 @@
                     <span class="name">صفحه اصلی سایت</span>
                 </a>
             </li>
-            <li>
-                <a href="javascript:void(0);">
-                    <span class="icon"><i class="fa fa-envelope-o"></i></span>
-                    <span class="name">میزبانی ها</span>
-                    <span class="arrow"><i class="arrow fa fa-angle-left pull-left"></i></span>
-                </a>
-                <ul class="sidebar-dropdown">
-                    <li class="sidebar-dropdown-title"><p>اقامتگاه ها</p></li>
-{{--                    <li><a href="">اقامتگاه های ثبت شده</a></li>--}}
-                    <li><a href="{{ route('IndexHost', ['type' => 'all']) }}">اقامتگاه های ثبت شده</a></li>
 
-                </ul>
+            <li>
+                <a href="{{ route('IndexHost', ['type' => 'all']) }}">
+                    <span class="icon"><i class="fa fa-home"></i></span>
+                    <span class="name">اقامتگاه ها</span>
+                    {{--<span class="number pull-left"><span class="label label-primary">5</span></span>--}}
+                </a>
             </li>
+
+
+            <li>
+                <a href="{{ route('IndexReserve') }}">
+                    <span class="icon"><i class="fa fa-home"></i></span>
+                    <span class="name">رزروها</span>
+                    {{--<span class="number pull-left"><span class="label label-primary">5</span></span>--}}
+                </a>
+            </li>
+
 {{--            <li>--}}
 {{--                <a href="javascript:void(0);">--}}
 {{--                    <span class="icon"><i class="fa fa-envelope-o"></i></span>--}}
@@ -40,20 +45,16 @@
 
 {{--                </ul>--}}
 {{--            </li>--}}
+
+
             <li>
-                <a href="javascript:void(0);">
-                    <span class="icon"><i class="fa fa-envelope-o"></i></span>
-                    <span class="name">مدیریت کاربران</span>
-                    <span class="arrow"><i class="arrow fa fa-angle-left pull-left"></i></span>
+                <a href="{{ route('IndexUser') }}">
+                    <span class="icon"><i class="fa fa-users"></i></span>
+                    <span class="name">کاربرها</span>
+                    {{--<span class="number pull-left"><span class="label label-primary">5</span></span>--}}
                 </a>
-                <ul class="sidebar-dropdown">
-                    <li class="sidebar-dropdown-title"><p>مدیریت کاربران</p></li>
-                    <li><a href="{{ route('IndexUser') }}">کاربران سایت</a></li>
-{{--                    <li><a href="">کاربران ویژه</a></li>--}}
-{{--                    <li><a href="{{ route('IndexUser') }}">کاربران سایت</a></li>--}}
-{{--                    <li><a href="{{ route('IndexUserConfirm') }}">کاربران ویژه</a></li>--}}
-                </ul>
             </li>
+
 
             <li>
                 <a href="javascript:void(0);">

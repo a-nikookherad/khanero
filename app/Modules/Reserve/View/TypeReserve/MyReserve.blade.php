@@ -62,7 +62,7 @@
                             ساعت تحویل : {{$hostModel->time_enter_from}}
                         </p>
                     </li>
-                    <li class="info-trip">تعداد {{$reserveModel[0]->count_person}} نفر</li>
+                    <li class="info-trip">تعداد {{$reserveModel[0]->num_of_standard_people + $reserveModel[0]->num_of_guests}} نفر</li>
                 </ul>
                 <ul class="each-01">
                     <li class="info-trip">

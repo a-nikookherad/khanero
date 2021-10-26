@@ -303,7 +303,6 @@ class RegisterController extends Controller
      * update user profile
      */
     public function UpdateUser(Request $request) {
-        dd($request->toArray());
         $userModel = User::where('id', auth()->user()->id)->first();
         if($request->has('image_form')) {
             $oldImg = $userModel->avatar;

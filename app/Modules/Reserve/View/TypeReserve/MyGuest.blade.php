@@ -28,7 +28,7 @@
                 </ul>
                 <div class="col-sm-5 paymnt-not d-flex justify-content-center">
                     <a class="btn-success reseve-Button" href="#">تایید</a>
-                    <a class="btn-danger reseve-Button" href="#">لغو</a>
+                    <a class="btn-danger reseve-Button" href="#">عدم تایید</a>
 {{--                    <div class="timer-py d-flex align-items-center">--}}
 {{--                        <label>--}}
 {{--                            12--}}
@@ -62,7 +62,7 @@
                             ساعت تحویل : {{$hostModel->time_enter_from}}
                         </p>
                     </li>
-                    <li class="info-trip">تعداد {{$reserveModel[0]->count_person}} نفر</li>
+                    <li class="info-trip">تعداد : {{$reserveModel[0]->num_of_standard_people + $reserveModel[0]->num_of_guests}} نفر</li>
                 </ul>
                 <ul class="each-01">
                     <li class="info-trip">

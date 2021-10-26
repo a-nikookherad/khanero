@@ -86,9 +86,10 @@ class ReserveController extends Controller
             } else {
                 $type = 'my-guest';
             }
-            $reserve[$res->host_id] = array('type' => $type, 'group_code' => $res->group_code);
+//            $reserve[$res->host_id] = array('type' => $type, 'group_code' => $res->group_code);
+            $reserve[$res->id] = array('type' => $type, 'group_code' => $res->group_code);
         }
-
+        krsort($reserve);
         return view('Reserve::indexReserve', compact('reserve'));
     }
 
@@ -399,7 +400,9 @@ class ReserveController extends Controller
                     'description' => $value['description'],
                     'status' => 0,
                     'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'num_of_standard_people' => $standardGuest,
+                    'num_of_guests' => $countGuest
                 ];
             }
             $countDayReserve = $countDayReserve + 1;

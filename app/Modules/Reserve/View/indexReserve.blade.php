@@ -197,9 +197,9 @@
         .tab-pane.active {
             display: block;
         }
-        
-        
-        
+
+
+
         /*animate*/
         .animated-step {
             -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
@@ -209,14 +209,14 @@
             animation-duration: 2s;
             animation-iteration-count: infinite;
         }
-    
+
         /* Safari 4.0 - 8.0 */
         @-webkit-keyframes example-animate {
             0%   {color: #e73f05;}
             50% {color:#36454f;}
             100% {color:#e73f05;}
         }
-    
+
         /* Standard syntax */
         @keyframes example-animate {
             0%   {color:#e73f05;}
@@ -294,7 +294,7 @@
                                 <option>در انتظار پرداخت</option>
                                 <option>پرداخت شده</option>
                                 <option>منقضی شده</option>
-                                <option>کنسل میزبان</option>
+                                <option>عدم تایید</option>
                             </select>
                         </div>
                     </div>
@@ -354,7 +354,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div id="ExtraModalDetailPrice">
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -379,15 +379,15 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    
+
                                 </div>
                                 <div class="modal-body">
                                     <div class="">
                                         <div id="ExtraModalDetailPayment" class="tab-pane fade in active">
-                                        
+
                                         </div>
                                         <div id="WalletPay" class="tab-pane fade">
-                                        
+
                                         </div>
                                     </div>
                                 </div>
@@ -443,7 +443,7 @@
                 rtl:true,
                 loop: true,smartSpeed:3000,
 		        lazyLoad: true,
-                margin: 0, 
+                margin: 0,
                 responsiveClass: true,
                 responsive: {
                     0: {
