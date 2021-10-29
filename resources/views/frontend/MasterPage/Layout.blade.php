@@ -546,7 +546,7 @@
         </div>
     </div>
 </div>
-<a href="#" class="back-to-top" style=""><i class="fas fa-chevron-up"></i></a>
+<!--<a href="#" class="back-to-top" style=""><i class="fas fa-chevron-up"></i></a>-->
 <script src="{{asset('frontend/js/owl.carousel.js')}}"></script>
 <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 <!-- <script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}"></script> -->

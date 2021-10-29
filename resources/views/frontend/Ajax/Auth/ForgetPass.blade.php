@@ -9,6 +9,10 @@
             <input type="text" autocomplete="off" class="form-control" id="InputCode" placeholder="کد ارسال شده">
             <span class="message text-danger float-right"></span>
         </div>
+        <div class="form-group mb-0">
+            <input type="text" autocomplete="off" class="form-control" id="InputNewPass" placeholder=" رمز جدید">
+            <span class="message text-danger float-right"></span>
+        </div>
     </div>
     <div >
         <div class="form-group">
@@ -19,6 +23,6 @@
         <div class="form-group text-right">
             <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
         </div>
-        
+
     </div>
 </div>

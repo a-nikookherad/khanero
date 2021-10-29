@@ -19,7 +19,9 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 .py-3, .pt-3 {
   padding-top: 2rem !important;
 }
-
+.pt-2{
+  padding-top: 15px;
+}
 .justify-content-center {
   justify-content: center !important;
 }
@@ -1219,10 +1221,9 @@ form.search .dropdown {
   margin-top: 12px;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 10px;
 }
 
-.main0 h3 span::after {
+/* .main0 h3 span::after {
   width: 4px;
   height: 38px;
   content: '';
@@ -1231,20 +1232,15 @@ form.search .dropdown {
   position: absolute;
   top: -9px;
   right: -10px
-}
+} */
 
 .location span {
   color: #969696;
   font-size: 13px;
-  padding-right: 10px;
-  margin-top: 7px;
-  font-weight: 500;
-  float: right;
-}
+  padding-right: 5px;
 
-.location {
-  float: right;
-  width: 100%;
+  font-weight: 500;
+
 }
 
 .description h4 a {
@@ -1252,15 +1248,13 @@ form.search .dropdown {
   font-weight: 600;
   margin: 10px 0;
   width: 100%;
-  float: right;
+  /* float: right; */
   font-size: 14px;
 }
 
 .location i {
-  float: right;
   font-size: 16px;
   color: #8a8888;
-  margin-top: 10px;
 }
 
 .btn-search:hover {
@@ -1353,7 +1347,10 @@ div#demos .item1 img {
   -o-object-fit: fill;
   object-fit: fill;
   height: 100% !important;
-  border-radius: 5px;
+  border-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
 }
 
 .box-img img {
@@ -1500,9 +1497,9 @@ li.buy a:hover {
 
 div#demos .item {
   transition: all .3s;
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 10px;
-  box-shadow: 0 0 5px 1px #ebe6e6;
+  box-shadow: 0 0 8px 4px #ebe6e6;
   margin-top: 10px;
   margin-bottom: 10px !important;
 }
@@ -1540,28 +1537,25 @@ span.time-item {
 
 ul.items-des {
   width: 100%;
-  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 13px;
   margin-bottom: 8px;
-  border-bottom: 1px dashed #b6b2b2;
+  /* border-bottom: 1px dashed #b6b2b2; */
   line-height: 2.5;
 }
 
 ul.items-des li {
-  display: inline-block;
-  margin-left: 10px;
-  margin-top: 4px;
-  float: right;
+   display: flex;
+  align-items: center;
+  line-height: 2;
 }
 
 ul.items-des li i {
-  float: right;
-  margin-top: 7px;
   margin-left: 5px;
-  color: #8a8888;
-}
-
-ul.items-des li span {
-  float: right;
+  color: #6371DD;
 }
 
 p.boldtextblue {
@@ -1995,9 +1989,7 @@ div#demos .item1 img {
 }
 
 .description {
-  float: right;
-  padding: 5px 3px;
-  width: 100%;
+  padding: 5px 10px 10px;
 }
 
 .item {
@@ -3844,6 +3836,7 @@ ul.dropdown-menu table.table.table-striped {
   background-color: #ebebeb;
   padding-bottom: 20px;
   border-top: 1px solid #e6e6e6;
+  float: right !important;
 }
 
 .namad li {
