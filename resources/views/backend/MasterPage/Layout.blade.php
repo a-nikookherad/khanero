@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="fa">
     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
+
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <title>@yield('title')</title>
     <meta name="description" content="Flatter - Flat Admin Theme">
@@ -134,7 +134,7 @@
         </li>
     </ul>
 </header>
-    
+
 <div class="sidebar sidebar-left">
     <div class="content">
 {{--        <ul class="nav nav-tabs nav-justified sidetabs">--}}

@@ -274,11 +274,11 @@
                 </div>
                 <div class="panel-body">
                     <div class="head-serach row">
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">جستجو:</label>
                             <input class="same-styk" placeholder="جستجو کنید ...">
                         </div>
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">نوع رزرو:</label>
                             <select class="same-styk">
                                 <option>همه</option>
@@ -286,7 +286,7 @@
                                 <option>رزرو دریافتی</option>
                             </select>
                         </div>
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">وضعیت:</label>
                             <select class="same-styk">
                                 <option>همه</option>
@@ -296,6 +296,9 @@
                                 <option>منقضی شده</option>
                                 <option>عدم تایید</option>
                             </select>
+                        </div>
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
+                            <div class="btn btn-info">جستجو</div>
                         </div>
                     </div>
                     @if(count($reserve) == 0)

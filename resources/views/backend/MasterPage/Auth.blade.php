@@ -34,7 +34,7 @@
         .navbar-default.navbar-alt .navbar-nav>li>a:hover, .navbar-default.navbar-alt .navbar-nav>li>a:focus {
             color: #527970;
         }
-        
+
         body {
             animation:myanim 0.5s;
             -webkit-animation:myanim 0.5s;
