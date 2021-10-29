@@ -23,6 +23,9 @@
             <button type="button" id="BtnLogin" class="btn btn-block btn_bgCustom">ورود</button>
         </div>
     </div>
+    <div class="text-right border-top mt-2 pt-3">
+        <a class="text_actionlogin">ورود با رمز یکبار مصرف  </a>
+    </div>
 </div>
 
 <script>
@@ -63,6 +66,18 @@
     $('.btn-edit-mobile').click(function () {
         $.ajax({
             url: "{{route('DefaultLoginAjax')}}",
+            method: "post",
+            data: {
+                mobile: $('#MobileUser').val(),
+            }
+        }).done(function (returnData) {
+            $('.box-login-register').html(returnData.Content);
+        });
+    });
+
+    $('.btn-forget-pass').click(function () {
+        $.ajax({
+            url: "",
             method: "post",
             data: {
                 mobile: $('#MobileUser').val(),
