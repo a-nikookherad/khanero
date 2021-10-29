@@ -273,22 +273,23 @@
                     <h3 class="panel-title">لیست رزرو ها</h3>
                 </div>
                 <div class="panel-body">
+                    <form>
                     <div class="head-serach row">
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">جستجو:</label>
-                            <input class="same-styk" placeholder="جستجو کنید ...">
+                            <input class="same-styk" name="keyword" placeholder="جستجو کنید ...">
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">نوع رزرو:</label>
-                            <select class="same-styk">
-                                <option>همه</option>
-                                <option>رزرو درخواستی</option>
-                                <option>رزرو دریافتی</option>
+                            <select name="type_of_reserve" class="same-styk">
+                                <option value="-1">همه</option>
+                                <option value="my_reserve">رزرو درخواستی</option>
+                                <option value="guest_reserve">رزرو دریافتی</option>
                             </select>
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">وضعیت:</label>
-                            <select class="same-styk">
+                            <select name="status" class="same-styk">
                                 <option>همه</option>
                                 <option>در انتظار تایید</option>
                                 <option>در انتظار پرداخت</option>
@@ -298,9 +299,10 @@
                             </select>
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
-                            <div class="btn btn-info">جستجو</div>
+                            <button class="btn btn-info btn-submit">جستجو</button>
                         </div>
                     </div>
+                    </form>
                     @if(count($reserve) == 0)
                         <div class="row">
                             <div class="alert alert-warning">
