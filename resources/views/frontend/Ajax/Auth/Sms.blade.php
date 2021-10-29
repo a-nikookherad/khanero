@@ -16,12 +16,13 @@
         </div>
     </div>
     <div class="d-flex align-items-center justify-content-between border-bottom mb-2">
-        <div class="form-group text-right">
-            <a class="btn-edit-mobile">فراموشی رمز عبور</a>
-        </div>
-        <div class="form-group text-right">
+    <div class="form-group text-right">
             <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
         </div>
+        <div class="form-group text-right">
+            <a class="btn-forget-pass">فراموشی رمز عبور</a>
+        </div>
+        
     </div>
     
     <div class="text-right">
@@ -63,6 +64,30 @@
     $('.btn-edit-mobile').click(function () {
         $.ajax({
             url: "{{route('DefaultLoginAjax')}}",
+            method: "post",
+            data: {
+                mobile: $('#MobileUser').val(),
+            }
+        }).done(function (returnData) {
+            $('.box-login-register').html(returnData.Content);
+        });
+    });
+
+    $('.btn-forget-pass').click(function () {
+        $.ajax({
+            url: "",
+            method: "post",
+            data: {
+                mobile: $('#MobileUser').val(),
+            }
+        }).done(function (returnData) {
+            $('.box-login-register').html(returnData.Content);
+        });
+    });
+
+    $('.text_actionlogin').click(function () {
+        $.ajax({
+            url: "",
             method: "post",
             data: {
                 mobile: $('#MobileUser').val(),

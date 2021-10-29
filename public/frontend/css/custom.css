@@ -267,7 +267,9 @@ a {
 .border-bottom {
   border-bottom: 1px solid #dee2e6;
 }
-
+.border-top {
+  border-top: 1px solid #dee2e6;
+}
 .read-more:before {
   content: "";
   background: linear-gradient( 0deg, #f8f8f8, transparent);
@@ -5012,7 +5014,7 @@ ul.dropdown-menu table.table.table-striped {
 }
 
 .box-login .btn-forget-pass {
-  color: #454545;
+  color: #848484 ;
 }
 
 .modal-backdrop.fade.in {
@@ -5039,7 +5041,9 @@ a.btn-edit-mobile {
 .mb-2 {
   margin-bottom: 1.5rem;
 }
-
+.mt-2 {
+  margin-top: 1.5rem;
+}
 .d-flex {
   display: flex
 }
