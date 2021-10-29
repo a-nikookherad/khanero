@@ -86,4 +86,16 @@
             $('.box-login-register').html(returnData.Content);
         });
     });
+
+    $('.text_actionlogin').click(function () {
+        $.ajax({
+            url: "",
+            method: "post",
+            data: {
+                mobile: $('#MobileUser').val(),
+            }
+        }).done(function (returnData) {
+            $('.box-login-register').html(returnData.Content);
+        });
+    });
 </script>
