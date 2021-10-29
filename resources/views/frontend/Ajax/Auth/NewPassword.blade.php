@@ -20,7 +20,7 @@
 
     <div >
         <div class="form-group mb-0">
-            <input type="text" autocomplete="off" class="form-control" id="InputPassword" placeholder="رمز جدید شما">
+            <input type="password" autocomplete="off" class="form-control" id="InputPassword" placeholder="رمز جدید شما">
             <span class="message text-danger mb-3 float-right"></span>
         </div>
     </div>

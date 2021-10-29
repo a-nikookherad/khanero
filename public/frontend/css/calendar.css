@@ -1,22 +1,24 @@
 .P-Calendar .each-mounth {text-align: center;margin: 8px;border: 1px solid #e5edee;border-radius: 10px;overflow: hidden;}
 .P-Calendar .name-mounth {font-weight: bold;color: #007b8c;}
 .P-Calendar .head-Calendar {background: #d5dde2;padding: 15px 0;margin: 0 0 18px;}
-.P-Calendar .number-year {font-weight: bold;color: #828282;font-size: 14px;letter-spacing: 2px;}
-.P-Calendar .body-Calendar li {text-align: center;display: inline-block;width: 13.3%;max-width: 13.3%;-webkit-box-flex: 0;-ms-flex: 0 0 13.3%;flex: 0 0 13.3%;margin: -2px 0px;}
-.P-Calendar .name-week {margin: 0 0 24px;}
-.P-Calendar .each-day {background: #0e728314;border-radius: 3px;position: relative;cursor: pointer;transition: all 0.3s;padding: 5px 0;overflow: hidden;}
+.P-Calendar .number-year {font-weight: bold;color: #828282;font-size: 14px;}
+.P-Calendar .body-Calendar li {text-align: center;display: inline-block;width: 13%;max-width: 13.3%;-webkit-box-flex: 0;-ms-flex: 0 0 13.3%;flex: 0 0 13.3%;margin: -2px 0px;}
+.P-Calendar .name-week {margin: 0 0 24px !important;}
+.P-Calendar .last-day-item.temporary-block{background-color: #00C6E6 !important;}
+.P-Calendar .each-day {border:1px solid #0e728314;border-radius: 3px;position: relative;cursor: pointer;transition: all 0.3s;padding: 5px 0;overflow: hidden;}
 .P-Calendar .each-day:hover {transition: all 0.3s;background: #0e728326;}
 .P-Calendar .each-day:focus {transition: all 0.3s;background: #0e7283d6;}
 .P-Calendar .each-day:focus span {color: #fff;}
 .P-Calendar .each-day.peyk-day::before {content: "";display: block;position: absolute;border-style: solid;border-width: 6px;border-color: #00000000 #16c316 #16c316 #00000000;bottom: 0;right: 0;}
+.P-Calendar .each-day.holy-day{border:1px solid #fd2323}
 .P-Calendar .each-day.holy-day span {color: #fd2323;}
-.P-Calendar .each-day.last-day-item{cursor: default;background: repeating-linear-gradient(-45deg,transparent,transparent 8px,#eee 0,#eee 10px)!important;}
+.P-Calendar .each-day.last-day-item{cursor: default;background: #efefef!important;}
 .P-Calendar .each-day.last-day-item span{color: #929292;}
-.P-Calendar .each-day.dis-able{cursor: default;background: repeating-linear-gradient(-45deg,transparent,transparent 8px,#eee 0,#eee 10px)!important;}
+.P-Calendar .each-day.dis-able{cursor: default;border: 0 none;}
 .P-Calendar .each-day.dis-able span{color: #929292;}
 .P-Calendar .each-day span {display: block;}
 .P-Calendar .number-day {font-weight: bold;    color: #444444;font-size: 18px;}
-.P-Calendar .price-day {color: black;font-size: 12px;letter-spacing: 1px;}
+.P-Calendar .price-day {color: black;font-size: 12px;}
 .P-Calendar .owl-nav {top: 0;}
 .P-Calendar .owl-nav .owl-prev,
 .P-Calendar .owl-nav .owl-next {background: white;position: absolute;top: 23px;width: 30px;height: 39px;border-radius: 4px;line-height: 37px;font-size: 27px;border: 1px solid #dae1e2;color: #00000000;}
@@ -28,3 +30,4 @@
 .P-Calendar .body-Calendar {padding: 4px 11px;}
 .P-Calendar .day-weeks {text-align: left;}
 .P-Calendar .btn-dlet {text-align: left;display: inline-block;padding: 3px 14px 2px;border-radius: 3px;border: 1px dashed #ff000030;font-size: 9px;transform: scale(1.5);margin: 9px 32px;cursor: pointer;}
+.P-Calendar .calendar-day-today{background: repeating-linear-gradient(-45deg,transparent,transparent 8px,#eee 0,#eee 10px)!important;}

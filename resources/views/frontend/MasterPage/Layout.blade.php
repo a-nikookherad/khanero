@@ -22,54 +22,6 @@
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap-datepicker.min.css')}}"/>
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
     @yield('style')
-    <style>
-        .modal-backdrop.fade.in {
-            z-index: 998;
-        }
-
-        .fa, .far, .fas {
-            font-family: "Font Awesome 5 Free" !important;
-        }
-
-        img.load-register {
-            height: 20px;
-            margin: 0 auto;
-        }
-
-        .btn-edit-mobile.text-success {
-            color: #007dec;
-        }
-
-        a.btn-edit-mobile {
-            color: #848484 !important;
-        }
-
-        .mb-2 {
-            margin-bottom: 1.5rem;
-        }
-
-        .d-flex {
-            display: flex
-        }
-
-        .public-search {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .search-wrapper {
-                display: block;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .mobileInter {
-                display: none !important;
-            }
-        }
-
-
-    </style>
 </head>
 <body>
 <div class="over-page"></div>
@@ -78,7 +30,7 @@
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
-                    <div id="logo"><img src="{{asset('frontend/images/LOGO.png')}}" alt="logo"></div>
+                    <a href="#" id="logo"><img src="{{asset('frontend/images/LOGO.png')}}" alt="logo"></a>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
                     <div class="d-flex">
@@ -102,13 +54,9 @@
                                 <li class="box-login">
                                     @if(!auth()->check())
                                         <div class="mobileInter">
-                                            <a>
-                                        <span data-toggle="modal" data-target="#myModal">
-                                            <span>
-                                                <img src="{{asset('frontend/images/user.png')}}">
-                                            </span>
-                                            <span> ورود </span>
-                                        </span>
+                                            <a data-toggle="modal" data-target="#myModal">
+                                       
+                                             ورود 
                                             </a>
                                             <span class="line-login"> </span>
                                             <a data-toggle="modal" data-target="#myModal">

@@ -5,71 +5,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/lightgallery/1.3.9/css/lightgallery.min.css">
     <link rel="stylesheet" href="/khosravi/frontend/css/lightgallery.min.css" />
-    <style>
-        .container-fluid,.top {width: 100%;float: none;}
-        body {font-size: 14px;}
-        @media screen and (max-width:767.99px){
-            body {font-size: 13px;}
-        }
-        /*=*=*=*=*=*= * --- tooltip --  * ======================== */
-        [tooltip] {position: relative; }
-        [tooltip]::before,
-        [tooltip]::after {text-transform: none; font-size: .9em;line-height: 1;user-select: none;pointer-events: none;position: absolute;display: none;opacity: 0;}
-        [tooltip]::before {content: '';border: 5px solid transparent; z-index: 1001;}
-        [tooltip]::after {content: attr(tooltip);text-align: center;min-width: 3em;max-width: 21em;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;padding: 1ch 1.5ch;border-radius: 3px;box-shadow: 0 1em 2em -0.5em rgb(0 0 0 / 35%);background: #ebf7fa;color: #fff;z-index: 1000;font-size: 12px;border: 1px solid #7064b3;}
-        [tooltip]:hover::before,
-        [tooltip]:hover::after {display: block;}
-        [tooltip='']::before,
-        [tooltip='']::after {display: none !important;}
-        [tooltip]:not([flow])::before,
-        [tooltip][flow^="up"]::before {bottom: 118%;border-bottom-width: 0;border-top-color: #7064b3;}
-        [tooltip]:not([flow])::after,
-        [tooltip][flow^="up"]::after {bottom: calc(100% + 10px);}
-        [tooltip]:not([flow])::after,
-        [tooltip][flow^="up"]::before,
-        [tooltip][flow^="up"]::after {color:#000;background: #fff;left: 50%;transform: translate(-50%, -.5em);}
-        [tooltip]:not([flow])::before {color:#000;background: transparent !important;left: 50%;transform: translate(-50%, -.5em);}
-        @keyframes tooltips-vert {
-            to {opacity: .9;transform: translate(-50%, 0);}
-        }
-        @keyframes tooltips-horz {
-            to {opacity: .9;transform: translate(0, -50%);}
-        }
-        [tooltip]:not([flow]):hover::before,
-        [tooltip]:not([flow]):hover::after,
-        [tooltip][flow^="up"]:hover::before,
-        [tooltip][flow^="up"]:hover::after,
-        [tooltip][flow^="down"]:hover::before,
-        [tooltip][flow^="down"]:hover::after {animation: tooltips-vert 300ms ease-out forwards;}
-        [tooltip][flow^="left"]:hover::before,
-        [tooltip][flow^="left"]:hover::after,
-        [tooltip][flow^="right"]:hover::before,
-        [tooltip][flow^="right"]:hover::after {animation: tooltips-horz 300ms ease-out forwards;}
-.fab {
-    font-family: "Font Awesome 5 Brands" !important;
-}
-        .nav-slider img {
-            width: 100%;
-        }
-        img.option-img {
-            width: 25px;
-        }
-
-
-
-        .display-none {
-            display: none;
-        }
-        .link-clear-date {
-            text-decoration: underline !important;
-            color: #007b8c;
-            font-size: 12px;
-        }
-        #InputDateFrom ,
-        #InputDateTo {
-            cursor: pointer;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -109,7 +44,7 @@
         </nav>
     </div>
 </section>
-<div class="container p-0 pad-1">
+<div class="container p-0">
     <div class="fiix-reserv-mobile row">
         <div class="col-xl-6">
             <div class="mob-price">
@@ -536,7 +471,7 @@
 
             </section>
         </div>
-        <div class="col-sm-4 pr-0 parent-fix">
+        <div class="col-sm-4 p-0 parent-fix">
             <div class="fx-side">
                 <div class="row">
                     <div class="col-sm-12">
