@@ -8,10 +8,6 @@
     <meta property="keyword" content="">
 @endsection
 @section('style')
-<style>
-    .top1 {background: transparent;}
-    .top {height: 0;}
-</style>
 @endsection
 @section('slide')
 @endsection
