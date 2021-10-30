@@ -136,6 +136,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     flex: 0 0 50%;
     max-width: 50%;
   }
+  
 }
 
 @media (min-width: 576px) {
@@ -793,6 +794,7 @@ ul.csncel-items i {
   background: #ffffff00;
   margin: 0;
   border-radius: 0 !important;
+  overflow: hidden;
 }
 
 .numbr-gu {
@@ -1104,7 +1106,7 @@ ol {
   position: relative;
   float: right;
   width: 100%;
-  height: 77px;
+  height: 77px ;
 }
 
 .box-search p {
@@ -2965,6 +2967,12 @@ div#demos .item1 img {
 }
 
 @media (max-width: 789.99px) {
+  .modal-backdrop{
+    display: none;
+  }
+  .box-login .form-control{
+    margin-bottom: 15px;
+  }
   .list-login ul {
     text-align: right;
     background: white;
@@ -3445,9 +3453,6 @@ ul.dropdown-menu table.table.table-striped {
   }
   .sabt img, .phone img {
     width: 15px;
-  }
-  .box-login img {
-    width: 12px;
   }
   .top1 {
     float: right;
@@ -4897,7 +4902,7 @@ ul.dropdown-menu table.table.table-striped {
   letter-spacing: 0;
 }
 
-.form-control#InputMobile, .form-control#InputCode, #InputPassword, #InputFName {
+.form-control#InputMobile, .form-control#InputCode, #InputPassword, #InputFName ,#InputNewPass{
   text-align: left;
   height: 44px;
   border-radius: 30px;
@@ -5223,12 +5228,46 @@ img.option-img {
 
 #InputDateFrom, #InputDateTo {
   cursor: pointer;
-}
-
-.top1 {
   background: transparent;
 }
-
-.top {
-  height: 0;
+.mbsc-ios.mbsc-textfield-wrapper{
+  margin: 0 !important;
 }
+.mbsc-form-control-wrapper ,.mbsc-rtl{
+  font-family: 'web_Yekan' !important;
+}
+ .md-mobile-picker-header {
+        font-size: 14px;
+    }
+    
+    input.md-mobile-picker-input {
+        color: initial;
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 12px 0;
+        border: 1px solid #ccc;
+        border-radius: 0;
+        font-size: 14px;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+    }
+    
+    .md-mobile-picker-button.mbsc-button {
+        font-size: 13px;
+        padding: 0 15px;
+        line-height: 36px;
+        float: right;
+        margin: 6px 0;
+        width: 100%;
+    }
+    
+    .mbsc-col-no-padding {
+        padding-left: 0;
+    }
+    
+    .md-mobile-picker-box-label.mbsc-textfield-wrapper-box,
+    .md-mobile-picker-box-label .mbsc-textfield-wrapper-box,
+    .md-mobile-picker-inline {
+        margin: 6px 0 12px 0;
+    }
+

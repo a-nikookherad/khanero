@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/lightgallery/1.3.9/css/lightgallery.min.css">
     <link rel="stylesheet" href="/khosravi/frontend/css/lightgallery.min.css" />
+<link rel="stylesheet" href="{{asset('frontend/css/mobiscroll.jquery.min.css')}}">
+    <script src="{{asset('frontend/js/mobiscroll.javascript.min.js')}}"></script>
 @endsection
 
 @section('content')
@@ -499,8 +501,15 @@
                         <div class="col-sm-12 py-2 date-cal">
                             <h6 class="titl-02">تاریخ اقامتگاه</h6>
                             <div class="bx-dTER d-flex">
-                                <input class="each-01 rounded" autocomplete="off" id="InputDateFrom" placeholder="تاریخ ورود" />
-                                <input class="each-01 rounded" autocomplete="off" id="InputDateTo" placeholder="تاریخ خروج"/>
+                                <label>
+                                    
+                                    <input class="each-01  rounded" autocomplete="off" id="InputDateFrom" placeholder="تاریخ ورود  " mbsc-input data-label-style="stacked" data-input-style="box" />
+                                </label>
+                                <label>
+                                    
+                                    <input class="each-01  rounded" autocomplete="off" id="InputDateTo" placeholder=" تاریخ خروج " mbsc-input data-label-style="stacked" data-input-style="box" />
+                                </label>
+                             
                             </div>
                         </div>
                         <div class="col-sm-12 numbr-gu">
@@ -800,15 +809,6 @@ moreLess(280);
 
 
         // calendar
-
-        $('#InputDateFrom').click(function () {
-            $('.calendar-box').removeClass('display-none');
-            $('.detail-date-box').addClass('display-none');
-            $('#InputDateFrom').val('');
-            $('#InputDateTo').val('');
-        });
-
-
         $('.link-clear-date').click(function () {
             $('.calendar-box').addClass('display-none');
             $('.detail-date-box').removeClass('display-none');
@@ -823,4 +823,21 @@ moreLess(280);
 
 
     </script>
+    <script>
+    mobiscroll.setOptions({
+        locale: mobiscroll.localeFa, 
+        theme: 'ios',                
+        themeVariant: 'light'        
+    });
+    mobiscroll.datepicker('#InputDateFrom', {
+    select: 'range',
+    startInput: '#InputDateFrom',
+    endInput: '#InputDateTo',
+    <!-- touchUi: true -->
+
+});
+
+
+    
+ </script>
 @endsection
