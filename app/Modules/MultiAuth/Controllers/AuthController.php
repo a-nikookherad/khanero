@@ -360,7 +360,7 @@ class AuthController extends Controller
 
             if ($Activation->save()) {
                 if($type == 'forget_password') {
-                    $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
+                    $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.ForgetPass')->render()];
                     return response()->json($Response);
                 }
                 $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
@@ -377,12 +377,12 @@ class AuthController extends Controller
      * ورود با کد یکبار مصرف
      */
     public function loginWithSmsCode(Request $request)
-    {
+    { // mobile , code
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
-
             if ($userModel->userActivation->token == $request->code) {
-                $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.NewPassword')->render()];
+                auth::loginUsingId($userModel->id);
+                $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.Header')->render(), "Content2" => view('frontend.Ajax.Auth.Menu')->render()];
                 return response()->json($Response);
             } else {
                 $Response = ["Message" => "wrong code"];
@@ -405,6 +405,49 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect(route('HomePage'));
+    }
+
+
+    /**
+     * make new password after clicking on forget password
+     */
+    public function newPassword(Request $request)
+    {
+        $Message = [
+            'code.required' => 'وارد کردن کد الزامی است.',
+            'password.required' => 'وارد کردن رمز جدید الزامی است',
+            'password.min' => 'رمز ورود باید بیش از 6 رقم باشد',
+            'confirm_password.required' => 'تکرار رمز عبور جدید الزامی است.',
+            'confirm_password.min' => 'تکرار رمز عبور باید بیش از 6 رقم باشد.',
+            'mobile.required' => 'شماره موبایل ارسال نشده است.',
+        ];
+        $this->validate($request, [
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6',
+            'mobile' => 'required',
+            'code' => 'required'
+        ], $Message);
+
+
+        if($request->password != $request->confirm_password) {
+            PrintMessage('رمز عبور جدید با تکرار رمز عبور مطابقت ندارد.', 'danger');
+            return back();
+        }
+
+        $userModel = User::where('mobile', $request->mobile)->first();
+
+        if (!empty($userModel)) {
+            if ($userModel->userActivation->token == $request->code) {
+                $userModel->password = bcrypt($request->new_password);
+                if ($userModel->save()) {
+                    PrintMessage('رمز کاربری با موفقیت تغییر یافت.', 'success');
+                    return back();
+                }
+            } else {
+                PrintMessage('کد ارسال شده صحیح نمیباشد.', 'danger');
+                return back();
+            }
+        }
     }
 
 }

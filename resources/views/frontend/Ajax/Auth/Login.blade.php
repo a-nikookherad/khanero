@@ -89,8 +89,6 @@
 
     $('.text_actionlogin').click(function () {
         $.ajax({
-            url: "{{ route('RequestSms', ['type' => 'login']) }}",
-            method: "post",
             data: {
                 mobile: $('#MobileUser').val(),
             }

@@ -26,3 +26,9 @@
 
     </div>
 </div>
+
+{{--
+send to route : ChangePassword
+data : code, password, confirm_password, mobile
+method : post
+--}}
