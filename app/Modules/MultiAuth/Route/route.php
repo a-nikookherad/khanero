@@ -31,7 +31,11 @@ Route::group(['middleware'=>['web'],'namespace'=>'App\Modules\MultiAuth\Controll
 
     Route::post('register-ajax-user','AuthController@RegisterAjaxUser')->name('RegisterAjaxUser');
 
+    Route::post('request-auth-sms/{types}','AuthController@AuthWithSms')->name('RequestSms');
 
+    Route::post('login-auth-sms', 'AuthController@loginWithSmsCode')->name('LoginWithSmsCode');
+
+    Route::post('change-user-password', 'AuthController@newPassword')->name('ChangePassword');
 
     /*
      * user Login page

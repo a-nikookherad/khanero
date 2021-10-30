@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if(!auth()->check()){
-            return redirect(route('Login'));
+            return redirect(route('HomePage'));
         }
         elseif(auth()->user()->role_id != 1){
             abort(404);

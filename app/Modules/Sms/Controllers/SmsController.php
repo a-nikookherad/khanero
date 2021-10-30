@@ -45,7 +45,7 @@ www.khanero.com';
             $to   = $Mobile;
             $from = '10007514';
 
-            $text =  ' میباشد.'. $Token . 'کد فعالسازی شما در خانه رو ';
+            $text = 'کد فعالسازی شما در خانه رو '.$Token.' میباشد.';
 
             $sms->send($to, $from, $text);
         } catch (\Exception $e) {
@@ -69,25 +69,21 @@ www.khanero.com';
     }
 
 
-    public static function SendSMSWaitConfirmHost($Mobile)
+    public static function SendSMSConfirmHost($Mobile)
     {
-//        $userModel = User::where('mobile', $Mobile)->first();
-//        if ($userModel->sex == 1) {
-//            $sex = ' آقای ';
-//        } else {
-//            $sex = ' خانم ';
-//        }
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ' '. auth()->user()->first_name . ' ' . auth()->user()->last_name .' عزیز
-//درخواست میزبانی اقامتگاه شما در "رنت" ثبت شد و پس از بررسی های لازم و تایید توسط تیم "رنت" آگهی شما در سایت گذاشته خواهد شد
-//شماره پشتیبانی :';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '10007514';
+
+            $text = 'سایت خانه رو
+اقامتگاه شما با موفقیت ثبت شد. لطفا جهت تسریع در روند تایید و فعالسازی اقامتگاه، تا پیش از تماس همکاران، تصاویر مدارک خود را آماده نمایید.
+کارشناسان ما حداکثر تا 24 ساعت آینده با شما تماس خواهند گرفت.';
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
         return true;
     }
 

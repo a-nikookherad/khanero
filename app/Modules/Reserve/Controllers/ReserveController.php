@@ -31,7 +31,7 @@ class ReserveController extends Controller
     /*****************
      * Index Reserve *
      ****************/
-    public function IndexReserve()
+    public function IndexReserve(Request $request)
     {
 
 //        $yourjson = {

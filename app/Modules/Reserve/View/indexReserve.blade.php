@@ -273,31 +273,34 @@
                     <h3 class="panel-title">لیست رزرو ها</h3>
                 </div>
                 <div class="panel-body">
+                    <form>
                     <div class="head-serach row">
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">جستجو:</label>
-                            <input class="same-styk" placeholder="جستجو کنید ...">
+                            <input class="same-styk" name="keyword" placeholder="جستجو کنید ...">
                         </div>
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">نوع رزرو:</label>
-                            <select class="same-styk">
-                                <option>همه</option>
-                                <option>رزرو درخواستی</option>
-                                <option>رزرو دریافتی</option>
+                            <select name="type_of_reserve" class="same-styk">
+                                <option value="all">همه</option>
+                                <option value="{{ \App\Modules\Reserve\Model\Reserve::M }}">رزرو درخواستی</option>
+                                <option value="guest_reserve">رزرو دریافتی</option>
                             </select>
                         </div>
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">وضعیت:</label>
-                            <select class="same-styk">
-                                <option>همه</option>
-                                <option>در انتظار تایید</option>
-                                <option>در انتظار پرداخت</option>
-                                <option>پرداخت شده</option>
-                                <option>منقضی شده</option>
-                                <option>عدم تایید</option>
+                            <select name="status" class="same-styk">
+                                <option value="all">همه</option>
+                                @foreach(\App\Modules\Reserve\Model\Reserve::getReserveStatusList() as $status)
+                                    <option value="{{ $status['value'] }}">{{ $status['message'] }}</option>
+                                @endforeach
                             </select>
+                        </div>
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
+                            <button class="btn btn-info btn-submit">جستجو</button>
                         </div>
                     </div>
+                    </form>
                     @if(count($reserve) == 0)
                         <div class="row">
                             <div class="alert alert-warning">

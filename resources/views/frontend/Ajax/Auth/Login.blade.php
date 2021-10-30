@@ -77,7 +77,7 @@
 
     $('.btn-forget-pass').click(function () {
         $.ajax({
-            url: "",
+            url: "{{ route('RequestSms', ['type' => 'forget_password']) }}",
             method: "post",
             data: {
                 mobile: $('#MobileUser').val(),
@@ -89,8 +89,6 @@
 
     $('.text_actionlogin').click(function () {
         $.ajax({
-            url: "",
-            method: "post",
             data: {
                 mobile: $('#MobileUser').val(),
             }

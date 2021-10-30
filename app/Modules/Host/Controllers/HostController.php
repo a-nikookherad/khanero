@@ -743,7 +743,7 @@ class HostController extends Controller
                 $hostModel->step = 100;
                 $hostModel->active = 1;
                 if ($hostModel->save()) {
-                    //                SmsController::SendSMSWaitConfirmHost(auth()->user()->mobile);
+                    SmsController::SendSMSConfirmHost(auth()->user()->mobile);
                     PrintMessage('ثبت اقامتگاه با موفقیت انجام شد', 'success');
                     $Response = ["Success" => "1", "Message" => "ثبت اقامتگاه با موفقیت انجام شد"];
                     return response()->json($Response);

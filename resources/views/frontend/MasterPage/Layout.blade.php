@@ -412,10 +412,7 @@
     <div class="container">
         <div class="row row-copy">
             <div class="col-md-6 col-xs-12 right-copy pr-md-0">
-                © 2018 DESIGNED BY <span class="color">NO NEGARE</span> . ALL RIGHTS RESERVED
-            </div>
-            <div class="col-md-6 col-xs-12 left-copy pl-md-0">
-                Copyright ALLORO MILANO . All rights reserved.
+               کلیه حقوق برای خانه رو محفوظ است
             </div>
         </div>
     </div>
