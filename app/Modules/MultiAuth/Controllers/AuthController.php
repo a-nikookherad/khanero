@@ -341,7 +341,7 @@ class AuthController extends Controller
     /**
      * درخواست لاگین با کد یکبار مصرف
      */
-    public function loginWithSms(Request $request)
+    public function AuthWithSms(Request $request, $type)
     {
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
@@ -359,7 +359,11 @@ class AuthController extends Controller
             ]);
 
             if ($Activation->save()) {
-                $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.Sms')->render()];
+                if($type == 'forget_password') {
+                    $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
+                    return response()->json($Response);
+                }
+                $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
                 return response()->json($Response);
             }
 
@@ -369,6 +373,9 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * ورود با کد یکبار مصرف
+     */
     public function loginWithSmsCode(Request $request)
     {
         $userModel = User::where('mobile', $request->mobile)->first();

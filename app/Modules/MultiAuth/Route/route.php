@@ -31,6 +31,8 @@ Route::group(['middleware'=>['web'],'namespace'=>'App\Modules\MultiAuth\Controll
 
     Route::post('register-ajax-user','AuthController@RegisterAjaxUser')->name('RegisterAjaxUser');
 
+    Route::post('request-auth-sms/{types}','AuthController@AuthWithSms')->name('RequestSms');
+
 
 
     /*

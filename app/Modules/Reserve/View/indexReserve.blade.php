@@ -282,20 +282,18 @@
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">نوع رزرو:</label>
                             <select name="type_of_reserve" class="same-styk">
-                                <option value="-1">همه</option>
-                                <option value="my_reserve">رزرو درخواستی</option>
+                                <option value="all">همه</option>
+                                <option value="{{ \App\Modules\Reserve\Model\Reserve::M }}">رزرو درخواستی</option>
                                 <option value="guest_reserve">رزرو دریافتی</option>
                             </select>
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">وضعیت:</label>
                             <select name="status" class="same-styk">
-                                <option>همه</option>
-                                <option>در انتظار تایید</option>
-                                <option>در انتظار پرداخت</option>
-                                <option>پرداخت شده</option>
-                                <option>منقضی شده</option>
-                                <option>عدم تایید</option>
+                                <option value="all">همه</option>
+                                @foreach(\App\Modules\Reserve\Model\Reserve::getReserveStatusList() as $status)
+                                    <option value="{{ $status['value'] }}">{{ $status['message'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">

@@ -20,6 +20,9 @@ class Reserve extends Model
     const STATUS_WAITING_TO_PAY = 1; // تایید شده و منتظر است تا مهمان مبلغ را پرداخت کند.
     const STATUS_PAID  = 2; // پرداخت شده.
 
+    const MY_RESERVE = 1; // اگر کاربر از اقامتگاههای خودش رزرو کرده باشه.
+    const MY_GUEST = 2;
+
 
     /**
      * The attributes that are mass assignable.
@@ -59,6 +62,18 @@ class Reserve extends Model
     {
         return [
             [
+                'value'   => self::STATUS_REQUEST_TO_CONFIRM,
+                'message' => "در انتظار تایید",
+            ],
+            [
+                'value'   => self::STATUS_WAITING_TO_PAY,
+                'message' => "در انتظار پرداخت",
+            ],
+            [
+                'value'   => self::STATUS_PAID,
+                'message' => "پرداخت شده",
+            ],
+            [
                 'value'   => self::STATUS_EXPIRED,
                 'message' => "منقضی شده",
             ],
@@ -70,18 +85,6 @@ class Reserve extends Model
             [
                 'value'   => self::STATUS_REJECTED,
                 'message' => "عدم تایید",
-            ],
-            [
-                'value'   => self::STATUS_REQUEST_TO_CONFIRM,
-                'message' => "در انتظار تایید",
-            ],
-            [
-                'value'   => self::STATUS_WAITING_TO_PAY,
-                'message' => "در انتظار پرداخت",
-            ],
-            [
-                'value'   => self::STATUS_PAID,
-                'message' => "پرداخت شده",
             ],
         ];
     }
