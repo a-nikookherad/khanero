@@ -831,9 +831,10 @@ moreLess(280);
     });
     mobiscroll.datepicker('#InputDateFrom', {
     select: 'range',
+    controls: ['calendar'],
     startInput: '#InputDateFrom',
     endInput: '#InputDateTo',
-    <!-- touchUi: true -->
+    touchUi: true
 
 });
 
