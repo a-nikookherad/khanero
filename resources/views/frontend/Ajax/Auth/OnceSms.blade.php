@@ -15,7 +15,7 @@
             <button type="button" id="BtnSendSms" class="btn btn-block btn_bgCustom">بررسی</button>
         </div>
     </div>
-    <div class="d-flex border-bottom mb-2">
+    <div class="d-flex">
         <div class="form-group text-right">
             <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
         </div>
