@@ -62,6 +62,8 @@
     });
 
     $('.btn-edit-mobile').click(function () {
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        $(this).html(loading);
         $.ajax({
             url: "{{route('DefaultLoginAjax')}}",
             method: "post",
@@ -74,6 +76,8 @@
     });
 
     $('.btn-forget-pass').click(function () {
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        $(this).html(loading);
         $.ajax({
             url: "",
             method: "post",
@@ -86,6 +90,8 @@
     });
 
     $('.text_actionlogin').click(function () {
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        $(this).html(loading);
         $.ajax({
             url: "",
             method: "post",

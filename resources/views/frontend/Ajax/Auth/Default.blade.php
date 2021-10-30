@@ -21,7 +21,7 @@
         $('span.message').text('');
     });
     $('#BtnCheckUser').click(function () {
-        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading_calendar.gif')}}" />'
         $(this).html(loading);
         var mobile = $('#InputMobile').val();
         if (mobile.length != 11 || Number.isInteger(parseInt(mobile)) != true) {

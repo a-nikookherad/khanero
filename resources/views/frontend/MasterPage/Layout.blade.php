@@ -185,10 +185,10 @@
                                     @elseif(!auth()->check())
                                         <div class="list-login">
                                             <ul>
-                                                <li data-toggle="modal" data-target="#myModal"><a class="item-login"
+                                                <li><a  data-toggle="modal" data-target="#myModal" class="item-login"
                                                                                                   href=""><i
                                                                 class="far fa-user"></i>ورود</a></li>
-                                                <li data-toggle="modal" data-target="#myModal"><a class="item-login"
+                                                <li ><a class="item-login" data-toggle="modal" data-target="#myModal"
                                                                                                   href=""><i
                                                                 class="far fa-user"></i>ثبت نام</a></li>
                                                 <li><a class="item-login" href="{{route('CreateHost')}}"><i

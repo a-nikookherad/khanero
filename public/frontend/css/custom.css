@@ -136,6 +136,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     flex: 0 0 50%;
     max-width: 50%;
   }
+  
 }
 
 @media (min-width: 576px) {
@@ -2966,6 +2967,12 @@ div#demos .item1 img {
 }
 
 @media (max-width: 789.99px) {
+  .modal-backdrop{
+    display: none;
+  }
+  .box-login .form-control{
+    margin-bottom: 15px;
+  }
   .list-login ul {
     text-align: right;
     background: white;
@@ -3446,9 +3453,6 @@ ul.dropdown-menu table.table.table-striped {
   }
   .sabt img, .phone img {
     width: 15px;
-  }
-  .box-login img {
-    width: 12px;
   }
   .top1 {
     float: right;
@@ -4898,7 +4902,7 @@ ul.dropdown-menu table.table.table-striped {
   letter-spacing: 0;
 }
 
-.form-control#InputMobile, .form-control#InputCode, #InputPassword, #InputFName {
+.form-control#InputMobile, .form-control#InputCode, #InputPassword, #InputFName ,#InputNewPass{
   text-align: left;
   height: 44px;
   border-radius: 30px;
