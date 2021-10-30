@@ -62,25 +62,45 @@ class ReserveController extends Controller
 
 
 
-//        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
-//            ->orWhereHas('Host', function ($Query) {
-//            $Query->where('user_id', auth()->user()->id);
-//        })
+        $reserveModel = Reserve::where(function($query){
+                if(Auth::user()->role_id == User::ADMIN) {
+                    //returns all
+                } else {
+                    $query->where('user_id', auth()->user()->id);
+                }
+            })
+            ->orWhereHas('Host', function ($Query) {
+                if(Auth::user()->role_id == User::ADMIN) {
+                    //returns all
+                } else {
+                    $Query->where('user_id', auth()->user()->id);
+                }
+        })
 //            ->orWhere('host_id',auth()->user()->id)
-//            ->get()->groupBy('group_code');
+            ->when($request->has('keyword'), function($query) use($request){
+                if(stringNotEmpty($request->keyword)){
+//                    $query->where('')
+                }
+            })
+            ->when($request->has('status'), function($query) use($request){
+                if($request->status != 'all'){
+                    $query->where('status', $request->status);
+                }
+            })
+            ->get()->groupBy('group_code');
 
-        $reserveModel = DB::table('reserves')
-            ->select('group_code')
-            ->groupBy('group_code')
-            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
-            ->where('hosts.user_id','=',Auth::id())
-            ->orWhere('reserves.user_id','=',Auth::id())
-            ->get();
+//        $reserveModel2 = DB::table('reserves')
+//            ->select('group_code')
+//            ->groupBy('group_code')
+//            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
+//            ->where('hosts.user_id','=',Auth::id())
+//            ->orWhere('reserves.user_id','=',Auth::id())
+//            ->get();
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
         foreach ($reserveModel as $key => $value) {
-            $res = Reserve::where('group_code', $value->group_code)->first();
+            $res = Reserve::where('group_code', $key)->first();
             if($res->user_id == auth()->user()->id) {
                 $type = 'my-reserve';
             } else {

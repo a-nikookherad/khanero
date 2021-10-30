@@ -283,8 +283,8 @@
                             <label class="ttle-row">نوع رزرو:</label>
                             <select name="type_of_reserve" class="same-styk">
                                 <option value="all">همه</option>
-                                <option value="{{ \App\Modules\Reserve\Model\Reserve::M }}">رزرو درخواستی</option>
-                                <option value="guest_reserve">رزرو دریافتی</option>
+                                <option value="{{ \App\Modules\Reserve\Model\Reserve::MY_REQUESTED_RESERVES }}">رزرو درخواستی</option>
+                                <option value="{{ \App\Modules\Reserve\Model\Reserve::MY_GUEST_RESERVES }}">رزرو دریافتی</option>
                             </select>
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
