@@ -1,40 +1,4 @@
-<link rel="stylesheet" href="{{asset('frontend/css/calendar.css')}}" />
-<style>
-    .calendar-day-today {
-        border: 1px solid #5a9ea7;
-    }
-    .left-month,
-    .right-month {
-        display: inline-block;
-        font-size: 18px;
-    }
-    .left-month {
-        float: left;
-        margin-left: 20px;
-    }
-    .right-month {
-        float: right;
-        margin-right: 20px;
-    }
-    .left-month i, .right-month i {
-        border: 1px solid #c2c7c8;
-        padding: 4px 12px;
-        border-radius: 5px;
-        background: #e5edee;
-        cursor: pointer;
-        transition: .3s;
-    }
-    .left-month i:hover, .right-month i:hover {
-        background: #fafbfb;
-        transition: .3s;
-    }
-    .hover-day {
-        background: #c1dbde;
-    }
-    .last-day-item {
-
-    }
-</style>
+<!-- <link rel="stylesheet" href="{{asset('frontend/css/calendar.css')}}" />
 @php
     $past_day = $detailMonth['start_day_month']['day_id'] - 1; // تعداد روز های گذشته شده از هفته برای محاسبه شروع تقویم
     $future = end($detailMonth['detail_days']); // تعداد روز برای تکمیل کردن اخر هفته که خالی نباشد
@@ -46,9 +10,9 @@
         <div class="head-Calendar">
             {{--            <h5 class="name-mounth">فروردین</h5>--}}
             <p class="number-year">
-                <span class="left-month btn__left"> <i class="fas fa-arrow-left"></i> </span>
-                {{$detailMonth['today']['name_month'].' '.$detailMonth['today']['year']}}
                 <span class="right-month btn__right"> <i class="fas fa-arrow-right"></i> </span>
+                {{$detailMonth['today']['name_month'].' '.$detailMonth['today']['year']}}
+                <span class="left-month btn__left"> <i class="fas fa-arrow-left"></i> </span>
             </p>
         </div>
         <div class="body-Calendar">
@@ -260,4 +224,4 @@
         });
     });
 
-</script>
+</script> -->
