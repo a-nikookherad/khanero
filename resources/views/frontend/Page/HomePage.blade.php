@@ -294,27 +294,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -345,27 +352,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -396,27 +410,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -447,27 +468,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -498,27 +526,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -549,27 +584,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -633,27 +675,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location"> <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -681,27 +730,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location">  <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li> <span>( 3 نظر)</span> <span> مهمان نواز</span>    </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -729,27 +785,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location">  <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span><span> مهمان نواز</span>   </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -777,27 +840,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location">  <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li><span>( 3 نظر)</span> <span> مهمان نواز</span>   </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -825,27 +895,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location">  <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li> <span>( 3 نظر)</span> <span> مهمان نواز</span>   </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -873,27 +950,34 @@
                                         </div>
                                     </div>
                                     <div class="description col-xs-12">
-                                        <div class="location">  <i class="img-marker"></i> <span> گیلان، بندر انزلی، ویلایی </span> </div>
                                         <h4><a href=""> اقامتگاه بوم‌گردی ماه‌سو (خیام) </a></h4>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-10">
+                                            <div class="location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>
+                                                   گیلان، بندر انزلی، ویلایی
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-star"></i>
+                                                <span> 4/9 </span>
+                                                <span> ( 3 نظر) </span>
+                                            </div>
+                                        </div>
                                         <div class="description1">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-8 padding1">
-                                                    <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 padding1">
-                                                    <div class="price-item-old">220/000 تومان</div>
+                                            <ul class="items-des">
+                                                <li><i class="fas fa-bed"></i><span> 2خوابه</span> </li>
+                                                <li> <i class="fa fa-user"></i><span> تا 3 نفر</span> </li>
+                                            </ul>
+                                            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                                                <div class="price-item"> هر شب از <span> 220/000</span> تومان </div>
+                                            
+                                                <div class="price-item-old">220/000 تومان</div>
+                                                <div>
+                                                    <li class="buy"> <a href=""> خرید آنی </a> </li>
                                                 </div>
                                             </div>
-                                            <ul class="items-des">
-                                                <li> <i class="img-bed"></i> <span> 2خوابه</span> </li>
-                                                <li> <i class="img-user"></i> <span> تا 3 نفر</span> </li>
-                                            </ul>
-
-                                            <ul class="starcomment">
-                                                <li> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i> </li>
-                                                <li> <span>( 3 نظر)</span>  <span> مهمان نواز</span> </li>
-                                                <li class="buy"> <a href=""> خرید آنی </a> </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>

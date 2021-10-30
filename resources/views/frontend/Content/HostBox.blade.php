@@ -25,27 +25,27 @@
         </div>
     </div>
     <div class="description col-xs-12">
-        <div class="location">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>
-                {{$value->getProvince->name}} ، {{$value->getTownship->name}}
-            </span>
-        </div>
         <h4>
             <a href="">
                 {{$value->title}}
             </a>
         </h4>
-        <div class="description1">
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 padding1">
-                    <div class="price-item">
-                        هر شب از
-                        <span>{{number_format(GetMinPrice($value->id))}}</span>
-                        تومان
-                    </div>
-                </div>
+        <div class="d-flex justify-content-between align-items-center mb-10">
+            <div class="location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>
+                    {{$value->getProvince->name}} ، {{$value->getTownship->name}}
+                </span>
             </div>
+            <div>
+                <i class="fas fa-star"></i>
+                <span> 4/9 </span>
+                <span> ( 3 نظر) </span>
+            </div>
+        </div>
+        
+        
+        <div class="description1">
             <ul class="items-des">
                 <li>
                     <i class="fas fa-bed"></i>
@@ -61,22 +61,25 @@
 {{--            <p class="boldtextblue">--}}
 {{--                ضدعفونی شده--}}
 {{--            </p>--}}
-            <ul class="starcomment">
-                <li>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                            class="fas fa-star"></i>
-                    <i class="far fa-star"></i><i class="far fa-star"></i>
-                </li>
-                <li>
-                    <span> ( 3 نظر) </span>
-                    <span> مهمان نواز</span>
-                </li>
-                <li class="buy">
-                    <a target="_blank" href="{{route('DetailHost', ['id' => $value->id])}}">
-                        درخواست رزرو
-                    </a>
-                </li>
-            </ul>
+
+
+            <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+               
+                <div class="price-item">
+                    هر شب از
+                    <span>{{number_format(GetMinPrice($value->id))}}</span>
+                    تومان
+                </div>
+               
+                <div>
+                    <li class="buy">
+                        <a target="_blank" href="{{route('DetailHost', ['id' => $value->id])}}">
+                            درخواست رزرو
+                        </a>
+                    </li>
+                </div>
+            </div>
+
 
         </div>
     </div>
