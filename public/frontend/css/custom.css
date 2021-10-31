@@ -4902,7 +4902,7 @@ ul.dropdown-menu table.table.table-striped {
   letter-spacing: 0;
 }
 
-.form-control#InputMobile, .form-control#InputCode, #InputPassword, #InputFName ,#InputNewPass{
+.form-control#InputMobile, .form-control#InputCode, #InputPassword, #InputFName ,#InputNewPass,#InputRepetPassword{
   text-align: left;
   height: 44px;
   border-radius: 30px;

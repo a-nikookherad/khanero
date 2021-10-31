@@ -24,6 +24,12 @@
             <span class="message text-danger mb-3 float-right"></span>
         </div>
     </div>
+    <div >
+        <div class="form-group mb-0">
+            <input type="password" autocomplete="off" class="form-control" id="InputRepetPassword" placeholder="تکرار رمز جدید ">
+            <span class="message text-danger mb-3 float-right"></span>
+        </div>
+    </div>
     <div class="d-flex align-items-center justify-content-between">
         <div class="item_Gender">
             <input type="radio" name="Gender" value="1" id="Gender-0" class="GenderInLogin" checked/>
