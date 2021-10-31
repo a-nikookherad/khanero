@@ -83,7 +83,7 @@
                         </div>
                         <div class="col-12 p-0 text-right">
                             <span class="px-1 font-weight-bold position-relative info2">کد اقامتگاه:</span>
-                            <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id + 5000}}</span>
+                            <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id}}</span>
                         </div>
 
                     </div>

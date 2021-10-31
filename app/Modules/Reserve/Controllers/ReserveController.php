@@ -33,35 +33,6 @@ class ReserveController extends Controller
      ****************/
     public function IndexReserve(Request $request)
     {
-
-//        $yourjson = {
-//            "Token":"a8d7606bf50b45dab0dd27110c70ce63",
-//          "SenderNumber":"50001",
-//          "Mobile":"09355000000",
-//          "Message" : "test"
-//        };
-
-
-//$ch = curl_init();
-//
-//curl_setopt($ch, CURLOPT_URL,"https://mysite.ir/api/v1/Send");
-//curl_setopt($ch, CURLOPT_POST, 1);
-//curl_setopt($ch, CURLOPT_POSTFIELDS,
-//    "Token=a8d7606bf50b45dab0dd27110c70ce63&SenderNumber=10003031&Mobile=09396800779&Message=1234");
-
-// In real life you should use something like:
-// curl_setopt($ch, CURLOPT_POSTFIELDS,
-//          http_build_query(array('postvar1' => 'value1')));
-
-// Receive server response ...
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//
-//$server_output = curl_exec($ch);
-//
-//curl_close ($ch);
-
-
-
         $reserveModel = Reserve::where(function($query){
                 if(Auth::user()->role_id == User::ADMIN) {
                     //returns all
@@ -79,7 +50,19 @@ class ReserveController extends Controller
 //            ->orWhere('host_id',auth()->user()->id)
             ->when($request->has('keyword'), function($query) use($request){
                 if(stringNotEmpty($request->keyword)){
-//                    $query->where('')
+                    $keyword = $request->keyword;
+                    $query->where(function($q)use($keyword) {
+                        $q->where('id', $keyword)
+                            ->orWhere('host_id', $keyword)
+                            ->orWhereHas('Host',function($query) use($keyword){
+                                $query->where('name', 'LIKE', "%$keyword%");
+                            })
+                            ->orWhereHas('User', function($query) use($keyword){
+                                $query->where('first_name', 'LIKE', "%$keyword%")
+                                    ->orWhere('last_name', 'LIKE', "%$keyword%");
+                            })
+                        ;
+                    });
                 }
             })
             ->when($request->has('status'), function($query) use($request){
