@@ -46,6 +46,10 @@ class Reserve extends Model
         return $this->hasOne(Week::class, 'id', 'week_id');
     }
 
+    public function User() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function getUser() {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

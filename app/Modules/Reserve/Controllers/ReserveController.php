@@ -79,7 +79,19 @@ class ReserveController extends Controller
 //            ->orWhere('host_id',auth()->user()->id)
             ->when($request->has('keyword'), function($query) use($request){
                 if(stringNotEmpty($request->keyword)){
-//                    $query->where('')
+                    $keyword = $request->keyword;
+                    $query->where(function($q)use($keyword) {
+                        $q->where('id', $keyword)
+                            ->orWhere('host_id', $keyword)
+                            ->orWhereHas('Host',function($query) use($keyword){
+                                $query->where('name', 'LIKE', "%$keyword%");
+                            })
+                            ->orWhereHas('User', function($query) use($keyword){
+                                $query->where('first_name', 'LIKE', "%$keyword%")
+                                    ->orWhere('last_name', 'LIKE', "%$keyword%");
+                            })
+                        ;
+                    });
                 }
             })
             ->when($request->has('status'), function($query) use($request){

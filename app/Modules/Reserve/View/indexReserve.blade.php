@@ -277,7 +277,7 @@
                     <div class="head-serach row">
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">جستجو:</label>
-                            <input class="same-styk" name="keyword" placeholder="جستجو کنید ...">
+                            <input class="same-styk" name="keyword" value="{{ Request()->keyword }}" placeholder="جستجو کنید ...">
                         </div>
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">نوع رزرو:</label>
@@ -290,9 +290,9 @@
                         <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">وضعیت:</label>
                             <select name="status" class="same-styk">
-                                <option value="all">همه</option>
+                                <option value="all" {{ Request()->status !=null ? 'selected' : '' }}>همه</option>
                                 @foreach(\App\Modules\Reserve\Model\Reserve::getReserveStatusList() as $status)
-                                    <option value="{{ $status['value'] }}" {{ Request()->status == $status['value'] ? 'selected' : '' }}>{{ $status['message'] }}</option>
+                                    <option value="{{ $status['value'] }}" {{ Request()->status !='all' && Request()->status !=null && Request()->status == $status['value'] ? 'selected' : '' }}>{{ $status['message'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -310,11 +310,11 @@
                     @endif
                     @foreach($reserve as $key => $value)
                         @if($value['type'] == 'my-reserve')
-                            @if(Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_REQUESTED_RESERVES || Request()->type_of_reserve == 'all')
+                            @if(Request()->type_of_reserve == null || Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_REQUESTED_RESERVES || Request()->type_of_reserve == 'all')
                             @include('Reserve::TypeReserve.MyReserve')
                                 @endif
                         @elseif($value['type'] == 'my-guest')
-                            @if(Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_GUEST_RESERVES || Request()->type_of_reserve == 'all')
+                            @if(Request()->type_of_reserve == null || Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_GUEST_RESERVES || Request()->type_of_reserve == 'all')
                             @include('Reserve::TypeReserve.MyGuest')
                                 @endif
                         @endif

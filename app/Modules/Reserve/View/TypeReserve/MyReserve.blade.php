@@ -9,7 +9,7 @@
         <div class="slid-1">
             <a class="d-block box-sl slide" href="#">
                 <img class="mw-100" src="{{asset('Uploaded/Gallery/Img/'.$hostModel->getGalleryFirst->img)}}" alt="image" />
-                <div class="info-code-1"><span>کد اقامتگاه   :</span><label>{{$hostModel->id + 5000}}</label></div>
+                <div class="info-code-1"><span>کد اقامتگاه   :</span><label>{{$hostModel->id}}</label></div>
             </a>
         </div>
     </div>
@@ -23,7 +23,7 @@
                     </p>
                 </div>
                 <ul class="col-sm-7 px-0 som-inf">
-                    <li class="info-Rsdnc"><span>شماره رزرو  :</span><label>{{$reserveModel[0]->id + 100000}}</label></li>
+                    <li class="info-Rsdnc"><span>شماره رزرو  :</span><label>{{$reserveModel[0]->id }}</label></li>
                     <li class="info-Rsdnc"><span>وضعیت رزرو  :</span><label>در انتظار تایید </label></li>
                 </ul>
                 <div class="col-sm-5 paymnt-not">
