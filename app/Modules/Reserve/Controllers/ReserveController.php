@@ -213,7 +213,7 @@ class ReserveController extends Controller
                 return response()->json($Response);
             } else {
                 $total_sum_guest = $countRequestGuest - $standardGuest;
-                $extraPriceForPerson = $hostModel->one_person_price * $total_sum_guest; // هزینه کل نفرات اضافی
+                $extraPriceForPerson = ($hostModel->one_person_price * $total_sum_guest)/100; // هزینه کل نفرات اضافی
             }
         }
         // اضافه کردن صفر به تاریخ شروع و پایان
@@ -466,10 +466,10 @@ class ReserveController extends Controller
                 $reserveIdModel = Reserve::where('group_code', $groupCode)->first();
                 $reserveId = $reserveIdModel->id;
                 // send sms for users
-//                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
+                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
                 $userModel = User::where('id', $hostModel->user_id)->first();
                 $total_price_reserve = $total_price_reserve + ($extraPriceForPerson * count($array_price_date));
-//                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
+                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
                 return 1;
             }
         }

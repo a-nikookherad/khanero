@@ -51,7 +51,7 @@
         <div class="col-xl-6">
             <div class="mob-price">
                 <span class="night-price"> هر شب از :</span>
-                <span class="number-price">500,000</span>
+                <span class="number-price">{{number_format(GetMinPrice($hostModel->id)/10)}}</span>
                 <span class="unitq-price">تومان</span>
             </div>
             <div class="rating-homed-flex align-items-center">
@@ -502,14 +502,14 @@
                             <h6 class="titl-02">تاریخ اقامتگاه</h6>
                             <div class="bx-dTER d-flex">
                                 <label>
-                                    
+
                                     <input class="each-01  rounded" autocomplete="off" id="InputDateFrom" placeholder="تاریخ ورود  " mbsc-input data-label-style="stacked" data-input-style="box" />
                                 </label>
                                 <label>
-                                    
+
                                     <input class="each-01  rounded" autocomplete="off" id="InputDateTo" placeholder=" تاریخ خروج " mbsc-input data-label-style="stacked" data-input-style="box" />
                                 </label>
-                             
+
                             </div>
                         </div>
                         <div class="col-sm-12 numbr-gu">
@@ -825,9 +825,9 @@ moreLess(280);
     </script>
     <script>
     mobiscroll.setOptions({
-        locale: mobiscroll.localeFa, 
-        theme: 'ios',                
-        themeVariant: 'light'        
+        locale: mobiscroll.localeFa,
+        theme: 'ios',
+        themeVariant: 'light'
     });
     mobiscroll.datepicker('#InputDateFrom', {
     select: 'range',
@@ -839,6 +839,6 @@ moreLess(280);
 });
 
 
-    
+
  </script>
 @endsection
