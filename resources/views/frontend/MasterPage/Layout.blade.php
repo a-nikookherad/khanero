@@ -20,17 +20,20 @@
     <link href="{{asset('frontend/css/persian-datepicker.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('backend/css/datepicker.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap-datepicker.min.css')}}"/>
+    <link rel="stylesheet" href="/khosravi/frontend/css/lightgallery.min.css" />
+    <link rel="stylesheet" href="{{asset('frontend/css/mobiscroll.jquery.min.css')}}">
+    <script src="{{asset('frontend/js/mobiscroll.javascript.min.js')}}"></script>
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
     @yield('style')
 </head>
 <body>
 <div class="over-page"></div>
 <div class="top">
-    <div class="top1 border-bottom">
+    <div class="top1">
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
-                    <a href="#" id="logo"><img src="{{asset('frontend/images/LOGO.png')}}" alt="logo"></a>
+                    <a href="#" id="logo"><img src="{{asset('frontend/images/logo-f.png')}}" alt="logo"></a>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
                     <div class="d-flex">
@@ -42,8 +45,8 @@
 
                             <ul class="link-top">
                                 <li class="hidden-xs phone">
-                                    <img src="{{asset('frontend/images/icon-t1.png')}}" alt="logo"> <a href=""> 0910 698
-                                        66 86 </a>
+                                    <a href=""> 09106986686 </a>
+                                    <i class="fa fa-phone"></i>
                                 </li>
                                 <li class="sabt hidden-xs visible-md">
                                     <a href="{{route('CreateHost')}}">

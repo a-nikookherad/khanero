@@ -111,7 +111,7 @@
 <!-- Header -->
 <header class="">
 <div class="top mb-2">
-    <div class="top1 border-bottom">
+    <div class="top1">
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">

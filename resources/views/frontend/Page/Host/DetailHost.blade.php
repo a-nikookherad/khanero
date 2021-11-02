@@ -4,9 +4,7 @@
 @section('style')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/lightgallery/1.3.9/css/lightgallery.min.css">
-    <link rel="stylesheet" href="/khosravi/frontend/css/lightgallery.min.css" />
-<link rel="stylesheet" href="{{asset('frontend/css/mobiscroll.jquery.min.css')}}">
-    <script src="{{asset('frontend/js/mobiscroll.javascript.min.js')}}"></script>
+
 @endsection
 
 @section('content')
@@ -834,7 +832,8 @@ moreLess(280);
     controls: ['calendar'],
     startInput: '#InputDateFrom',
     endInput: '#InputDateTo',
-    touchUi: true
+    touchUi: true,
+    showOuterDays: false
 
 });
 

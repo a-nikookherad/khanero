@@ -41,8 +41,8 @@
                 <div class="col-xs-12">
                     <div id="search">
                         <form class="search" action="{{route('SearchHost')}}">
-                            <div class="input-search">
-                                <span class="icon-to"></span>
+                            <div class="input-search d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt"></i>
                                 <span class="search2">
 					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">
 				     </span>
@@ -50,14 +50,14 @@
 
                             <div class="date">
                                 <div class="datepersian">
-                                    <span class="icon-calender"></span>
+                                    <i class="fal fa-calendar-alt"></i>
                                     <span class="input-calender">
                                     <input class="range-from" placeholder=" تاریخ ورود" name="date_from"/>
 						 <!-- <input class="Q-bx date-enter input-date1" type="" id="InputFromDate" placeholder=" تاریخ ورود" name=""> -->
 					 </span>
                                 </div>
                                 <div class="datepersian">
-                                    <span class="icon-calender"></span>
+                                    <i class="fal fa-calendar-alt"></i>
                                     <span class="input-calender">
                                 
                                     <input class="range-to" placeholder=" تاریخ خروج" name="date_to"/>
@@ -65,7 +65,7 @@
 					 </span>
                                 </div>
                                 <div class="number">
-                                    <span class="icon-number"></span>
+                                    <i class="fa fa-users"></i>
                                     <span class="minus"><i class="fas fa-minus"></i></span>
                                     <input type="text" value="1" placeholder="تعداد نفرات" name="number">
                                     <span class="text-number"> نفر</span>

@@ -1121,7 +1121,7 @@ ol {
 .input-search {
   background: #fff;
   border-radius: 30px;
-  padding: 3px 7px;
+  padding: 3px 10px;
   font-size: 13px;
 }
 
@@ -1135,7 +1135,7 @@ input.input-date1.datepersian {
   float: right;
   background: #fff;
   border-radius: 30px;
-  padding: 4px 7px;
+  padding: 4px 10px;
   margin-right: 15px;
   font-size: 12px;
 }
@@ -1145,7 +1145,7 @@ input.input-date1.datepersian {
   float: right;
   background: #fff;
   border-radius: 30px;
-  padding: 3px 7px;
+  padding: 3px 10px;
   font-size: 14px;
   margin-right: 15px;
 }
@@ -1315,7 +1315,7 @@ button.btn-dropdown-city.dropdown-toggle {
 }
 
 .box-login a {
-  color: #fff;
+
   cursor: pointer;
   margin-left: 5px;
 }
@@ -1329,18 +1329,17 @@ button.btn-dropdown-city.dropdown-toggle {
   display: inline-block;
 }
 
-.phone {
-  font-size: 19px;
-  color: #16c316;
+.phone i{
+  transform: rotate(90deg);
+        color: #787676;
+    font-size: 22px;
 }
 
-.phone img, .phone a {
-  float: left;
-  margin-right: 10px;
-  color: #fff;
+ .phone a {
+ 
+  color: #454545;
   font-weight: bold;
   font-size: 21px;
-  text-shadow: 0 2px 3px black;
 }
 
 div#demos .item1 img {
@@ -2752,9 +2751,8 @@ span.btn {
 
 @media (max-width: 1050px) {
   div#logo {
-    MARGIN: 0;
+    margin: 0;
   }
-  .top1.fixedLinks-fx {}
   .top1.fixedLinks-fx {
     display: block;
   }
@@ -3055,7 +3053,7 @@ div#demos .item1 img {
   span.line-login {
     height: 14px;
     width: 1px;
-    background: #ffffff;
+    background: #5c5d5e87;
     position: relative;
     right: -3px;
     display: inline-block;
@@ -3320,14 +3318,6 @@ ul.dropdown-menu table.table.table-striped {
   font-family: 'web_Yekan' !important;
 }
 
-.icon-to {
-  background: url("../images/slice.png") no-repeat -273px -14px;
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
 .input-search span {
   display: inline-block;
   vertical-align: middle;
@@ -3341,14 +3331,6 @@ ul.dropdown-menu table.table.table-striped {
   background-color: transparent !important;
   width: 100%;
   min-height: 45px;
-}
-
-.icon-calender {
-  background: url("../images/slice.png") no-repeat -221px -15px;
-  width: 20px;
-  height: 21px;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 .input-calender {
@@ -3590,12 +3572,6 @@ ul.dropdown-menu table.table.table-striped {
 }
 
 @media screen and (min-width:768px) {
-  .icon-calender {
-    margin-left: 7px;
-  }
-  .hidden-xs.phone a {
-    margin-top: -3px;
-  }
   .row.fix-w {
     display: flex;
     align-items: center;
@@ -3609,7 +3585,7 @@ ul.dropdown-menu table.table.table-striped {
   span.line-login {
     height: 14px;
     width: 2px;
-    background: #ffffff;
+    background: #5c5d5e87;
     position: relative;
     right: -3px;
     display: inline-block;
@@ -3666,12 +3642,11 @@ ul.dropdown-menu table.table.table-striped {
     top: 0;
     transition: top .3s;
     position: absolute;
-    background: #A6ABBD;
     padding: 10px 0;
+    background-color: #ffffff91;
+    box-shadow: 0 0 5px 3px #716e6e;
+    height: 77px;
   }
-  /* .top1.border-bottom{
-  border: 0 none;
-} */
   div#logo {
     width: 32%;
   }
@@ -4189,9 +4164,6 @@ ul.dropdown-menu table.table.table-striped {
 }
 
 .icon-number {
-  background: url("../images/slice.png") -173px -16px;
-  width: 20px;
-  height: 18px;
   display: inline-block;
   vertical-align: middle;
   float: right;
@@ -5270,4 +5242,16 @@ img.option-img {
     .md-mobile-picker-inline {
         margin: 6px 0 12px 0;
     }
-
+.search .datepersian i ,.input-search i{
+  font-size: 20px;
+  color: #007dec;
+  font-family: 'Font Awesome 5 Free' !important;
+  margin-left: 7px;
+}
+.number i.fa-users{
+  float: right;
+  margin-top: 12px;
+  margin-right: 4px;
+  font-size: 20px;
+  color: #007dec;
+}
