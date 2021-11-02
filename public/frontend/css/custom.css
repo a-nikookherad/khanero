@@ -794,7 +794,6 @@ ul.csncel-items i {
   background: #ffffff00;
   margin: 0;
   border-radius: 0 !important;
-  overflow: hidden;
 }
 
 .numbr-gu {
@@ -1106,7 +1105,7 @@ ol {
   position: relative;
   float: right;
   width: 100%;
-  height: 77px ;
+  height: 77px;
 }
 
 .box-search p {
@@ -5200,14 +5199,12 @@ img.option-img {
 
 #InputDateFrom, #InputDateTo {
   cursor: pointer;
+}
+
+.top1 {
   background: transparent;
 }
-.mbsc-ios.mbsc-textfield-wrapper{
-  margin: 0 !important;
-}
-.mbsc-form-control-wrapper ,.mbsc-rtl{
-  font-family: 'web_Yekan' !important;
-}
+<<<<<<< HEAD
  .md-mobile-picker-header {
         font-size: 14px;
     }
@@ -5254,4 +5251,9 @@ img.option-img {
   margin-right: 4px;
   font-size: 20px;
   color: #007dec;
+=======
+
+.top {
+  height: 0;
+>>>>>>> parent of 396ba1d... New Datepicker
 }
