@@ -76,8 +76,8 @@
         <div class="collapse navbar-collapse navbar-right" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class=""><a href="{{ route('HomePage') }}">صفحه اصلی سایت</a></li>
-                <li class=""><a href="{{ route('Login') }}">ورود</a></li>
-                <li><a href="{{ route('Register') }}">ثبت نام</a></li>
+{{--                <li class=""><a href="{{ route('Login') }}">ورود</a></li>--}}
+{{--                <li><a href="{{ route('Register') }}">ثبت نام</a></li>--}}
             </ul>
         </div>
     </div>

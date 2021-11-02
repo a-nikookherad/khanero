@@ -20,8 +20,8 @@ class Reserve extends Model
     const STATUS_WAITING_TO_PAY = 1; // تایید شده و منتظر است تا مهمان مبلغ را پرداخت کند.
     const STATUS_PAID  = 2; // پرداخت شده.
 
-    const MY_RESERVE = 1; // اگر کاربر از اقامتگاههای خودش رزرو کرده باشه.
-    const MY_GUEST = 2;
+    const MY_REQUESTED_RESERVES = 1;
+    const MY_GUEST_RESERVES = 2;
 
 
     /**
@@ -44,6 +44,10 @@ class Reserve extends Model
 
     public function getWeek() {
         return $this->hasOne(Week::class, 'id', 'week_id');
+    }
+
+    public function User() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function getUser() {

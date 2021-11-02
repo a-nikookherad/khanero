@@ -868,3 +868,11 @@ function getVisionName($vision_id)
     return 'ندارد';
 }
 
+function stringNotEmpty($string)
+{
+    if(trim($string) == ''){
+        return false;
+    }
+    return true;
+}
+

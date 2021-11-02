@@ -33,54 +33,57 @@ class ReserveController extends Controller
      ****************/
     public function IndexReserve(Request $request)
     {
-
-//        $yourjson = {
-//            "Token":"a8d7606bf50b45dab0dd27110c70ce63",
-//          "SenderNumber":"50001",
-//          "Mobile":"09355000000",
-//          "Message" : "test"
-//        };
-
-
-//$ch = curl_init();
-//
-//curl_setopt($ch, CURLOPT_URL,"https://mysite.ir/api/v1/Send");
-//curl_setopt($ch, CURLOPT_POST, 1);
-//curl_setopt($ch, CURLOPT_POSTFIELDS,
-//    "Token=a8d7606bf50b45dab0dd27110c70ce63&SenderNumber=10003031&Mobile=09396800779&Message=1234");
-
-// In real life you should use something like:
-// curl_setopt($ch, CURLOPT_POSTFIELDS,
-//          http_build_query(array('postvar1' => 'value1')));
-
-// Receive server response ...
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//
-//$server_output = curl_exec($ch);
-//
-//curl_close ($ch);
-
-
-
-//        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
-//            ->orWhereHas('Host', function ($Query) {
-//            $Query->where('user_id', auth()->user()->id);
-//        })
+        $reserveModel = Reserve::where(function($query){
+                if(Auth::user()->role_id == User::ADMIN) {
+                    //returns all
+                } else {
+                    $query->where('user_id', auth()->user()->id);
+                }
+            })
+            ->orWhereHas('Host', function ($Query) {
+                if(Auth::user()->role_id == User::ADMIN) {
+                    //returns all
+                } else {
+                    $Query->where('user_id', auth()->user()->id);
+                }
+        })
 //            ->orWhere('host_id',auth()->user()->id)
-//            ->get()->groupBy('group_code');
+            ->when($request->has('keyword'), function($query) use($request){
+                if(stringNotEmpty($request->keyword)){
+                    $keyword = $request->keyword;
+                    $query->where(function($q)use($keyword) {
+                        $q->where('id', $keyword)
+                            ->orWhere('host_id', $keyword)
+                            ->orWhereHas('Host',function($query) use($keyword){
+                                $query->where('name', 'LIKE', "%$keyword%");
+                            })
+                            ->orWhereHas('User', function($query) use($keyword){
+                                $query->where('first_name', 'LIKE', "%$keyword%")
+                                    ->orWhere('last_name', 'LIKE', "%$keyword%");
+                            })
+                        ;
+                    });
+                }
+            })
+            ->when($request->has('status'), function($query) use($request){
+                if($request->status != 'all'){
+                    $query->where('status', $request->status);
+                }
+            })
+            ->get()->groupBy('group_code');
 
-        $reserveModel = DB::table('reserves')
-            ->select('group_code')
-            ->groupBy('group_code')
-            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
-            ->where('hosts.user_id','=',Auth::id())
-            ->orWhere('reserves.user_id','=',Auth::id())
-            ->get();
+//        $reserveModel2 = DB::table('reserves')
+//            ->select('group_code')
+//            ->groupBy('group_code')
+//            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
+//            ->where('hosts.user_id','=',Auth::id())
+//            ->orWhere('reserves.user_id','=',Auth::id())
+//            ->get();
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
         foreach ($reserveModel as $key => $value) {
-            $res = Reserve::where('group_code', $value->group_code)->first();
+            $res = Reserve::where('group_code', $key)->first();
             if($res->user_id == auth()->user()->id) {
                 $type = 'my-reserve';
             } else {
@@ -193,7 +196,7 @@ class ReserveController extends Controller
                 return response()->json($Response);
             } else {
                 $total_sum_guest = $countRequestGuest - $standardGuest;
-                $extraPriceForPerson = $hostModel->one_person_price * $total_sum_guest; // هزینه کل نفرات اضافی
+                $extraPriceForPerson = ($hostModel->one_person_price * $total_sum_guest)/100; // هزینه کل نفرات اضافی
             }
         }
         // اضافه کردن صفر به تاریخ شروع و پایان
@@ -446,10 +449,10 @@ class ReserveController extends Controller
                 $reserveIdModel = Reserve::where('group_code', $groupCode)->first();
                 $reserveId = $reserveIdModel->id;
                 // send sms for users
-//                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
+                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
                 $userModel = User::where('id', $hostModel->user_id)->first();
                 $total_price_reserve = $total_price_reserve + ($extraPriceForPerson * count($array_price_date));
-//                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
+                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
                 return 1;
             }
         }

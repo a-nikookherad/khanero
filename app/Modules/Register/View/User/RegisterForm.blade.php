@@ -112,7 +112,7 @@
                         <div class="">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <p>قبلا ثبت نام کرده اید؟ <a href="{{route('Login')}}">ورود</a></p>
+{{--                                    <p>قبلا ثبت نام کرده اید؟ <a href="{{route('Login')}}">ورود</a></p>--}}
                                 </div>
                             </div>
                         </div>

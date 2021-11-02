@@ -49,7 +49,7 @@
         <div class="col-xl-6">
             <div class="mob-price">
                 <span class="night-price"> هر شب از :</span>
-                <span class="number-price">500,000</span>
+                <span class="number-price">{{number_format(GetMinPrice($hostModel->id)/10)}}</span>
                 <span class="unitq-price">تومان</span>
             </div>
             <div class="rating-homed-flex align-items-center">
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col-12 p-0 text-right">
                             <span class="px-1 font-weight-bold position-relative info2">کد اقامتگاه:</span>
-                            <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id + 5000}}</span>
+                            <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id}}</span>
                         </div>
 
                     </div>

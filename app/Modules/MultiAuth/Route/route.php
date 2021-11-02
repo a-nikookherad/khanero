@@ -14,9 +14,9 @@ Route::group(['middleware'=>['web'],'namespace'=>'App\Modules\MultiAuth\Controll
 
     /*admin login page*/
 
-    Route::get('login','AuthController@LoginPage')->name('LoginPage');
+//    Route::get('login','AuthController@LoginPage')->name('LoginPage');
 
-    Route::post('login','AuthController@Login')->name('Login');
+//    Route::post('login','AuthController@Login')->name('Login');
 
 
     /*user login page*/
