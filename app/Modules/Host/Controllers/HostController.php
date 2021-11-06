@@ -842,7 +842,7 @@ class HostController extends Controller
             'img.mimes' => 'تصویر باید از نوع "png" یا "jpg" باشد'
         ];
         $validator = Validator::make($request->all(), [
-            'img' => 'required|mimes:png,jpg,jpeg', //max:5000
+            'img' => 'required|mimes:png,jpg,jpeg,jfif', //max:5000
         ], $Message);
 
         if ($validator->fails()) {

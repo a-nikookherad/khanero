@@ -16,8 +16,8 @@ class SMS
 
     public function __construct($mobile, $pattern_code)
     {
-        $this->username = env("SMS_USERNAME", "9106986686");
-        $this->password = env("SMS_PASSWORD", "faraz1080087966");
+        $this->username = env("SMS_USERNAME", "09106986686"); //9106986686
+        $this->password = env("SMS_PASSWORD", "faraz1080087999"); //faraz1080087966
         $this->to = $mobile;
         $this->from = env("SMS_SENDER");
         $this->pattern_code = $pattern_code;

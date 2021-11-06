@@ -10,7 +10,7 @@ class SMSController extends Controller
     public function register($mobile, $password)
     {
         try {
-            $pattern = "3cy9f4wuw3";
+            $pattern = "1qodulr83z";//"3cy9f4wuw3";
             $smsLogicInstance = new SMS($mobile, $pattern);
 
             $input_data = [
