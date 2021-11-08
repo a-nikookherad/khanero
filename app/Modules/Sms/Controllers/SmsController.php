@@ -20,7 +20,7 @@ class SmsController extends Controller
 {
 
     public static function SendSMSRegister($Name = null, $Mobile, $Token)
-    {
+    { // comment
         try {
             $sms  = Facade::sms();
             $to   = $Mobile;
@@ -39,11 +39,11 @@ www.khanero.com';
 
 
     public static function SendSMSForLogin($Mobile, $Token)
-    {
+    { //comment
         try {
             $sms  = Facade::sms();
             $to   = $Mobile;
-            $from = '10007514';
+            $from = '3000505';
 
             $text = 'کد فعالسازی شما در خانه رو '.$Token.' میباشد.';
 
@@ -55,7 +55,7 @@ www.khanero.com';
     }
 
     public static function SendSMSRegister2($Mobile, $Token)
-    {
+    { // comment
 //        try {
 //            $sms = melipayamak::sms();
 //            $to = $Mobile;
@@ -71,18 +71,25 @@ www.khanero.com';
 
     public static function SendSMSConfirmHost($Mobile)
     {
-        try {
-            $sms  = Facade::sms();
-            $to   = $Mobile;
-            $from = '10007514';
 
-            $text = 'سایت خانه رو
+        ini_set("soap.wsdl_cache_enabled", "0");
+        try {
+            $client = new \SoapClient("http://ippanel.com/class/sms/wsdlservice/server.php?wsdl");
+            $user = env("SMS_USERNAME", "09106986686"); //9106986686
+            $pass = env("SMS_PASSWORD", "faraz1080087999"); //faraz1080087966
+            $fromNum = "3000505";
+            $toNum = array($Mobile);
+            $messageContent = 'سایت خانه رو
 اقامتگاه شما با موفقیت ثبت شد. لطفا جهت تسریع در روند تایید و فعالسازی اقامتگاه، تا پیش از تماس همکاران، تصاویر مدارک خود را آماده نمایید.
 کارشناسان ما حداکثر تا 24 ساعت آینده با شما تماس خواهند گرفت.';
+            $op  = "send";
+            //If you want to send in the future  ==> $time = '2016-07-30' //$time = '2016-07-30 12:50:50'
 
-            $sms->send($to, $from, $text);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+            $time = '';
+
+            echo $client->SendSMS($fromNum,$toNum,$messageContent,$user,$pass,$time,$op);
+        } catch (\SoapFault $ex) {
+            echo $ex->faultstring;
         }
         return true;
     }
@@ -126,7 +133,7 @@ Khanero.com'
     }
 
     public static function SendSMSWaitReserveHost($Mobile, $HostId, $HostName, $CountDayReserve, $DateFrom, $DateTo, $TotalPrice, $Token, $TokenCancel, $CountGuest,$reserveId)
-    {
+    { //comment
 
         $fromDate = jDate::forge($DateFrom)->format('%A %d %B %Y');
 
@@ -146,32 +153,6 @@ Khanero.com'
 
             $sms->send($to, $from, $text);
         } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-        return true;
-
-
-
-        $userModel = User::where('mobile', $Mobile)->first();
-        $percent = $TotalPrice*5 / 100;
-        $TotalPrice = $TotalPrice - $percent;
-        $perDay = $TotalPrice / $CountDayReserve;
-        try {
-            $sms = melipayamak::sms();
-            $to = $Mobile;
-            $from = '10007514';
-            $text = ''.$userModel->first_name . ' ' . $userModel->last_name.' عزیز
-مهمانی با قیمت خالص '.$TotalPrice.' تومان با میانگین شبی '.round($perDay).' تومان اقامتگاه '.$HostName.' شما را به مدت '.$CountDayReserve.' شب از تاریخ '.$DateFrom.' تا تاریخ '.$DateTo.' با '.$CountGuest.' مهمان درخواست رزرو کرده است
-در صورتی که امکان اراِئه سرویس به این مهمان را دارید تا 2 ساعت آینده وقت دارید به این پیام پاسخ دهید تا لینک پرداخت برای مهمان ارسال شود
-در صورت تایید کد : '. $Token .'
-عدم تایید کد : '.$TokenCancel.'
-را به همین شماره ارسال کنید
-توجه داشته باشید دیر پاسخ دادن به درخواست ممکن است مهمان منزل دیگری را انتخاب کند
-شماره رزرو :'.$reserveId.'
-شماره پشتیبانی :
-     ';
-            $sms->send($to, $from, $text);
-        } catch (Exception $e) {
             echo $e->getMessage();
         }
         return true;

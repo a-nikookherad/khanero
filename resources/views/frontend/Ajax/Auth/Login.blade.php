@@ -95,6 +95,8 @@
         var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
         $(this).html(loading);
         $.ajax({
+            url: "{{ route('RequestSms', ['type' => 'login_with_sms']) }}",
+            method: "post",
             data: {
                 mobile: $('#MobileUser').val(),
             }

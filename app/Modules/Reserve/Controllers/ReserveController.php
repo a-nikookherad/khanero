@@ -449,10 +449,26 @@ class ReserveController extends Controller
                 $reserveIdModel = Reserve::where('group_code', $groupCode)->first();
                 $reserveId = $reserveIdModel->id;
                 // send sms for users
-                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
+                $smsController = new \App\Http\Controllers\SMSController();
+                $data = [
+                    'reserveId' => $reserveId,
+                    'hostId' => $hostModel->id
+                ];
+                $smsController->register(auth()->user()->mobile, 'chqns3ucbe', $data);
+//                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
                 $userModel = User::where('id', $hostModel->user_id)->first();
                 $total_price_reserve = $total_price_reserve + ($extraPriceForPerson * count($array_price_date));
-                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
+                $data = [
+                    'hostName' => $reserveId,
+                    'hostId' => $hostModel->id,
+                    'fromDate' => jDate::forge($dateFrom)->format('%A %d %B %Y'),
+                    'countDayReserve' => $countDayReserve,
+                    'numberOfPeople' => $request->count_guest,
+                    'totalPrice' => $total_price_reserve/10,
+                    'link' => 'https://khanero.com'
+                ];
+                $smsController->register($userModel->mobile, 'v35ykcww8a', $data);
+//                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
                 return 1;
             }
         }

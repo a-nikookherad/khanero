@@ -210,15 +210,17 @@ class AuthController extends Controller
     {
         // return 23;
         $userModel = User::where('mobile', $request->mobile)->first();
+        $smsController = new \App\Http\Controllers\SMSController();
         if (!empty($userModel)) {
             if ($userModel->password == 'none') {
                 $Token = (rand(10000, 99999));
                 /*
                  * send sms
                  * */
-                SmsController::SendSMSRegister($userModel->first_name.' '.$userModel->last_name, $userModel->mobile, $Token);
-                $smsController = new \App\Http\Controllers\SMSController();
-                $smsController->register($userModel->mobile, $Token);
+                $data = [
+                    'token' => $Token
+                ];
+                $smsController->register($userModel->mobile, '7x5tqxosv2', $data);
                 UserActivation::where('user_id', $userModel->id)->delete();
                 $Activation = new UserActivation([
                     'user_id' => $userModel->id,
@@ -246,9 +248,11 @@ class AuthController extends Controller
                 /*
                  * send sms
                  * */
-                SmsController::SendSMSRegister($userModel->first_name . ' ' . $userModel->last_name, $userModel->mobile, $Token);
-                $smsController = new \App\Http\Controllers\SMSController();
-                $smsController->register($userModel->mobile, $Token);
+                $data = [
+                    'token' => $Token
+                ];
+                $smsController->register($userModel->mobile, '7x5tqxosv2', $data);
+
                 $Activation = new UserActivation([
                     'user_id' => $userModel->id,
                     'token'   => $Token
@@ -349,9 +353,7 @@ class AuthController extends Controller
             /*
              * send sms
              * */
-            SmsController::SendSMSForLogin($userModel->mobile, $Token);
             $smsController = new \App\Http\Controllers\SMSController();
-            $smsController->register($userModel->mobile, $Token);
             UserActivation::where('user_id', $userModel->id)->delete();
             $Activation = new UserActivation([
                 'user_id' => $userModel->id,
@@ -360,11 +362,21 @@ class AuthController extends Controller
 
             if ($Activation->save()) {
                 if($type == 'forget_password') {
+                    $data = [
+                        'verification_code' => $Token
+                    ];
+                    $smsController->register($userModel->mobile, '1qodulr83z', $data);
+
                     $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.ForgetPass')->render()];
                     return response()->json($Response);
+                } else {
+                    $data = [
+                        'token' => $Token
+                    ];
+                    $smsController->register($userModel->mobile, 'wkf3frx1mm', $data);
+                    $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
+                    return response()->json($Response);
                 }
-                $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
-                return response()->json($Response);
             }
 
         } else {
