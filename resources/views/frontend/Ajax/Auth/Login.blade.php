@@ -58,7 +58,7 @@
                 AlertToast('ورود', 'خوش آمدید');
                 $('#myModal').modal('hide');
                 $('.modal-backdrop.fade.in').css('display', 'none');
-                $('.list-login').html(returnData.Content2);
+                $('.box-login').append($('<div class="list-login">').append(returnData.Content2))
             }
         });
     });

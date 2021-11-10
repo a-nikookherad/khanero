@@ -306,10 +306,10 @@
                 <script>
                     //============ search-->
                     $(document).ready(function () {
-                        $('.menu-user').click(function () {
+                        $(document).on('click', '.menu-user', function () {
                             $(this).parent().parent().toggleClass('open-1');
                             $('.over-page').toggleClass('active');
-                        });
+                        })
                         $('.btn-menu').click(function () {
                             $(this).parent().toggleClass('open-mob');
                             $('.over-page').toggleClass('active');

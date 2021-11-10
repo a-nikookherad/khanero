@@ -621,6 +621,7 @@ span.px-1.font-weight-bold.position-relative.info1.text-theme {
 img.pc-user.mw-100 {
   width: 65px;
   height: 65px;
+  padding: 7px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 3px 9px -4px #c3c3c3;
