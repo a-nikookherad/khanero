@@ -55,6 +55,8 @@
                 AlertToast('ورود', 'رمز ورود اشتباه است', 'warning');
             } else if(returnData.Message == 'success') {
                 $('.box-login').html(returnData.Content);
+                $('.box-login > span').addClass('can-click-on');
+                $('.box-login > span > a').addClass('user-style');
                 AlertToast('ورود', 'خوش آمدید');
                 $('#myModal').modal('hide');
                 $('.modal-backdrop.fade.in').css('display', 'none');
