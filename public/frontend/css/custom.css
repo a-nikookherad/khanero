@@ -5246,15 +5246,62 @@ img.option-img {
   font-family: 'Font Awesome 5 Free' !important;
   margin-left: 7px;
 }
-.number i.fa-users{
+.number i.fa-users {
   float: right;
   margin-top: 12px;
   margin-right: 4px;
   font-size: 20px;
   color: #007dec;
-=======
+}
 
 .top {
   height: 0;
 >>>>>>> parent of 396ba1d... New Datepicker
+}
+
+.top1{
+  background-color: #fff;
+}
+
+.select2-container--default .select2-selection--single {
+  border: none;
+}
+
+.select2-search.select2-search--dropdown {
+  display: block !important;
+}
+
+.select2-results {
+  display: block !important;
+}
+
+.select2-container--default .select2-results__group {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.select2-container--default .select2-results__option .select2-results__option {
+  border-bottom: 1px solid #ddd;
+}
+
+.select2-results__option {
+  text-align: center;
+}
+
+.select2-container--default .select2-results__option .select2-results__option {
+  text-align: right;
+}
+
+.select2-container--default .select2-results__option--selected {
+  background-color: #007dec;
+  color: white;
+}
+
+.select2-container {
+  text-align: right;
+}
+
+.select2-container .selection {
+  width: 100%;
 }

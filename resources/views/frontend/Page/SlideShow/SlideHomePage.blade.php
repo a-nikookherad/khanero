@@ -44,7 +44,18 @@
                             <div class="input-search d-flex align-items-center">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span class="search2">
-					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">
+{{--					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">--}}
+                                    <select class="js-example-basic-single" name="state">
+                                        <option></option>
+                                      <optgroup label="مقاصد پر تردد">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                      </optgroup>
+                                      <optgroup label="سایر شهرها">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                      </optgroup>
+                                    </select>
 				     </span>
                             </div>
 

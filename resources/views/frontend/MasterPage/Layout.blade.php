@@ -16,14 +16,13 @@
 <!-- <link rel="stylesheet" href="{{asset('frontend/css/persian-datepicker.css')}}"> -->
     <link href="{{asset('frontend/css/fontawesome-all.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/assets/Popup-jQuery/toast.style.min.css')}}"/>
-    <link href="{{asset('frontend/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/persian-datepicker.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('backend/css/datepicker.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap-datepicker.min.css')}}"/>
-    <link rel="stylesheet" href="/khosravi/frontend/css/lightgallery.min.css" />
-    <link rel="stylesheet" href="{{asset('frontend/css/mobiscroll.jquery.min.css')}}">
-    <script src="{{asset('frontend/js/mobiscroll.javascript.min.js')}}"></script>
+    <link href="{{asset('frontend/css/select2.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('frontend/css/custom.css')}}" rel="stylesheet">
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
+    <script src="{{asset('frontend/js/select2.min.js')}}"></script>
     @yield('style')
 </head>
 <body>
@@ -558,6 +557,19 @@
 
 
 <script>
+
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2({
+            dir: 'rtl',
+            width: '100%',
+            placeholder: 'شهر مقصد یا کد اقامتگاه',
+            language: {
+                noResults: function () {
+                    return "نتیجه ای یافت نشد.";
+                }
+            }
+        });
+    });
 
     var to, from;
     to = $(".range-to").persianDatepicker({
