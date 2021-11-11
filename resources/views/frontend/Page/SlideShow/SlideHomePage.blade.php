@@ -45,15 +45,17 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span class="search2">
 {{--					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">--}}
-                                    <select class="js-example-basic-single" name="state">
+                                    <select class="js-example-basic-single" name="city">
                                         <option></option>
                                       <optgroup label="مقاصد پر تردد">
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
+                                       @foreach($busyDestinations as $busyDestination)
+                                           <option value="{{ $busyDestination }}">{{ $busyDestination }}</option>
+                                          @endforeach
                                       </optgroup>
                                       <optgroup label="سایر شهرها">
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
+                                          @foreach($townshipSearchData as $town)
+                                              <option value="{{ $town }}">{{ $town }}</option>
+                                          @endforeach
                                       </optgroup>
                                     </select>
 				     </span>
