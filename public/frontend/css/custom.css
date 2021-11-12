@@ -5305,3 +5305,19 @@ img.option-img {
 .select2-container .selection {
   width: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  /* border-radius: 100px; */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border: 3.5px solid transparent;
+  background-clip: content-box;
+  background-color: #8070d4;
+}
