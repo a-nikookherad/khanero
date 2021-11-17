@@ -115,7 +115,7 @@
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
-                    <div id="logo"><img src="{{public_path('frontend/images/LOGO0.png')}}" alt="logo"></div>
+                    <div id="logo"><img src="{{asset('frontend/images/logo-f.png')}}" alt="logo"></div>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
             <div class="d-flex">
@@ -133,7 +133,7 @@
                                         <!-- Modal content-->
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <img src="{{public_path('frontend/images/LOGO0.png')}}" alt="logo">
+                                                <img src="{{asset('frontend/images/logo-f.png')}}" alt="logo">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 <h4 class="modal-title">ورود / ثبت نام</h4>
                                             </div>
@@ -215,7 +215,7 @@
                             <div class="list-login">
                                 <ul>
                                     <li class="user-info d-flex align-items-center">
-                                        <img class="pc-user mw-100" src="{{auth()->user()->avatar?auth()->user()->avatar:''}}"/>
+                                        <img class="pc-user mw-100" src="{{auth()->user()->avatar?asset(auth()->user()->avatar):''}}"/>
                                         <h5 class="name-user">{{auth()->user()->first_name . ' ' . auth()->user()->last_name}}</h5>
                                     </li>
                                     <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>
