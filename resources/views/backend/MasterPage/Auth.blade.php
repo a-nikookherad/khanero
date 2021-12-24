@@ -34,7 +34,7 @@
         .navbar-default.navbar-alt .navbar-nav>li>a:hover, .navbar-default.navbar-alt .navbar-nav>li>a:focus {
             color: #527970;
         }
-        
+
         body {
             animation:myanim 0.5s;
             -webkit-animation:myanim 0.5s;
@@ -76,8 +76,8 @@
         <div class="collapse navbar-collapse navbar-right" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class=""><a href="{{ route('HomePage') }}">صفحه اصلی سایت</a></li>
-                <li class=""><a href="{{ route('Login') }}">ورود</a></li>
-                <li><a href="{{ route('Register') }}">ثبت نام</a></li>
+{{--                <li class=""><a href="{{ route('Login') }}">ورود</a></li>--}}
+{{--                <li><a href="{{ route('Register') }}">ثبت نام</a></li>--}}
             </ul>
         </div>
     </div>

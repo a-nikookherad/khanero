@@ -145,15 +145,18 @@
         var name = file.name;
         var size = file.size;
         var extension = name.split('.').pop().toLowerCase();
-        if (jQuery.inArray(extension, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+        if (jQuery.inArray(extension, ['gif', 'png', 'jpg', 'jpeg', 'jfif']) == -1) {
             AlertToast('ارسال تصویر', 'فرمت فایل صحیح نیست.', 'warning');
             $('.Loading').html('');
             return false;
-        } else if (size > 20000000) {
+        }
+
+        if (size > 2000000) {
             AlertToast('ارسال تصویر', 'حجم فایل ارسالی بیش از حد مجاز است.', 'warning');
             $('.Loading').html('');
             return false;
         }
+
         var hostId = $('#host_id').val();
         var formData = new FormData();
         formData.append('img', file);

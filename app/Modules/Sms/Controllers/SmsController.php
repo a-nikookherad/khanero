@@ -12,32 +12,50 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Melipayamak;
+use Melipayamak\Laravel\Facade;
+use Morilog\Jalali\Facades\jDate;
 
 
 class SmsController extends Controller
 {
-    public static function SendSMSRegister($Name=null, $Mobile, $Token)
-    {
-/*        try {
-            $sms = melipayamak::sms();
-            $to = $Mobile;
+
+    public static function SendSMSRegister($Name = null, $Mobile, $Token)
+    { // comment
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
             $from = '10007514';
 
-            $text = ''.$Name.' عزیز
-به سایت رنت خوش آمدید
-کد فعالسازی "رنت" :'.$Token.'
-راهنمای نحوه رزرو :
-کانال تلگرام :
-شماره پشتیبانی :';
+            $text = 'به خانه رو خوش آمدید !
+کد فعالسازی شما :' . $Token . '
+www.khanero.com';
+
             $sms->send($to, $from, $text);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
-        return true;*/
+        return true;
     }
+
+
+    public static function SendSMSForLogin($Mobile, $Token)
+    { //comment
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '3000505';
+
+            $text = 'کد فعالسازی شما در خانه رو '.$Token.' میباشد.';
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+        return true;
+    }
+
     public static function SendSMSRegister2($Mobile, $Token)
-    {
+    { // comment
 //        try {
 //            $sms = melipayamak::sms();
 //            $to = $Mobile;
@@ -51,25 +69,28 @@ class SmsController extends Controller
     }
 
 
-    public static function SendSMSWaitConfirmHost($Mobile)
+    public static function SendSMSConfirmHost($Mobile)
     {
-//        $userModel = User::where('mobile', $Mobile)->first();
-//        if ($userModel->sex == 1) {
-//            $sex = ' آقای ';
-//        } else {
-//            $sex = ' خانم ';
-//        }
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ' '. auth()->user()->first_name . ' ' . auth()->user()->last_name .' عزیز
-//درخواست میزبانی اقامتگاه شما در "رنت" ثبت شد و پس از بررسی های لازم و تایید توسط تیم "رنت" آگهی شما در سایت گذاشته خواهد شد
-//شماره پشتیبانی :';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
+
+        ini_set("soap.wsdl_cache_enabled", "0");
+        try {
+            $client = new \SoapClient("http://ippanel.com/class/sms/wsdlservice/server.php?wsdl");
+            $user = env("SMS_USERNAME", "09106986686"); //9106986686
+            $pass = env("SMS_PASSWORD", "faraz1080087999"); //faraz1080087966
+            $fromNum = "3000505";
+            $toNum = array($Mobile);
+            $messageContent = 'سایت خانه رو
+اقامتگاه شما با موفقیت ثبت شد. لطفا جهت تسریع در روند تایید و فعالسازی اقامتگاه، تا پیش از تماس همکاران، تصاویر مدارک خود را آماده نمایید.
+کارشناسان ما حداکثر تا 24 ساعت آینده با شما تماس خواهند گرفت.';
+            $op  = "send";
+            //If you want to send in the future  ==> $time = '2016-07-30' //$time = '2016-07-30 12:50:50'
+
+            $time = '';
+
+            echo $client->SendSMS($fromNum,$toNum,$messageContent,$user,$pass,$time,$op);
+        } catch (\SoapFault $ex) {
+            echo $ex->faultstring;
+        }
         return true;
     }
 
@@ -92,47 +113,48 @@ class SmsController extends Controller
     }
 
 
-    public static function SendSMSWaitReserveCustomer($Mobile)
+    public static function SendSMSWaitReserveCustomer($Mobile,$reserveId, $hostId)
     {
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ''.auth()->user()->first_name . ' ' . auth()->user()->last_name.' عزیز
-//درخواست شما با موفقیت در سیستم ثبت گردید و وضعیت رزرو شما حداکثر تا 3 ساعت کاری آینده از طریق پیامک به اطلاع شما خواهد رسید
-//پیگیری رزرو : http://www.rentt.ir/index/reserve
-//شماره پشتیبانی :';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '10007514';
+
+            $text = 'سایت خانه رو
+درخواست رزرو '. $reserveId.' با کد ملک '. $hostId.' جهت بررسی به میزبان ارسال و تا 30 دقیقه آینده نتیجه آن به اطلاع شما خواهد رسید.
+Khanero.com'
+            ;
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
         return true;
     }
 
     public static function SendSMSWaitReserveHost($Mobile, $HostId, $HostName, $CountDayReserve, $DateFrom, $DateTo, $TotalPrice, $Token, $TokenCancel, $CountGuest,$reserveId)
-    {
-//        $userModel = User::where('mobile', $Mobile)->first();
-//        $percent = $TotalPrice*5 / 100;
-//        $TotalPrice = $TotalPrice - $percent;
-//        $perDay = $TotalPrice / $CountDayReserve;
-//        try {
-//            $sms = melipayamak::sms();
-//            $to = $Mobile;
-//            $from = '10007514';
-//            $text = ''.$userModel->first_name . ' ' . $userModel->last_name.' عزیز
-//مهمانی با قیمت خالص '.$TotalPrice.' تومان با میانگین شبی '.round($perDay).' تومان اقامتگاه '.$HostName.' شما را به مدت '.$CountDayReserve.' شب از تاریخ '.$DateFrom.' تا تاریخ '.$DateTo.' با '.$CountGuest.' مهمان درخواست رزرو کرده است
-//در صورتی که امکان اراِئه سرویس به این مهمان را دارید تا 2 ساعت آینده وقت دارید به این پیام پاسخ دهید تا لینک پرداخت برای مهمان ارسال شود
-//در صورت تایید کد : '. $Token .'
-//عدم تایید کد : '.$TokenCancel.'
-//را به همین شماره ارسال کنید
-//توجه داشته باشید دیر پاسخ دادن به درخواست ممکن است مهمان منزل دیگری را انتخاب کند
-//شماره رزرو :'.$reserveId.'
-//شماره پشتیبانی :
-//     ';
-//            $sms->send($to, $from, $text);
-//        } catch (Exception $e) {
-//            echo $e->getMessage();
-//        }
+    { //comment
+
+        $fromDate = jDate::forge($DateFrom)->format('%A %d %B %Y');
+
+        try {
+            $sms  = Facade::sms();
+            $to   = $Mobile;
+            $from = '10007514';
+
+            $text = 'سایت خانه رو：
+درخواست بررسی رزرو
+ "'. $HostName .'" 
+کد اقامتگاه  '. $HostId .'
+ورود '. $fromDate .' ،  مدت '. $CountDayReserve .' شب،  تعداد 2 نفر
+مبلغ رزرو (تسویه با سایت) : '. $TotalPrice/10 .' تومان
+جهت تایید یا عدم تایید بصورت آنلاین از طریق لینک زیر اقدام نمایید:
+';
+
+            $sms->send($to, $from, $text);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
         return true;
     }
 

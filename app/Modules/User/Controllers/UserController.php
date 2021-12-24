@@ -81,7 +81,7 @@ class UserController extends Controller
         $userModel = User::where('id', $id)->first();
         $cityModel = Township::where('id', $userModel->city_id)->first();
         return view('User::detailUser', compact('userModel',
-            'provinceModel',
+//            'provinceModel',
             'cityModel'
         ));
     }

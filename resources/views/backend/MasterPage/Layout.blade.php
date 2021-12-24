@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="fa">
     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
+
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <title>@yield('title')</title>
     <meta name="description" content="Flatter - Flat Admin Theme">
@@ -74,7 +74,7 @@
     <!-- Header -->
 <header class="navbar main-header">
     <a class="navbar-brand" href="{{ route('HomePage') }}" target="" style="">
-        <img src="{{asset('frontend/images/LOGO0.png')}}" style="width: 75px;" />
+        <img src="{{asset('frontend/images/logo.png')}}" style="width: 75px;" />
 {{--        <span>{{auth()->user()->first_name.' '.auth()->user()->last_name}}</span>--}}
     </a>
     <ul class="nav navbar-nav navbar-right sidebar-toggle-ul">
@@ -134,7 +134,7 @@
         </li>
     </ul>
 </header>
-    
+
 <div class="sidebar sidebar-left">
     <div class="content">
 {{--        <ul class="nav nav-tabs nav-justified sidetabs">--}}

@@ -1,6 +1,6 @@
 @php
-    $reserveModel = GetReserveByCode($key);
-    $hostModel = GetHostByCode($key);
+    $reserveModel = GetReserveByCode($value['group_code']);
+    $hostModel = GetHostByCode($value['group_code']);
     $JdateInstance = new App\Logic\moriJalali\moriJalaiAdaptor(new App\Logic\moriJalali\moriJalaiLogic());
 
 @endphp
@@ -9,7 +9,7 @@
         <div class="slid-1">
             <a class="d-block box-sl slide" href="#">
                 <img class="mw-100" src="{{asset('Uploaded/Gallery/Img/'.$hostModel->getGalleryFirst->img)}}" alt="image" />
-                <div class="info-code-1"><span>کد اقامتگاه   :</span><label>{{$hostModel->id + 5000}}</label></div>
+                <div class="info-code-1"><span>کد اقامتگاه   :</span><label>{{$hostModel->id}}</label></div>
             </a>
         </div>
     </div>
@@ -23,7 +23,7 @@
                     </p>
                 </div>
                 <ul class="col-sm-7 px-0 som-inf">
-                    <li class="info-Rsdnc"><span>شماره رزرو  :</span><label>{{$reserveModel[0]->id + 100000}}</label></li>
+                    <li class="info-Rsdnc"><span>شماره رزرو  :</span><label>{{$reserveModel[0]->id }}</label></li>
                     <li class="info-Rsdnc"><span>وضعیت رزرو  :</span><label>در انتظار تایید </label></li>
                 </ul>
                 <div class="col-sm-5 paymnt-not">
@@ -62,7 +62,7 @@
                             ساعت تحویل : {{$hostModel->time_enter_from}}
                         </p>
                     </li>
-                    <li class="info-trip">تعداد {{$reserveModel[0]->count_person}} نفر</li>
+                    <li class="info-trip">تعداد {{$reserveModel[0]->num_of_standard_people + $reserveModel[0]->num_of_guests}} نفر</li>
                 </ul>
                 <ul class="each-01">
                     <li class="info-trip">

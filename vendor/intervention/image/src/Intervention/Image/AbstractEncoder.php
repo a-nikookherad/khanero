@@ -2,6 +2,9 @@
 
 namespace Intervention\Image;
 
+use Intervention\Image\Exception\InvalidArgumentException;
+use Intervention\Image\Exception\NotSupportedException;
+
 abstract class AbstractEncoder
 {
     /**
@@ -28,7 +31,7 @@ abstract class AbstractEncoder
     /**
      * Output quality of encoder instance
      *
-     * @var integer
+     * @var int
      */
     public $quality;
     
@@ -82,11 +85,18 @@ abstract class AbstractEncoder
     abstract protected function processWebp();
 
     /**
+     * Processes and returns image as Avif encoded string
+     *
+     * @return string
+     */
+    abstract protected function processAvif();
+
+    /**
      * Process a given image
      *
      * @param  Image   $image
      * @param  string  $format
-     * @param  integer $quality
+     * @param  int     $quality
      * @return Image
      */
     public function process(Image $image, $format = null, $quality = null)
@@ -114,9 +124,11 @@ abstract class AbstractEncoder
 
             case 'jpg':
             case 'jpeg':
+            case 'image/jp2':
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/pjpeg':
+            case 'image/jfif':
                 $this->result = $this->processJpeg();
                 break;
 
@@ -130,7 +142,14 @@ abstract class AbstractEncoder
                 break;
 
             case 'bmp':
-            case 'image/bmp':
+            case 'bmp':
+            case 'ms-bmp':
+            case 'x-bitmap':
+            case 'x-bmp':
+            case 'x-ms-bmp':
+            case 'x-win-bitmap':
+            case 'x-windows-bmp':
+            case 'x-xbitmap':
             case 'image/ms-bmp':
             case 'image/x-bitmap':
             case 'image/x-bmp':
@@ -158,10 +177,15 @@ abstract class AbstractEncoder
             case 'image/x-webp':
                 $this->result = $this->processWebp();
                 break;
+
+            case 'avif':
+            case 'image/avif':
+                $this->result = $this->processAvif();
+                break;
                 
             default:
-                throw new \Intervention\Image\Exception\NotSupportedException(
-                    "Encoding format ({$format}) is not supported."
+                throw new NotSupportedException(
+                    "Encoding format ({$this->format}) is not supported."
                 );
         }
 
@@ -214,7 +238,7 @@ abstract class AbstractEncoder
     /**
      * Determines output quality
      *
-     * @param integer $quality
+     * @param int $quality
      */
     protected function setQuality($quality)
     {
@@ -222,7 +246,7 @@ abstract class AbstractEncoder
         $quality = $quality === 0 ? 1 : $quality;
 
         if ($quality < 0 || $quality > 100) {
-            throw new \Intervention\Image\Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Quality must range from 0 to 100.'
             );
         }

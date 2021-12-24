@@ -2,6 +2,7 @@
 
 namespace App\Modules\Reserve\Controllers;
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\Host\Model\Host;
@@ -15,6 +16,7 @@ use App\Modules\Discount\Model\Discount;
 use App\Modules\Message\Model\Message;
 use App\Modules\Payment\Model\Payment;
 use App\Modules\Payment\Model\Wallet;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Morilog\Jalali\Facades\jDate;
 use Morilog\Jalali\Facades\jDateTime;
@@ -29,65 +31,68 @@ class ReserveController extends Controller
     /*****************
      * Index Reserve *
      ****************/
-    public function IndexReserve()
+    public function IndexReserve(Request $request)
     {
-
-//        $yourjson = {
-//            "Token":"a8d7606bf50b45dab0dd27110c70ce63",
-//          "SenderNumber":"50001",
-//          "Mobile":"09355000000",
-//          "Message" : "test"
-//        };
-
-
-//$ch = curl_init();
-//
-//curl_setopt($ch, CURLOPT_URL,"https://mysite.ir/api/v1/Send");
-//curl_setopt($ch, CURLOPT_POST, 1);
-//curl_setopt($ch, CURLOPT_POSTFIELDS,
-//    "Token=a8d7606bf50b45dab0dd27110c70ce63&SenderNumber=10003031&Mobile=09396800779&Message=1234");
-
-// In real life you should use something like:
-// curl_setopt($ch, CURLOPT_POSTFIELDS,
-//          http_build_query(array('postvar1' => 'value1')));
-
-// Receive server response ...
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//
-//$server_output = curl_exec($ch);
-//
-//curl_close ($ch);
-
-
-
-//        $reserveModel = Reserve::select('group_code')->where('user_id', auth()->user()->id)
-//            ->orWhereHas('Host', function ($Query) {
-//            $Query->where('user_id', auth()->user()->id);
-//        })
+        $reserveModel = Reserve::where(function($query){
+                if(Auth::user()->role_id == User::ADMIN) {
+                    //returns all
+                } else {
+                    $query->where('user_id', auth()->user()->id);
+                }
+            })
+            ->orWhereHas('Host', function ($Query) {
+                if(Auth::user()->role_id == User::ADMIN) {
+                    //returns all
+                } else {
+                    $Query->where('user_id', auth()->user()->id);
+                }
+        })
 //            ->orWhere('host_id',auth()->user()->id)
-//            ->get()->groupBy('group_code');
+            ->when($request->has('keyword'), function($query) use($request){
+                if(stringNotEmpty($request->keyword)){
+                    $keyword = $request->keyword;
+                    $query->where(function($q)use($keyword) {
+                        $q->where('id', $keyword)
+                            ->orWhere('host_id', $keyword)
+                            ->orWhereHas('Host',function($query) use($keyword){
+                                $query->where('name', 'LIKE', "%$keyword%");
+                            })
+                            ->orWhereHas('User', function($query) use($keyword){
+                                $query->where('first_name', 'LIKE', "%$keyword%")
+                                    ->orWhere('last_name', 'LIKE', "%$keyword%");
+                            })
+                        ;
+                    });
+                }
+            })
+            ->when($request->has('status'), function($query) use($request){
+                if($request->status != 'all'){
+                    $query->where('status', $request->status);
+                }
+            })
+            ->get()->groupBy('group_code');
 
-        $reserveModel =DB::table('reserves')
-            ->select('group_code')
-            ->groupBy('group_code')
-            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
-            ->where('hosts.user_id','=',auth()->user()->id)
-            ->orWhere('reserves.user_id','=',auth()->user()->id)
-            ->get();
+//        $reserveModel2 = DB::table('reserves')
+//            ->select('group_code')
+//            ->groupBy('group_code')
+//            ->leftJoin('hosts','reserves.host_id','=','hosts.id')
+//            ->where('hosts.user_id','=',Auth::id())
+//            ->orWhere('reserves.user_id','=',Auth::id())
+//            ->get();
         $reserve = array();
 
         // جدا کردن رزرو های خود کاربر و میهمانان
         foreach ($reserveModel as $key => $value) {
-
             $res = Reserve::where('group_code', $key)->first();
             if($res->user_id == auth()->user()->id) {
                 $type = 'my-reserve';
             } else {
                 $type = 'my-guest';
             }
-            $reserve[$key] = array('type' => $type, 'group_code' => $res->group_code);
+//            $reserve[$res->host_id] = array('type' => $type, 'group_code' => $res->group_code);
+            $reserve[$res->id] = array('type' => $type, 'group_code' => $res->group_code);
         }
-           
+        krsort($reserve);
         return view('Reserve::indexReserve', compact('reserve'));
     }
 
@@ -173,7 +178,7 @@ class ReserveController extends Controller
             return response()->json($Response);
         }
         if ($request->count_guest > ($hostModel->count_guest + $hostModel->standard_guest) || $request->count_guest == 0) {
-            $Response = ["Success" => "0", "Message" => "لطفا تعداد نفرات را مشخص کنید"];
+            $Response = ["Success" => "0", "Message" => "تعداد نفرات بیش از حد مجاز است."];
             return response()->json($Response);
         }
 
@@ -185,13 +190,13 @@ class ReserveController extends Controller
         $extraPriceForPerson = 0; // Extra person
         $total_sum_guest = 0;
         if($countRequestGuest > $standardGuest) {
-            $sum_max = $countGuest+$standardGuest;
+            $sum_max = $countGuest + $standardGuest;
             if($countRequestGuest > $sum_max) { // درخواست بیش از حداکثر اقامتگاه
                 $Response = ["Success" => "0", "Message" => "درخواست تعداد نفرات مهمان بیش از حداکثر اقامتگاه می باشد."];
                 return response()->json($Response);
             } else {
                 $total_sum_guest = $countRequestGuest - $standardGuest;
-                $extraPriceForPerson = $hostModel->one_person_price * $total_sum_guest; // هزینه کل نفرات اضافی
+                $extraPriceForPerson = ($hostModel->one_person_price * $total_sum_guest)/100; // هزینه کل نفرات اضافی
             }
         }
         // اضافه کردن صفر به تاریخ شروع و پایان
@@ -200,41 +205,22 @@ class ReserveController extends Controller
 //        $bufferFrom = explode(' ', $from);
 //        $dateFrom = $bufferFrom[0] . ' 00:00:00';
 
-        $t =$request->from_date;
-        $t =explode('/',$t);
-        $dateFrom = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]);
-        $dateFrom =$dateFrom[0].'/'.$dateFrom[1].'/'.$dateFrom[2].' '.'00:00:00';
 
-
-
-
-
-
+         $dateFrom = DateHelper::SolarToGregorian($request->from_date, '/', '/') . ' 00:00:00';
 //
 //        $to = jDateTime::ConvertToGeorgian($request->to_date, date('H:i:s'));
 //        $to = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
 //        $bufferTo = explode(' ', $to);
 //        $dateTo = $bufferTo[0] . ' 00:00:00';
 
-        $t =$request->to_date;
-        $t =explode('/',$t);
-        $to = \Morilog\Jalali\CalendarUtils::toGregorian($t[0],$t[1],$t[2]-1);
-        $dateTo =$to[0].'/'.$to[1].'/'.$to[2].' '.'00:00:00';
 
-
-
-
-
-
+        $dateTo = DateHelper::SolarToGregorian($request->to_date, '/' , '/'). ' 00:00:00';
 
 
 //        $dateTo = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($to))); // کم کردن یه روز از تاریخ دوم
 
 
         $nowDate = date('Y-m-d 00:00:00');
-
-
-
 
         if ($dateFrom > $dateTo) { // چک کردن بزرگ نبودن تاریخ شروع از پایان
             $Response = ["Success" => "0", "Message" => array()];
@@ -244,8 +230,6 @@ class ReserveController extends Controller
             $Response = ["Success" => "1", "Message" => array()];
             return response()->json($Response);
         }
-
-
 
         $date_from = Carbon::parse($dateFrom);
         $date_to = Carbon::parse($dateTo);
@@ -259,7 +243,6 @@ class ReserveController extends Controller
             return response()->json($Response);
         }
 
-
         $array_day_reserve = array();
         // وارد کردن روزهای انتخاب شده در آرایه
         for ($i = 0; $i <= $countDayReserve; $i++) {
@@ -270,8 +253,9 @@ class ReserveController extends Controller
         foreach ($array_day_reserve as $key => $value) {
             $blockedDayModel = BlockedDay::where('host_id', $hostModel->id)
                 ->where('date', $value)->first();
+
             if(!empty($blockedDayModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". jDate::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value))))->format('Y/m/d') ." در تقویم مسدود می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
             $reserveModel = Reserve::where('host_id', $hostModel->id)
@@ -280,11 +264,10 @@ class ReserveController extends Controller
 //                ->whereIn('step', array()) // چک کردن مرحله رزرو
                 ->first();
             if(!empty($reserveModel)) {
-                $Response = ["Success" => "0", "Message" => "تاریخ ". Jalalian::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
+                $Response = ["Success" => "0", "Message" => "تاریخ ". jDate::forge(date('Y-m-d H:i:s', strtotime('+0 day', strtotime($value))))->format('Y/m/d') ." در تقویم رزرو می باشد، لطفا پس از بررسی مجددا تلاش نمایید."];
                 return response()->json($Response);
             }
         }
-
 
         // چک کردن تخفیف برای چند روز رزرو
         $discountModel = Discount::where('host_id', $hostModel->id)
@@ -292,7 +275,7 @@ class ReserveController extends Controller
             ->where('number_days', '<=', count($array_day_reserve))
             ->first();
         $total_price_reserve = 0; // قیمت کل رزرو
-        $array_price_date = array();
+        $array_price_date    = array();
 
 
         foreach ($array_day_reserve as $key => $value) {
@@ -329,6 +312,8 @@ class ReserveController extends Controller
 //                ->first();
             $special_price = 0;
             $check_special = 0;
+
+            // مجدد چک شود
             if(!empty($specialDayModel)) { // چک کردن تاریخ در روزهای ویژه
 //                $special_price = $specialDayModel->price;
 //                $check_special = 1;
@@ -342,6 +327,8 @@ class ReserveController extends Controller
                     $description = $specialDateModel->description;
                 }
             }
+
+
             /** ****************************************************************************/
             // در صورت داشتن اولویت برای تخفیف ها و روزهای ویژه این قسمت تغییر باید تغییر کند
             /** ****************************************************************************/
@@ -352,6 +339,7 @@ class ReserveController extends Controller
                 $final_price = $final_price - $percentPrice;
                 $percent = $discountModel->percent;
             }
+
             $array_price_date[] = array(
                 'date' => $value,
                 'host_id' => $hostModel->id,
@@ -415,7 +403,9 @@ class ReserveController extends Controller
                     'description' => $value['description'],
                     'status' => 0,
                     'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'num_of_standard_people' => $standardGuest,
+                    'num_of_guests' => $countGuest
                 ];
             }
             $countDayReserve = $countDayReserve + 1;
@@ -456,13 +446,29 @@ class ReserveController extends Controller
                 $Activation->token = $Token;
                 $Activation->token_cancel = $TokenCancel;
                 $Activation->save();
-                // send sms for users
-                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile);
-                $userModel = User::where('id', $hostModel->user_id)->first();
                 $reserveIdModel = Reserve::where('group_code', $groupCode)->first();
                 $reserveId = $reserveIdModel->id;
+                // send sms for users
+                $smsController = new \App\Http\Controllers\SMSController();
+                $data = [
+                    'reserveId' => $reserveId,
+                    'hostId' => $hostModel->id
+                ];
+                $smsController->register(auth()->user()->mobile, 'chqns3ucbe', $data);
+//                SmsController::SendSMSWaitReserveCustomer(auth()->user()->mobile, $reserveId, $hostModel->id);
+                $userModel = User::where('id', $hostModel->user_id)->first();
                 $total_price_reserve = $total_price_reserve + ($extraPriceForPerson * count($array_price_date));
-                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $request->from_date, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
+                $data = [
+                    'hostName' => $reserveId,
+                    'hostId' => $hostModel->id,
+                    'fromDate' => jDate::forge($dateFrom)->format('%A %d %B %Y'),
+                    'countDayReserve' => $countDayReserve,
+                    'numberOfPeople' => $request->count_guest,
+                    'totalPrice' => $total_price_reserve/10,
+                    'link' => 'https://khanero.com'
+                ];
+                $smsController->register($userModel->mobile, 'v35ykcww8a', $data);
+//                SmsController::SendSMSWaitReserveHost($userModel->mobile, $hostModel->id, $hostModel->name, $countDayReserve, $dateFrom, $request->to_date, $total_price_reserve, $Token, $TokenCancel, $request->count_guest,$reserveId);
                 return 1;
             }
         }

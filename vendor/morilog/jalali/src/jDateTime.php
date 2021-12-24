@@ -43,45 +43,6 @@ class jDateTime
         return self::d2g(self::j2d($jy, $jm, $jd));
     }
 
-
-    /*
-     * conver jalali to georgian
-     *
-     *
-     * */
-    public static function ConvertToGeorgian($date,$time='')
-    {
-        $explode=explode("/",$date);
-
-        // return $date;// $explode[1];
-        $implode=self::d2g(self::j2d($explode[0],$explode[1],$explode[2]));
-
-        if($implode[1]<10){$implode[1]="0".$implode[1];}
-        if($implode[2]<10){$implode[2]="0".$implode[2];}
-
-        return $implode[0]."-".$implode[1]."-".$implode[2]." ".$time;
-    }
-    /**
-     * Converts a Jalali date to Gregorian.
-     *
-     * @param int $jy
-     * @param int $jm
-     * @param int $jd
-     * @return Gregorian DateTime
-     */
-    public static function toGregorianDate($jy, $jm, $jd)
-    {
-        $georgianDateArr = self::toGregorian($jy, $jm, $jd);
-        $year = $georgianDateArr[0];
-        $month = $georgianDateArr[1];
-        $day = $georgianDateArr[2];
-        $georgianDate = new \DateTime();
-        $georgianDate->setDate($year, $month, $day);
-        
-        
-        return $georgianDate;
-    }
-
     /**
      * Checks whether a Jalaali date is valid or not.
      *
@@ -772,7 +733,7 @@ class jDateTime
         $dt['is_dst'] = '';
 
         if (strlen($dt['year']) == 2) {
-            $now = jDate::forge('now');
+            $now = self::forge('now');
             $x = $now->format('Y') - $now->format('y');
             $dt['year'] += $x;
         }

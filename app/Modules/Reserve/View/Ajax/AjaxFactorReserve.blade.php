@@ -51,7 +51,7 @@
 		@foreach($array_price_date as $key => $value)
 			<tr>
 				<td>{{$key+1}}</td>
-				<td>{{\Morilog\Jalali\Jalalian::forge($value['date'])->format('Y/m/d')}}</td>
+				<td>{{\Morilog\Jalali\Facades\jDate::forge(date('Y-m-d H:i:s', strtotime('-1 day', strtotime($value['date']))))->format('Y/m/d')}}</td>
 				<td>{{$value['day_name']}}</td>
 				<td>{{number_format($value['day_price'])}}</td>
 				<td>

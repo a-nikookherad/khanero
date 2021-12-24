@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "8080:80"
+      - "8081:80"
     #      - "443:443"
     #      - "9001-9009:9001-9009"
     volumes:

@@ -197,9 +197,9 @@
         .tab-pane.active {
             display: block;
         }
-        
-        
-        
+
+
+
         /*animate*/
         .animated-step {
             -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
@@ -209,14 +209,14 @@
             animation-duration: 2s;
             animation-iteration-count: infinite;
         }
-    
+
         /* Safari 4.0 - 8.0 */
         @-webkit-keyframes example-animate {
             0%   {color: #e73f05;}
             50% {color:#36454f;}
             100% {color:#e73f05;}
         }
-    
+
         /* Standard syntax */
         @keyframes example-animate {
             0%   {color:#e73f05;}
@@ -273,31 +273,34 @@
                     <h3 class="panel-title">لیست رزرو ها</h3>
                 </div>
                 <div class="panel-body">
+                    <form>
                     <div class="head-serach row">
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">جستجو:</label>
-                            <input class="same-styk" placeholder="جستجو کنید ...">
+                            <input class="same-styk" name="keyword" value="{{ Request()->keyword }}" placeholder="جستجو کنید ...">
                         </div>
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">نوع رزرو:</label>
-                            <select class="same-styk">
-                                <option>همه</option>
-                                <option>رزرو درخواستی</option>
-                                <option>رزرو دریافتی</option>
+                            <select name="type_of_reserve" class="same-styk">
+                                <option value="all" {{ (Request()->type_of_reserve == 'all' ||  Request()->type_of_reserve == null) ? 'selected' : '' }}>همه</option>
+                                <option value="{{ \App\Modules\Reserve\Model\Reserve::MY_REQUESTED_RESERVES }}" {{ Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_REQUESTED_RESERVES ? 'selected' : '' }}>رزرو درخواستی</option>
+                                <option value="{{ \App\Modules\Reserve\Model\Reserve::MY_GUEST_RESERVES }}" {{ Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_GUEST_RESERVES ? 'selected' : '' }}>رزرو دریافتی</option>
                             </select>
                         </div>
-                        <div class="col-sm-4 px-0 d-flex align-items-center vazyat-agahi">
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
                             <label class="ttle-row">وضعیت:</label>
-                            <select class="same-styk">
-                                <option>همه</option>
-                                <option>در انتظار تایید</option>
-                                <option>در انتظار پرداخت</option>
-                                <option>پرداخت شده</option>
-                                <option>منقضی شده</option>
-                                <option>کنسل میزبان</option>
+                            <select name="status" class="same-styk">
+                                <option value="all" {{ Request()->status !=null ? 'selected' : '' }}>همه</option>
+                                @foreach(\App\Modules\Reserve\Model\Reserve::getReserveStatusList() as $status)
+                                    <option value="{{ $status['value'] }}" {{ Request()->status !='all' && Request()->status !=null && Request()->status == $status['value'] ? 'selected' : '' }}>{{ $status['message'] }}</option>
+                                @endforeach
                             </select>
+                        </div>
+                        <div class="col-sm-3 px-0 d-flex align-items-center vazyat-agahi">
+                            <button class="btn btn-info btn-submit">جستجو</button>
                         </div>
                     </div>
+                    </form>
                     @if(count($reserve) == 0)
                         <div class="row">
                             <div class="alert alert-warning">
@@ -307,9 +310,14 @@
                     @endif
                     @foreach($reserve as $key => $value)
                         @if($value['type'] == 'my-reserve')
+                            @if((Request()->type_of_reserve == null) || Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_REQUESTED_RESERVES || Request()->type_of_reserve == 'all')
+
                             @include('Reserve::TypeReserve.MyReserve')
+                                @endif
                         @elseif($value['type'] == 'my-guest')
+                            @if(Request()->type_of_reserve == null || Request()->type_of_reserve == \App\Modules\Reserve\Model\Reserve::MY_GUEST_RESERVES || Request()->type_of_reserve == 'all')
                             @include('Reserve::TypeReserve.MyGuest')
+                                @endif
                         @endif
                     @endforeach
                     {{-- modal cancel--}}
@@ -354,7 +362,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div id="ExtraModalDetailPrice">
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -379,15 +387,15 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    
+
                                 </div>
                                 <div class="modal-body">
                                     <div class="">
                                         <div id="ExtraModalDetailPayment" class="tab-pane fade in active">
-                                        
+
                                         </div>
                                         <div id="WalletPay" class="tab-pane fade">
-                                        
+
                                         </div>
                                     </div>
                                 </div>
@@ -443,7 +451,7 @@
                 rtl:true,
                 loop: true,smartSpeed:3000,
 		        lazyLoad: true,
-                margin: 0, 
+                margin: 0,
                 responsiveClass: true,
                 responsive: {
                     0: {

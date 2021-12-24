@@ -111,11 +111,11 @@
 <!-- Header -->
 <header class="">
 <div class="top mb-2">
-    <div class="top1 border-bottom">
+    <div class="top1">
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
-                    <div id="logo"><img src="{{public_path('frontend/images/LOGO0.png')}}" alt="logo"></div>
+                    <div id="logo"><img src="{{asset('frontend/images/logo-f.png')}}" alt="logo"></div>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
             <div class="d-flex">
@@ -133,26 +133,27 @@
                                         <!-- Modal content-->
                                         <div class="modal-content">
                                             <div class="modal-header">
+                                                <img src="{{asset('frontend/images/logo-f.png')}}" alt="logo">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">ورود یا ثبت نام</h4>
+                                                <h4 class="modal-title">ورود / ثبت نام</h4>
                                             </div>
                                             <input type="hidden" id="MobileUser">
                                             <div class="modal-body box-login-register">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <p class="text-right">جهت ورود یا ثبت نام شماره همراه خود را وارد کنید</p>
+                                                <div>
+                                                    <div>
+                                                        <div class="form-group mb-3">
+                                                            <p class="text-right font_14">جهت ورود / ثبت نام شماره همراه خود را وارد کنید</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group text-right">
+                                                    <div>
+                                                        <div class="form-group mb-0 text-right">
                                                             <input type="text" autocomplete="off" maxlength="11" class="form-control" id="InputMobile" placeholder="شماره همراه">
-                                                            <span class="message text-danger"></span>
+                                                            <span class="message text-danger float-right"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div>
                                                         <div class="form-group">
-                                                            <button type="button" id="BtnCheckUser" class="btn btn-block">ادامه</button>
+                                                            <button type="button" id="BtnCheckUser" class="btn btn-block btn_bgCustom">ادامه</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,7 +215,7 @@
                             <div class="list-login">
                                 <ul>
                                     <li class="user-info d-flex align-items-center">
-                                        <img class="pc-user mw-100" src="{{auth()->user()->avatar?auth()->user()->avatar:''}}"/>
+                                        <img class="pc-user mw-100" src="{{auth()->user()->avatar?asset(auth()->user()->avatar):''}}"/>
                                         <h5 class="name-user">{{auth()->user()->first_name . ' ' . auth()->user()->last_name}}</h5>
                                     </li>
                                     <li><a class="item-login" href="{{route('EditUser')}}"><i class="far fa-user"></i>حساب کاربری</a></li>

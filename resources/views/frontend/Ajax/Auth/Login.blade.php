@@ -1,24 +1,30 @@
-<div class="row">
-    <div class="col-md-12">
+<div>
+    <div >
         <div class="form-group">
             <p class="text-right">رمز ورود را وارد کنید.</p>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group text-right">
-            <input type="text" autocomplete="off" class="form-control" id="InputPassword" placeholder="رمز ورود">
-            <span class="message text-danger"></span>
+    <div >
+        <div class="form-group mb-0">
+            <input type="password" autocomplete="off" class="form-control" id="InputPassword" placeholder="رمز ورود">
+            <span class="message text-danger mb-3 float-right"></span>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="d-flex justify-content-between">
         <div class="form-group text-right">
-            <a class="btn-edit-mobile">ویرایش شماره همراه</a>
+            <a class="btn-edit-mobile ">ویرایش شماره همراه</a>
+        </div>
+        <div class="form-group text-right">
+            <a class="btn-forget-pass ">فراموشی رمز عبور</a>
         </div>
     </div>
-    <div class="col-md-12">
+    <div >
         <div class="form-group">
-            <button type="button" id="BtnLogin" class="btn btn-block">ورود</button>
+            <button type="button" id="BtnLogin" class="btn btn-block btn_bgCustom">ورود</button>
         </div>
+    </div>
+    <div class="text-right border-top mt-2 pt-3">
+        <a class="text_actionlogin">ورود با رمز یکبار مصرف  </a>
     </div>
 </div>
 
@@ -49,17 +55,49 @@
                 AlertToast('ورود', 'رمز ورود اشتباه است', 'warning');
             } else if(returnData.Message == 'success') {
                 $('.box-login').html(returnData.Content);
+                $('.box-login > span').addClass('can-click-on');
+                $('.box-login > span > a').addClass('user-style');
                 AlertToast('ورود', 'خوش آمدید');
                 $('#myModal').modal('hide');
                 $('.modal-backdrop.fade.in').css('display', 'none');
-                $('.list-login').html(returnData.Content2);
+                $('.box-login').append($('<div class="list-login">').append(returnData.Content2))
             }
         });
     });
 
     $('.btn-edit-mobile').click(function () {
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        $(this).html(loading);
         $.ajax({
             url: "{{route('DefaultLoginAjax')}}",
+            method: "post",
+            data: {
+                mobile: $('#MobileUser').val(),
+            }
+        }).done(function (returnData) {
+            $('.box-login-register').html(returnData.Content);
+        });
+    });
+
+    $('.btn-forget-pass').click(function () {
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        $(this).html(loading);
+        $.ajax({
+            url: "{{ route('RequestSms', ['type' => 'forget_password']) }}",
+            method: "post",
+            data: {
+                mobile: $('#MobileUser').val(),
+            }
+        }).done(function (returnData) {
+            $('.box-login-register').html(returnData.Content);
+        });
+    });
+
+    $('.text_actionlogin').click(function () {
+        var loading = '<img class="load-register" src="{{asset('backend/img/img_loading/loading-register.gif')}}" />'
+        $(this).html(loading);
+        $.ajax({
+            url: "{{ route('RequestSms', ['type' => 'login_with_sms']) }}",
             method: "post",
             data: {
                 mobile: $('#MobileUser').val(),

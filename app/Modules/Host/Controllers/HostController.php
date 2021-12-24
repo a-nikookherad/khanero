@@ -3,6 +3,7 @@
 namespace App\Modules\Host\Controllers;
 
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Modules\Host\Model\Host;
 use App\Modules\Host\Model\Integrated;
@@ -26,6 +27,7 @@ use App\Modules\Discount\Model\Discount;
 use App\Modules\Special\Model\Special;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use DB;
@@ -665,7 +667,7 @@ class HostController extends Controller
 
         DB::table('price_days')->where('host_id', $hostModel->id)->delete();
         foreach ($request->all() as $key => $value) {
-            if ($key == 'host_id' || $key == 'percent_discount' || $key == 'day_discount' || $key == 'percent_discount_2' || $key == 'day_discount_2' || $key == 'max_day_show_calendar' || $key == 'price_one_person' || $key == 'price_special_day' || $key == 'day_turn_discount_from' || $key == 'day_turn_discount_to' || $key == 'turn_discount') {
+            if ($key == 'host_id' || $key == 'percent_discount' || $key == 'day_discount' || $key == 'percent_discount_2' || $key == 'day_discount_2' || $key == 'max_day_show_calendar' || $key == 'price_one_person' || $key == 'price_special_day' || $key == 'day_turn_discount_from' || $key == 'day_turn_discount_to' || $key == 'turn_discount' || $key == 'edit_host') {
                 continue;
             }
             if($value == 'NaN') {
@@ -676,7 +678,7 @@ class HostController extends Controller
             $data_3[] = [
                 'host_id' => $request->host_id,
                 'week_id' => $i,
-                'price' => $price * 1000,
+                'price' => $price * 10,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
@@ -689,7 +691,7 @@ class HostController extends Controller
         $priceSpecial   = str_replace(',', '', $request->price_special_day); // صفر ارسال می شود
         $onePersonPrice = str_replace(',', '', $request->price_one_person);
         $hostModel->special_price = $priceSpecial ;
-        $hostModel->one_person_price = $onePersonPrice * 1000;
+        $hostModel->one_person_price = $onePersonPrice * 10;
         $hostModel->max_day_show_calendar = $request->max_day_show_calendar;
         $hostModel->save();
         Discount::where('host_id', $hostModel->id)->delete();
@@ -741,7 +743,7 @@ class HostController extends Controller
                 $hostModel->step = 100;
                 $hostModel->active = 1;
                 if ($hostModel->save()) {
-                    //                SmsController::SendSMSWaitConfirmHost(auth()->user()->mobile);
+                    SmsController::SendSMSConfirmHost(auth()->user()->mobile);
                     PrintMessage('ثبت اقامتگاه با موفقیت انجام شد', 'success');
                     $Response = ["Success" => "1", "Message" => "ثبت اقامتگاه با موفقیت انجام شد"];
                     return response()->json($Response);
@@ -840,7 +842,7 @@ class HostController extends Controller
             'img.mimes' => 'تصویر باید از نوع "png" یا "jpg" باشد'
         ];
         $validator = Validator::make($request->all(), [
-            'img' => 'required|mimes:png,jpg,jpeg', //max:5000
+            'img' => 'required|mimes:png,jpg,jpeg,jfif', //max:5000
         ], $Message);
 
         if ($validator->fails()) {
@@ -1860,6 +1862,7 @@ class HostController extends Controller
 
     /**
      * Status Host
+     * Update host status by admin in index/host/all page
      */
     public function StatusHost($id, $status)
     {
@@ -2026,8 +2029,13 @@ class HostController extends Controller
         $first_date_month_jalali = ''.$nowYearJalali.'/'.$nowMonthJalali.'/01'; // get first day now month
         $month_model = Month::where('id', $nowMonthJalali)->first(); // get detail now month
         $last_date_month_jalali = ''.$nowYearJalali.'/'.$nowMonthJalali.'/'.$month_model->number_day; // get count day now month
-        $first_date_month_miladi = jDateTime::ConvertToGeorgian($first_date_month_jalali, date('H:i:s')); // change first day now month jalali to miladi(AD)
-        $last_date_month_miladi = jDateTime::ConvertToGeorgian($last_date_month_jalali, date('H:i:s')); // change last day now month jalali to miladi(AD)
+//        $first_date_month_miladi = jDateTime::ConvertToGeorgian($first_date_month_jalali, date('H:i:s')); // change first day now month jalali to miladi(AD)
+        $first_date_month_miladi = DateHelper::SolarToGregorian($first_date_month_jalali, '/', '/');
+
+//        $last_date_month_miladi = jDateTime::ConvertToGeorgian($last_date_month_jalali, date('H:i:s')); // change last day now month jalali to miladi(AD)
+        $last_date_month_miladi = DateHelper::SolarToGregorian($last_date_month_jalali, '/', '/');
+
+
         $first_date_month_miladi = explode(' ',$first_date_month_miladi); // put date to array for separate date and time
         $last_date_month_miladi = explode(' ',$last_date_month_miladi); // put date to array for separate date and time
         $first_date_month_miladi = $first_date_month_miladi[0].' 00:00:00'; // change time to 00:00:00
@@ -2118,7 +2126,9 @@ class HostController extends Controller
 
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
             $dayCalendarJalali = ''.$nowYearJalali.'/'.$nowMonthJalali.'/'.$i;
-            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+//            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+            $dayCalendarMiladi = DateHelper::SolarToGregorian($dayCalendarJalali, '/', '/');
+
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
                 if($value->week_id == $day_id) {
@@ -2237,7 +2247,8 @@ class HostController extends Controller
         $priceModel = PriceDay::where('host_id', $hostModel->id)->get();
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
             $dayCalendarJalali = ''.$year_now.'/'.$next_month.'/'.$i;
-            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+//            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+            $dayCalendarMiladi = DateHelper::SolarToGregorian($dayCalendarJalali, '/', '/'). ' 00:00:00';
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
                 if($value->week_id == $day_id) {
@@ -2450,7 +2461,8 @@ class HostController extends Controller
         $priceModel = PriceDay::where('host_id', $hostModel->id)->get();
         for ($i = 1; $i <= $monthModel->number_day; $i++) {
             $dayCalendarJalali = ''.$year_now.'/'.$prev_month.'/'.$i;
-            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+//            $dayCalendarMiladi = jDateTime::ConvertToGeorgian($dayCalendarJalali, date('00:00:00'));
+            $dayCalendarMiladi = DateHelper::SolarToGregorian($dayCalendarJalali, '/', '/'). ' 00:00:00';
             $name_day = $week[$day_id];
             foreach ($priceModel as $key => $value) {
                 if($value->week_id == $day_id) {
@@ -2915,8 +2927,6 @@ class HostController extends Controller
     }
 
 
-
-
     public function VisitedCity($id) {
         $townshipModel = Township::where('id', $id)->first();
         if(!empty($townshipModel)) {
@@ -2953,13 +2963,19 @@ class HostController extends Controller
     }
 
 
-
+    /**
+     *ذخیره سازی ویرایش تقویم در پنل توسط میزبان
+     */
     function StorePersonalizeHost(Request $request) {
 //        return $request->all();
         if($request->type == 'special') {
             $date = array();
-            $dateTimeFrom = jDateTime::ConvertToGeorgian($request->date_from,date('H:i:s'));
-            $dateTimeTo = jDateTime::ConvertToGeorgian($request->date_to,date('H:i:s'));
+//            $dateTimeFrom = jDateTime::ConvertToGeorgian($request->date_from,date('H:i:s'));
+            $dateTimeFrom = DateHelper::SolarToGregorian($request->date_from, '/', '/');
+
+//            $dateTimeTo = jDateTime::ConvertToGeorgian($request->date_to,date('H:i:s'));
+            $dateTimeTo = DateHelper::SolarToGregorian($request->date_to, '/', '/');
+
             $buffer1 = explode(' ', $dateTimeFrom);
             $buffer2 = explode(' ', $dateTimeTo);
             $SpecialDayTime1 = $buffer1[0].' 00:00:00';
@@ -2992,8 +3008,12 @@ class HostController extends Controller
             }
         } else if($request->type == 'block') {
             $date = array();
-            $dateTimeFrom = jDateTime::ConvertToGeorgian($request->date_from,date('H:i:s'));
-            $dateTimeTo = jDateTime::ConvertToGeorgian($request->date_to,date('H:i:s'));
+//            $dateTimeFrom = jDateTime::ConvertToGeorgian($request->date_from,date('H:i:s'));
+            $dateTimeFrom = DateHelper::SolarToGregorian($request->date_from, '/', '/');
+
+//            $dateTimeTo = jDateTime::ConvertToGeorgian($request->date_to,date('H:i:s'));
+            $dateTimeTo = DateHelper::SolarToGregorian($request->date_to, '/', '/');
+
             $buffer1 = explode(' ', $dateTimeFrom);
             $buffer2 = explode(' ', $dateTimeTo);
             $SpecialDayTime1 = $buffer1[0].' 00:00:00';
@@ -3023,8 +3043,12 @@ class HostController extends Controller
                 PrintMessage('خطا در ثبت تاریخ، لطفا مجددا تلاش نمایید.','success');
             }
         } else if($request->type == 'unblock') {
-            $dateTimeFrom = jDateTime::ConvertToGeorgian($request->date_from,date('H:i:s'));
-            $dateTimeTo = jDateTime::ConvertToGeorgian($request->date_to,date('H:i:s'));
+//            $dateTimeFrom = jDateTime::ConvertToGeorgian($request->date_from,date('H:i:s'));
+            $dateTimeFrom = DateHelper::SolarToGregorian($request->date_from, '/', '/');
+
+//            $dateTimeTo = jDateTime::ConvertToGeorgian($request->date_to,date('H:i:s'));
+            $dateTimeTo = DateHelper::SolarToGregorian($request->date_to, '/', '/');
+
             $buffer1 = explode(' ', $dateTimeFrom);
             $buffer2 = explode(' ', $dateTimeTo);
             $blockedDayTime1 = $buffer1[0].' 00:00:00';
@@ -3037,21 +3061,26 @@ class HostController extends Controller
     }
 
 
+    /**
+     * رزرو آنی در پنل میزبان
+     */
     public function StoreClosestTimeReserve(Request $request) {
-        $from_date = jDateTime::ConvertToGeorgian($request->from_date,date('H:i:s'));
-        $buffer_1 = explode(' ', $from_date);
-        $from_date = $buffer_1[0].' 00:00:00';
-        $to_date = jDateTime::ConvertToGeorgian($request->to_date,date('H:i:s'));
-        $buffer_2 = explode(' ', $to_date);
-        $to_date = $buffer_2[0].' 00:00:00';
+
+        $from_date = DateHelper::SolarToGregorian($request->from_date, '/');
+        $from_date = $from_date .' 00:00:00';
+
+        $to_date = DateHelper::SolarToGregorian($request->to_date, '/');
+        $to_date = $to_date .' 00:00:00';
         $hostModel = Host::where('id', $request->host_id)->where('user_id', auth()->user()->id)->first();
+
         if(!empty($hostModel)) {
             InstantBooking::where('host_id', $hostModel->id)->delete();
-            $instantBookingModel = new InstantBooking();
-            $instantBookingModel->host_id = $hostModel->id;
-            $instantBookingModel->from_date = $from_date;
-            $instantBookingModel->to_date = $to_date;
+            $instantBookingModel                  = new InstantBooking();
+            $instantBookingModel->host_id         = $hostModel->id;
+            $instantBookingModel->from_date       = $from_date;
+            $instantBookingModel->to_date         = $to_date;
             $instantBookingModel->min_day_reserve = $request->min_day_reserve;
+
             if($instantBookingModel->save()) {
                 PrintMessage('اطلاعات با موفقیت به روز رسانی شد.', 'success');
                 return back();
@@ -3063,6 +3092,7 @@ class HostController extends Controller
     }
 
     public function DeleteClosestTimeReserve($id) {
+
         $hostModel = Host::where('id', $id)->where('user_id', auth()->user()->id)->first();
         if(!empty($hostModel)) {
             InstantBooking::where('host_id', $hostModel->id)->delete();
@@ -3111,66 +3141,93 @@ class HostController extends Controller
     }
 
 
-    public function SearchHost(Request $request) {
+    /**
+     * gets city(format = تهران - تهران or تهران), date_from, date_to, number from main page
+     */
 
-        $dif=0;
-        $dateList=[];
+    public function SearchHost(Request $request)
+    {
+        $dif = 0;
+        $dateList = [];
+
+        //حتما باید نام شهر انتخاب شود و برای نمایش خطا با برنامه نویس فرانت هماهنگ شود.
+        $this->validate($request, [
+            'city' => 'required'
+        ], [
+            'city.required' => 'لطفا شهر را انتخاب کنید.'
+        ]);
 
         $hostModelList = Host::query()->with(['getProvince','getTownship','getGalleryFirst','getReserves'])
             ->where('hosts.active', 1)
-            ->where('hosts.status', 1);
+            ->where('hosts.status', Host::ACTIVE_STATUS);
 
+        if (isset($request->date_from) && isset($request->date_to)) {
+            $from = $this->Convertnumber2english($request->date_from);
+            $to   = $this->Convertnumber2english($request->date_to);
 
+            $from = DateHelper::SolarToGregorian($from, '/');
+            $to   = DateHelper::SolarToGregorian($to, '/');
 
-        if (isset($request->data_from) && isset($request->data_to)) {
-            $from = $this->Convertnumber2english($request->data_from);
-            $to = $this->Convertnumber2english($request->data_to);
+            $date_from = date_create($from);
 
+            $date_to = date_create($to);
+            $dif = date_diff($date_from,$date_to)->format('%d');
 
-            $from1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$from)->format('Y-m-d'); //2016-05-8
-            $to1=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y/m/d',$to)->format('Y-m-d'); //2016-05-8
-
-            $data_from = date_create($from1);
-
-            $data_to = date_create($to1);
-            $dif=date_diff($data_from,$data_to)->format('%d');
-
-            for ($i=0;$i<=$dif;$i++){
-                $from3 = \Morilog\Jalali\jDate::forge($from1)->reforge('+'.$i.'days')->format('date');
-                $from2=\Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d',$from3)->format('Y-m-d'); //2016-05-8
-                $data_from = date_create($from2)->format("Y-m-d H:i:s ");
-                 array_push($dateList,$data_from);
+            for ($i = 0; $i <= $dif; $i++) {
+                $from3 = \Morilog\Jalali\jDate::forge($from)->reforge('+'. $i .'days')->format('date');
+                $from2 = \Morilog\Jalali\jDatetime::createDatetimeFromFormat('Y-m-d', $from3)->format('Y-m-d'); //2016-05-8
+                $date_from = date_create($from2)->format("Y-m-d H:i:s");
+                 array_push($dateList, $date_from);
             }
-
-
         }
 
-        if (isset($request->data_from) && isset($request->data_to)) {
+
+
+        if (isset($request->date_from) && isset($request->date_to)) {
             $hostModelList
-                ->where("hosts.min_reserve_day",'>=',$dif)
-                ->where("hosts.max_day_show_calendar",'>=',$dif);
+                ->where("min_reserve_day",'<=', $dif +1 )
+                ->where("max_day_show_calendar",'>=',$dif +1 );
         }
-
-
 
         $hostModelList
-            ->where(DB::raw("hosts.standard_guest + hosts.count_guest"),'>=',$request->number);
+            ->where("hosts.count_guest",'>=', $request->number);
 
         if (!is_null($request->city)) {
 
-            $city=explode('-',$request->city);
-            if (count($city)==1) {
-                $city[1]=$city[0];
+            $city = explode('-',$request->city);
+
+            if (count($city) == 1) {
+                $city[1] = $city[0]; // در صورتی که یک شهر وارد شده باشد شهر و استان را یکی در نظر میگیرد
             }
+
             $hostModelList
                 ->select('hosts.*')
                 ->leftJoin('provinces','provinces.id','=','hosts.province_id')
                 ->leftJoin('townships','townships.id','=','hosts.township_id')
-                ->where('provinces.name','LIKE',"%{$city[0]}%")
-                ->where('townships.name','LIKE',"%{$city[1]}%");
+                ->where('provinces.name', 'LIKE', '%'.trim($city[0]).'%')
+                ->where('townships.name', 'LIKE', '%'.trim($city[1]).'%');
         }
-        $hostModel = $hostModelList->get();
 
+        //چک کردن رزورها در صورت انتخاب بازه زمانی خاص
+        if(empty(!$dateList)) {
+            $hostModel = $hostModelList->get()->filter(function ($host) use($from, $dateList) {
+                $reserved_in_date = false;
+                $reserved_dates = $host->getReserve->where('reserve_date', '>=', new Carbon($from))->pluck('reserve_date');
+                $reserved_dates->each(function($date) use($dateList, &$reserved_in_date){
+                    if(in_array(date_create($date)->format("Y-m-d 00:00:00"), $dateList)){
+                        $reserved_in_date = true;
+                    }
+                });
+                if($reserved_in_date){
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+        } else {
+            $hostModel = $hostModelList->get();
+        }
 
         return view('frontend.Page.Search.SearchHost', compact('hostModel'));
     }

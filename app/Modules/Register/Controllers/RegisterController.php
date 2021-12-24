@@ -2,6 +2,7 @@
 
 namespace App\Modules\Register\Controllers;
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Modules\City\Model\Province;
 use App\Modules\City\Model\Township;
@@ -298,8 +299,10 @@ class RegisterController extends Controller
     }
 
 
+    /**
+     * update user profile
+     */
     public function UpdateUser(Request $request) {
-
         $userModel = User::where('id', auth()->user()->id)->first();
         if($request->has('image_form')) {
             $oldImg = $userModel->avatar;
@@ -314,22 +317,21 @@ class RegisterController extends Controller
                         unlink('Uploaded/User/Profile/'.$oldImg);
                     }
                 }
-            }
-            else
+            } else
             {
                 $filename = $oldImg;
             }
             $userModel->avatar = $filename;
-            $userModel->about = $request->about;
+            $userModel->about  = $request->about;
             if($userModel->save()) {
-                PrintMessage('نمایه شما با موفقیت ویرایش گردید', 'success');
+                PrintMessage('نمایه شما با موفقیت ویرایش گردید.', 'success');
                 return back();
             } else {
                 return back();
             }
         }
 
-        $Message=[
+        $Message = [
             'first_name.required'=>'نام نمیتواند خالی باشد .',
 //            'last_name.required'=>'نام خانوادگی نمیتواند خالی باشد .',
 //            'mobile.required'=>'شماره موبایل نمیتواند خالی باشد .',
@@ -340,7 +342,7 @@ class RegisterController extends Controller
             'birth_date.required'=>'تاریخ تولد نمیتواند خالی باشد .',
 //            'email.required'=>'پست الکترونیکی نمیتواند خالی باشد .',
 //            'email.unique'=>'پست الکترونیکی قبلا در سیستم ثبت شده است .',
-//            'email.email'=>'پست الکترونیکی صحیح نمیباشد .',
+            'email.email'=>'پست الکترونیکی صحیح نمیباشد .',
             'city_id.required'=>'وارد کردن شهر الزامی می باشد .',
         ];
         $this->validate($request,[
@@ -349,14 +351,16 @@ class RegisterController extends Controller
 //            'mobile' => 'required|min:11|max:11|unique:users,mobile,'.$userModel->id,
 //            'telephone' => 'required',
             'birth_date' => 'required',
-//            'email' => 'required|email|unique:users,email,'.$userModel->id,
+            'email' => 'email|unique:users,email,'.$userModel->id,
             'city_id' => 'required',
         ],$Message);
 
         if($request->birth_date == 'انتخاب کنید') {
             $birthDate = null;
         } else {
-            $birthDate = jDateTime::ConvertToGeorgian($request->birth_date,date('H:i:s'));
+//            $birthDate = jDateTime::ConvertToGeorgian($request->birth_date,date('H:i:s'));
+            $birthDate = DateHelper::SolarToGregorian($request->birth_date, '/', '/'). ' 00:00:00';
+
         }
         if($request->city_id == 0) {
             PrintMessage('وارد کردن استان و شهر الزامی می باشد', 'danger');
@@ -401,17 +405,21 @@ class RegisterController extends Controller
     }
 
 
-
+    /**
+     * ارسال مدارک از صفحه پروفایل
+     */
     public function UpdateConfirmUser(Request $request)
     {
           $Message = [
               'type.required' => 'نوع مدرک نمیتواند خالی باشد .',
-              'type.not_in' => 'نوع مدرک نمیتواند خالی باشد .',
+              'type.not_in'   => 'نوع مدرک نمیتواند خالی باشد .',
               'file.required' => 'فایل مدرک نمیتواند خالی باشد .',
+              'file.mimes'    => 'عکس مدرک شما باید با فرمت png یا jpg یا jpeg باشد.',
+              'file.max'      => 'حداکثر حجم عکس مدرک شما دو مگابایت میباشد.'
           ];
           $this->validate($request, [
               'type' => 'required|not_in:0',
-              'file' => 'required',
+              'file' => 'required|mimes:png,jpg,jpeg|max:2048',
           ], $Message);
         if ($request->hasFile('file')) {
             $file = $request->file('file');

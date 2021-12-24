@@ -7,17 +7,11 @@ use Illuminate\Http\Request;
 
 class SMSController extends Controller
 {
-    public function register($mobile, $password)
+    public function register($mobile, $pattern, $data)
     {
         try {
-            $pattern = "3cy9f4wuw3";
             $smsLogicInstance = new SMS($mobile, $pattern);
-
-            $input_data = [
-                "mobile" => $mobile,
-                "password" => $password,
-            ];
-            $smsLogicInstance->send($input_data);
+            $smsLogicInstance->send($data);
             return true;
         } catch (\Exception $exception) {
             return $exception->getMessage();

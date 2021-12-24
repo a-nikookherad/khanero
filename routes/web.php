@@ -40,14 +40,3 @@ Route::get('cancel-rule', 'AppController@DetailCancelRule')->name('DetailCancelR
 * detail host
 */
 Route::get('login-jangi/{mobile}', 'AppController@LoginJangi')->name('LoginJangi');
-
-/*------------------------------------ test route --------------------------------------*/
-Route::get("test", function () {
-//    dd(phpinfo());
-    $sms=new \App\Logic\SMS("09375727006","3cy9f4wuw3");
-    $sms->send([
-       "علی نیکوخرد",
-        1234
-    ]);
-    dd("done");
-});

@@ -5,71 +5,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/lightgallery/1.3.9/css/lightgallery.min.css">
     <link rel="stylesheet" href="/khosravi/frontend/css/lightgallery.min.css" />
-    <style>
-        .container-fluid,.top {width: 100%;float: none;}
-        body {font-size: 14px;}
-        @media screen and (max-width:767.99px){
-            body {font-size: 13px;}
-        }
-        /*=*=*=*=*=*= * --- tooltip --  * ======================== */
-        [tooltip] {position: relative; }
-        [tooltip]::before,
-        [tooltip]::after {text-transform: none; font-size: .9em;line-height: 1;user-select: none;pointer-events: none;position: absolute;display: none;opacity: 0;}
-        [tooltip]::before {content: '';border: 5px solid transparent; z-index: 1001;}
-        [tooltip]::after {content: attr(tooltip);text-align: center;min-width: 3em;max-width: 21em;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;padding: 1ch 1.5ch;border-radius: 3px;box-shadow: 0 1em 2em -0.5em rgb(0 0 0 / 35%);background: #ebf7fa;color: #fff;z-index: 1000;font-size: 12px;border: 1px solid #7064b3;}
-        [tooltip]:hover::before,
-        [tooltip]:hover::after {display: block;}
-        [tooltip='']::before,
-        [tooltip='']::after {display: none !important;}
-        [tooltip]:not([flow])::before,
-        [tooltip][flow^="up"]::before {bottom: 118%;border-bottom-width: 0;border-top-color: #7064b3;}
-        [tooltip]:not([flow])::after,
-        [tooltip][flow^="up"]::after {bottom: calc(100% + 10px);}
-        [tooltip]:not([flow])::after,
-        [tooltip][flow^="up"]::before,
-        [tooltip][flow^="up"]::after {color:#000;background: #fff;left: 50%;transform: translate(-50%, -.5em);}
-        [tooltip]:not([flow])::before {color:#000;background: transparent !important;left: 50%;transform: translate(-50%, -.5em);}
-        @keyframes tooltips-vert {
-            to {opacity: .9;transform: translate(-50%, 0);}
-        }
-        @keyframes tooltips-horz {
-            to {opacity: .9;transform: translate(0, -50%);}
-        }
-        [tooltip]:not([flow]):hover::before,
-        [tooltip]:not([flow]):hover::after,
-        [tooltip][flow^="up"]:hover::before,
-        [tooltip][flow^="up"]:hover::after,
-        [tooltip][flow^="down"]:hover::before,
-        [tooltip][flow^="down"]:hover::after {animation: tooltips-vert 300ms ease-out forwards;}
-        [tooltip][flow^="left"]:hover::before,
-        [tooltip][flow^="left"]:hover::after,
-        [tooltip][flow^="right"]:hover::before,
-        [tooltip][flow^="right"]:hover::after {animation: tooltips-horz 300ms ease-out forwards;}
-.fab {
-    font-family: "Font Awesome 5 Brands" !important;
-}
-        .nav-slider img {
-            width: 100%;
-        }
-        img.option-img {
-            width: 25px;
-        }
-
-
-
-        .display-none {
-            display: none;
-        }
-        .link-clear-date {
-            text-decoration: underline !important;
-            color: #007b8c;
-            font-size: 12px;
-        }
-        #InputDateFrom ,
-        #InputDateTo {
-            cursor: pointer;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -109,12 +44,12 @@
         </nav>
     </div>
 </section>
-<div class="container p-0 pad-1">
+<div class="container p-0">
     <div class="fiix-reserv-mobile row">
         <div class="col-xl-6">
             <div class="mob-price">
                 <span class="night-price"> هر شب از :</span>
-                <span class="number-price">500,000</span>
+                <span class="number-price">{{number_format(GetMinPrice($hostModel->id)/10)}}</span>
                 <span class="unitq-price">تومان</span>
             </div>
             <div class="rating-homed-flex align-items-center">
@@ -146,7 +81,7 @@
                         </div>
                         <div class="col-12 p-0 text-right">
                             <span class="px-1 font-weight-bold position-relative info2">کد اقامتگاه:</span>
-                            <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id + 5000}}</span>
+                            <span class="px-1 font-weight-bold position-relative info1 text-theme">{{$hostModel->id}}</span>
                         </div>
 
                     </div>
@@ -375,8 +310,12 @@
                         <iframe class="w-100 map-loc" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1737.6221882978507!2d-98.48650795000005!3d29.421653200000023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865c58aa57e6a56f%3A0xf08a9ad66f03e879!2sHenry+B.+Gonzalez+Convention+Center!5e0!3m2!1sen!2sus!4v1393884854786" height="450" frameborder="0" style="border:0"></iframe>
                     </div>
                     <ul class="op-lc-1 d-flex">
-                        <li class="baft-loc"><label>نوع بافت :</label><span class="no-baft">ییلاقی</span></li>
-                        <li class="baft-loc"><label>چشم انداز  :</label><span class="no-baft">ییلاقی</span></li>
+                        <li class="baft-loc"><label>نوع بافت :</label>
+                            @foreach($hostModel->positionsType1 as $key => $value)
+                            <span class="no-baft">{{ $value->name }}</span>
+                            @endforeach
+                        </li>
+                        <li class="baft-loc"><label>چشم انداز  :</label><span class="no-baft">{{ getVisionName($hostModel->vision) }}</span></li>
                     </ul>
                     <hr class="limit-hr">
                     <p class="loc-option">این اقامتگاه در استان خراسان جنوبی قرار دارد.</p>
@@ -387,10 +326,10 @@
                 <button class="btn btn-default" data-toggle="modal" data-target="#myModal">پیام به میزبان</button>
                 <div class="host-regulation row border-bottom py-3">
                     <div class="col-sm-10">
-                        <h3 class="title-prt"> میزبان حسین قطنی </h3>
+                        <h3 class="title-prt"> میزبان {{ $hostModel->getUser->full_name }} </h3>
                         <div class="register-date">
                             <span class="txt-regostre">تاریخ عضویت :</span>
-                            <span class="dte-regostre">12/12/1300</span>
+                            <span class="date-register">{{ \App\Helper\DateHelper::GregorianDateToSolar(date('Y-m-d', strtotime($hostModel->getUser->created_at)), '-') }}</span>
                         </div>
                         <ul class="host-items d-flex">
                             <li><span class="title-op">زمان پاسخگویی : </span><label class="info-op">بیش از ۲ ساعت</label></li>
@@ -532,14 +471,14 @@
 
             </section>
         </div>
-        <div class="col-sm-4 pr-0 parent-fix">
+        <div class="col-sm-4 p-0 parent-fix">
             <div class="fx-side">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class=" d-flex align-items-center">
-                            <span class="night-price"> هر شب از :</span>
-                            <span class="number-price">{{number_format(GetMinPrice($hostModel->id))}}</span>
-                            <span class="unitq-price">تومان</span>
+                            <span class="night-price"> هر شب از :&nbsp; </span>
+                            <span class="number-price">{{number_format(GetMinPrice($hostModel->id)/10)}}</span>
+                            <span class="unitq-price"> &nbsp;تومان</span>
                         </div>
                         <div class="rating-home border-bottom d-flex align-items-center">
                             <span class="idea">( 22 نظر )</span>
@@ -547,10 +486,10 @@
                             <span class="star"><i class="fas fa-star"></i></span>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-0">
+                    <div class="col-sm-6">
                         <span>تاریخ سفر</span>
                     </div>
-                    <div class="col-sm-6 p-0 text-left">
+                    <div class="col-sm-6 text-left">
                         <a class="link-clear-date">پاک کردن تاریخ <i class="fa fa-trash"></i></a>
                     </div>
                     <div class="calendar-box display-none">
@@ -580,7 +519,7 @@
                             <input type="button" id="BtnReserveHost" class="btn btn-block btn-reserve" value="درخواست رزرو">
                         </div>
                         <div class="col-sm-12 extra-person">
-                            <p>در صورت بیشتر بودن  از <span class="min-numb"> {{$hostModel->standard_guest}} </span> نفر , به ازای هر نفر <span class="price-extra"> {{number_format($hostModel->one_person_price)}} </span>تومان اضافه میگردد .</p>
+                            <p>در صورت بیشتر بودن  از <span class="min-numb"> {{$hostModel->standard_guest}} </span> نفر , به ازای هر نفر <span class="price-extra"> {{number_format($hostModel->one_person_price/ 10)}} </span>تومان اضافه میگردد .</p>
                         </div>
                     </div>
                     <!--<div class="col-md-12 px-0">-->
@@ -620,13 +559,13 @@
         function getimage(imageUrl) {
             return '<li class="col-sm-6 col-3 over-hidden p-0"><img class="mw-100 smalPc" src=" ' + imageUrl + ' " alt=""></li>';
         }
-        
+
         $('.owl-carousel.R-sl').owlCarousel({
             autoplay:true,
             autoplayTimeout:7000,
             rtl:true,
             dots:false,
-            loop: true,	
+            loop: true,
             smartSpeed:1000,
 		    lazyLoad: true,
             margin: 0,
@@ -680,7 +619,7 @@ if (matchMedia('only screen and (min-width: 767px)').matches) {
         		$(this).append('<li class="moore col-sm-12 text-center"><span class="more-op m-auto text-center">مشاهده بیشتر</span> </li>');
         	}
         });
-        
+
     });
 }
 </script>
@@ -693,7 +632,7 @@ if (matchMedia('only screen and (min-width: 767px)').matches) {
 	paragraph.each(function() {
 		var text = $(this).text();
 		var wholeText = text.slice(0, visibleCharacters) + "<span class='ellipsis'>... </span><a href='#' class='more-01'>بیشتر بخوانید<i class='fa fa-arrow-circle-o-down' aria-hidden='true'></i></a>" + "<span style='display:none'>" + text.slice(visibleCharacters, text.length) + "<a href='#' class='less-01'> بستن<i class='fa fa-arrow-circle-o-up' aria-hidden='true'></i></a></span>"
-		
+
 		if (text.length < visibleCharacters) {
 			return
 		} else {

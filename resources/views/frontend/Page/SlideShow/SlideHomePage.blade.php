@@ -41,31 +41,44 @@
                 <div class="col-xs-12">
                     <div id="search">
                         <form class="search" action="{{route('SearchHost')}}">
-                            <div class="input-search">
-                                <span class="icon-to"></span>
+                            <div class="input-search d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt"></i>
                                 <span class="search2">
-					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">
+{{--					 <input class="" type="text" placeholder=" شهر مقصد یا کد اقامتگاه" name="city">--}}
+                                    <select class="js-example-basic-single" name="city">
+                                        <option></option>
+                                      <optgroup label="مقاصد پر تردد">
+                                       @foreach($busyDestinations as $busyDestination)
+                                           <option value="{{ $busyDestination }}">{{ $busyDestination }}</option>
+                                          @endforeach
+                                      </optgroup>
+                                      <optgroup label="سایر شهرها">
+                                          @foreach($townshipSearchData as $town)
+                                              <option value="{{ $town }}">{{ $town }}</option>
+                                          @endforeach
+                                      </optgroup>
+                                    </select>
 				     </span>
                             </div>
 
                             <div class="date">
                                 <div class="datepersian">
-                                    <span class="icon-calender"></span>
+                                    <i class="fal fa-calendar-alt"></i>
                                     <span class="input-calender">
-                                    <input class="range-from" placeholder=" تاریخ ورود" name="data_from"/>
+                                    <input class="range-from" placeholder=" تاریخ ورود" name="date_from"/>
 						 <!-- <input class="Q-bx date-enter input-date1" type="" id="InputFromDate" placeholder=" تاریخ ورود" name=""> -->
 					 </span>
                                 </div>
                                 <div class="datepersian">
-                                    <span class="icon-calender"></span>
+                                    <i class="fal fa-calendar-alt"></i>
                                     <span class="input-calender">
                                 
-                                    <input class="range-to" placeholder=" تاریخ خروج" name="data_to"/>
+                                    <input class="range-to" placeholder=" تاریخ خروج" name="date_to"/>
 						   <!-- <input class="Q-bx date-exit input-date2" type="" id="InputToDate" placeholder=" تاریخ خروج" name=""> -->
 					 </span>
                                 </div>
                                 <div class="number">
-                                    <span class="icon-number"></span>
+                                    <i class="fa fa-users"></i>
                                     <span class="minus"><i class="fas fa-minus"></i></span>
                                     <input type="text" value="1" placeholder="تعداد نفرات" name="number">
                                     <span class="text-number"> نفر</span>

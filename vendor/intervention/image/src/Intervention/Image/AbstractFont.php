@@ -14,7 +14,7 @@ abstract class AbstractFont
     /**
      * Text size in pixels
      *
-     * @var integer
+     * @var int
      */
     public $size = 12;
 
@@ -28,7 +28,7 @@ abstract class AbstractFont
     /**
      * Rotation angle of the text
      *
-     * @var integer
+     * @var int
      */
     public $angle = 0;
 
@@ -47,6 +47,13 @@ abstract class AbstractFont
     public $valign;
 
     /**
+     * Space between text characters
+     *
+     * @var float
+     */
+    public $kerning = 0;
+
+    /**
      * Path to TTF or GD library internal font file of the text
      *
      * @var mixed
@@ -57,16 +64,23 @@ abstract class AbstractFont
      * Draws font to given image on given position
      *
      * @param  Image   $image
-     * @param  integer $posx
-     * @param  integer $posy
+     * @param  int     $posx
+     * @param  int     $posy
      * @return boolean
      */
     abstract public function applyToImage(Image $image, $posx = 0, $posy = 0);
+    
+    /**
+     * Calculates bounding box of current font setting
+     *
+     * @return array
+     */
+    abstract public function getBoxSize();
 
     /**
      * Create a new instance of Font
      *
-     * @param Strinf $text Text to be written
+     * @param String $text Text to be written
      */
     public function __construct($text = null)
     {
@@ -99,7 +113,7 @@ abstract class AbstractFont
     /**
      * Set font size in pixels
      *
-     * @param  integer $size
+     * @param  int $size
      * @return void
      */
     public function size($size)
@@ -112,7 +126,7 @@ abstract class AbstractFont
     /**
      * Get font size in pixels
      *
-     * @return integer
+     * @return int
      */
     public function getSize()
     {
@@ -145,7 +159,7 @@ abstract class AbstractFont
     /**
      * Set rotation angle of text
      *
-     * @param  integer $angle
+     * @param  int $angle
      * @return void
      */
     public function angle($angle)
@@ -158,7 +172,7 @@ abstract class AbstractFont
     /**
      * Get rotation angle of text
      *
-     * @return integer
+     * @return int
      */
     public function getAngle()
     {
@@ -212,6 +226,27 @@ abstract class AbstractFont
     }
 
     /**
+     * Set text kerning
+     *
+     * @param  string $kerning
+     * @return void
+     */
+    public function kerning($kerning)
+    {
+        $this->kerning = $kerning;
+    }
+
+    /**
+     * Get kerning
+     *
+     * @return float
+     */
+    public function getKerning()
+    {
+        return $this->kerning;
+    }
+
+    /**
      * Set path to font file
      *
      * @param  string $file
@@ -251,7 +286,7 @@ abstract class AbstractFont
     /**
      * Counts lines of text to be written
      *
-     * @return integer
+     * @return int
      */
     public function countLines()
     {

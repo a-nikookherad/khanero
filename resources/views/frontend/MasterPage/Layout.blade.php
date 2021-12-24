@@ -9,7 +9,6 @@
     <meta property="og:url" content="{{$actual_link}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
-    <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/bootstrap-theme.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('frontend/css/owl.carousel.min.css')}}">
@@ -17,69 +16,23 @@
 <!-- <link rel="stylesheet" href="{{asset('frontend/css/persian-datepicker.css')}}"> -->
     <link href="{{asset('frontend/css/fontawesome-all.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/assets/Popup-jQuery/toast.style.min.css')}}"/>
-    <link href="{{asset('frontend/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/persian-datepicker.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('backend/css/datepicker.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap-datepicker.min.css')}}"/>
+    <link href="{{asset('frontend/css/select2.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('frontend/css/custom.css')}}" rel="stylesheet">
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
+    <script src="{{asset('frontend/js/select2.min.js')}}"></script>
     @yield('style')
-    <style>
-        .modal-backdrop.fade.in {
-            z-index: 998;
-        }
-
-        .fa, .far, .fas {
-            font-family: "Font Awesome 5 Free" !important;
-        }
-
-        img.load-register {
-            height: 20px;
-            margin: 0 auto;
-        }
-
-        .btn-edit-mobile.text-success {
-            color: #007dec;
-        }
-
-        a.btn-edit-mobile {
-            color: #848484 !important;
-        }
-
-        .mb-2 {
-            margin-bottom: 1.5rem;
-        }
-
-        .d-flex {
-            display: flex
-        }
-
-        .public-search {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .search-wrapper {
-                display: block;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .mobileInter {
-                display: none !important;
-            }
-        }
-
-
-    </style>
 </head>
 <body>
 <div class="over-page"></div>
 <div class="top">
-    <div class="top1 border-bottom">
+    <div class="top1">
         <div class="container">
             <div class="row fix-w">
                 <div class="col-xs-4 col-sm-4 p-0 pr-x-0">
-                    <div id="logo"><img src="{{asset('frontend/images/LOGO.png')}}" alt="logo"></div>
+                    <a href="#" id="logo"><img src="{{asset('frontend/images/logo-f.png')}}" alt="logo"></a>
                 </div>
                 <div class="col-sm-8 col-xs-8 p-0 px-0">
                     <div class="d-flex">
@@ -91,8 +44,8 @@
 
                             <ul class="link-top">
                                 <li class="hidden-xs phone">
-                                    <img src="{{asset('frontend/images/icon-t1.png')}}" alt="logo"> <a href=""> 0910 698
-                                        66 86 </a>
+                                    <a href=""> 09106986686 </a>
+                                    <i class="fa fa-phone"></i>
                                 </li>
                                 <li class="sabt hidden-xs visible-md">
                                     <a href="{{route('CreateHost')}}">
@@ -103,13 +56,9 @@
                                 <li class="box-login">
                                     @if(!auth()->check())
                                         <div class="mobileInter">
-                                            <a>
-                                        <span data-toggle="modal" data-target="#myModal">
-                                            <span>
-                                                <img src="{{asset('frontend/images/user.png')}}">
-                                            </span>
-                                            <span> ورود </span>
-                                        </span>
+                                            <a data-toggle="modal" data-target="#myModal">
+                                       
+                                             ورود 
                                             </a>
                                             <span class="line-login"> </span>
                                             <a data-toggle="modal" data-target="#myModal">
@@ -129,19 +78,19 @@
                                         {{--                                                </div>--}}
                                         {{--                                                <input type="hidden" id="MobileUser">--}}
                                         {{--                                                <div class="modal-body box-login-register">--}}
-                                        {{--                                                    <div class="row">--}}
-                                        {{--                                                        <div class="col-md-12">--}}
+                                        {{--                                                    <div >--}}
+                                        {{--                                                        <div >--}}
                                         {{--                                                            <div class="form-group">--}}
                                         {{--                                                                <p class="text-right">جهت ورود یا ثبت نام شماره همراه خود را وارد کنید</p>--}}
                                         {{--                                                            </div>--}}
                                         {{--                                                        </div>--}}
-                                        {{--                                                        <div class="col-md-12">--}}
+                                        {{--                                                        <div>--}}
                                         {{--                                                            <div class="form-group text-right">--}}
                                         {{--                                                                <input type="text" autocomplete="off" maxlength="11" class="form-control" id="InputMobile" placeholder="شماره همراه">--}}
                                         {{--                                                                <span class="message text-danger"></span>--}}
                                         {{--                                                            </div>--}}
                                         {{--                                                        </div>--}}
-                                        {{--                                                        <div class="col-md-12">--}}
+                                        {{--                                                        <div >--}}
                                         {{--                                                            <div class="form-group">--}}
                                         {{--                                                                <button type="button" id="BtnCheckUser" class="btn btn-block">ادامه</button>--}}
                                         {{--                                                            </div>--}}
@@ -238,10 +187,10 @@
                                     @elseif(!auth()->check())
                                         <div class="list-login">
                                             <ul>
-                                                <li data-toggle="modal" data-target="#myModal"><a class="item-login"
+                                                <li><a  data-toggle="modal" data-target="#myModal" class="item-login"
                                                                                                   href=""><i
                                                                 class="far fa-user"></i>ورود</a></li>
-                                                <li data-toggle="modal" data-target="#myModal"><a class="item-login"
+                                                <li ><a class="item-login" data-toggle="modal" data-target="#myModal"
                                                                                                   href=""><i
                                                                 class="far fa-user"></i>ثبت نام</a></li>
                                                 <li><a class="item-login" href="{{route('CreateHost')}}"><i
@@ -277,31 +226,31 @@
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;
-                                                    </button>
-                                                    <h4 class="modal-title">ورود یا ثبت نام</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times; </button>
+                                                    <img src="{{asset('frontend/images/logo-f.png')}}" alt="logo" class="img-footer mx-auto">
+                                                     <!-- <h4 class="modal-title mt_10 text-center">ورود / ثبت نام</h4> -->
                                                 </div>
                                                 <input type="hidden" id="MobileUser">
                                                 <div class="modal-body box-login-register">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <p class="text-right">جهت ورود یا ثبت نام شماره همراه
+                                                    <div >
+                                                        <div >
+                                                            <div class="form-group mb-5">
+                                                                <p class="text-right font_14">جهت ورود / ثبت نام شماره همراه
                                                                     خود را وارد کنید</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group text-right">
+                                                        <div >
+                                                            <div class="form-group mb-0">
                                                                 <input type="text" autocomplete="off" maxlength="11"
                                                                        class="form-control" id="InputMobile"
                                                                        placeholder="شماره همراه">
-                                                                <span class="message text-danger"></span>
+                                                                <span class="message text-danger mb-3 float-right"></span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <div >
                                                             <div class="form-group">
                                                                 <button type="button" id="BtnCheckUser"
-                                                                        class="btn btn-block">ادامه
+                                                                        class="btn btn-block btn_bgCustom">ادامه
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -356,10 +305,10 @@
                 <script>
                     //============ search-->
                     $(document).ready(function () {
-                        $('.menu-user').click(function () {
+                        $(document).on('click', '.menu-user', function () {
                             $(this).parent().parent().toggleClass('open-1');
                             $('.over-page').toggleClass('active');
-                        });
+                        })
                         $('.btn-menu').click(function () {
                             $(this).parent().toggleClass('open-mob');
                             $('.over-page').toggleClass('active');
@@ -465,10 +414,7 @@
     <div class="container">
         <div class="row row-copy">
             <div class="col-md-6 col-xs-12 right-copy pr-md-0">
-                © 2018 DESIGNED BY <span class="color">NO NEGARE</span> . ALL RIGHTS RESERVED
-            </div>
-            <div class="col-md-6 col-xs-12 left-copy pl-md-0">
-                Copyright ALLORO MILANO . All rights reserved.
+               کلیه حقوق برای خانه رو محفوظ است
             </div>
         </div>
     </div>
@@ -599,7 +545,7 @@
         </div>
     </div>
 </div>
-<a href="#" class="back-to-top" style=""><i class="fas fa-chevron-up"></i></a>
+<!--<a href="#" class="back-to-top" style=""><i class="fas fa-chevron-up"></i></a>-->
 <script src="{{asset('frontend/js/owl.carousel.js')}}"></script>
 <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 <!-- <script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}"></script> -->
@@ -611,6 +557,19 @@
 
 
 <script>
+
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2({
+            dir: 'rtl',
+            width: '100%',
+            placeholder: 'شهر مقصد یا کد اقامتگاه',
+            language: {
+                noResults: function () {
+                    return "نتیجه ای یافت نشد.";
+                }
+            }
+        });
+    });
 
     var to, from;
     to = $(".range-to").persianDatepicker({

@@ -10,6 +10,7 @@ function AuthUser() {
     return auth()->user();
 }
 
+use App\Modules\Possibilities\Model\PositionType;
 use App\User;
 function GetUserById($id) {
     return User::where('id', $id)->first();
@@ -71,7 +72,7 @@ function GetMinPrice($host_id) {
 
 function GetHost($type='default') {
     $hostModel = Host::where('active', 1)
-        ->where('status', 1)->take(6)->orderBy('id', 'DESC')->get();
+        ->where('status', Host::ACTIVE_STATUS)->take(6)->orderBy('id', 'DESC')->get();
     return $hostModel;
 }
 
@@ -115,6 +116,7 @@ function GetReserveByCode($code) {
 }
 
 function GetHostByCode($code) {
+
     $reserve = Reserve::where('group_code', $code)->first();
     return Host::where('id', $reserve->host_id)->first();
 }
@@ -854,5 +856,23 @@ function jalali_to_gregorian($jy,$jm,$jd,$mod=''){
         $gd-=$v;
     }
     return($mod==='')?array($gy,$gm,$gd):$gy .$mod .$gm .$mod .$gd;
+}
+
+function getVisionName($vision_id)
+{
+    $vision = PositionType::where('id', $vision_id)->first();
+    if($vision) {
+        return $vision->name;
+    }
+
+    return 'ندارد';
+}
+
+function stringNotEmpty($string)
+{
+    if(trim($string) == ''){
+        return false;
+    }
+    return true;
 }
 

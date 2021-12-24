@@ -22,10 +22,10 @@ Route::group(['middleware'=>['web', 'CheckMiddleware'],'namespace'=>'App\Modules
     Route::post('send-sms-code','RegisterController@SendCodeSms')->name('SendCodeSms');
 
     //register form
-    Route::get('register','RegisterController@RegisterForm')->name('Register');
+//    Route::get('register','RegisterController@RegisterForm')->name('Register');
 
     //register user
-    Route::post('store/new/user','RegisterController@StoreNewUser')->name('StoreNewUser');
+//    Route::post('store/new/user','RegisterController@StoreNewUser')->name('StoreNewUser');
 
     //register user with ajax
     Route::post('store/new/user/ajax','RegisterController@StoreNewUserAjax')->name('StoreNewUserAjax');

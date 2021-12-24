@@ -40,8 +40,6 @@ class AuthController extends Controller
 
     public function ActivityUser(Request $request)
     {
-
-
         $activeUser = UserActivation::where('token', $request->code)->first();
         if (!empty($activeUser)) {
             $userModel = User::find($activeUser->user_id);
@@ -170,20 +168,30 @@ class AuthController extends Controller
 
     }
 
-
+    /**
+     * change password
+     */
     public function ResetPassword(Request $request)
     {
         $Message = [
-            'password.required' => 'وارد کردن رمز جدید الزامی است',
-            'password.min' => 'رمز ورود باید بیش از 6 رقم باشد',
+            'current_password.required' => 'وارد کردن رمز فعلی الزامی است.',
+            'new_password.required' => 'وارد کردن رمز جدید الزامی است',
+            'new_password.min' => 'رمز ورود باید بیش از 6 رقم باشد',
         ];
         $this->validate($request, [
-            'password' => 'required|min:6',
+            'new_password' => 'required|min:6',
+            'current_password' => 'required'
         ], $Message);
 
         $userModel = User::where('id', auth()->user()->id)->first();
-        if ($request->password == $request->confirm_password) {
-            $userModel->password = bcrypt($request->password);
+
+        if(!\Hash::check($request->current_password, $userModel->password)) {
+            PrintMessage('رمز فعلی شما صحیح نمیباشد.', 'danger');
+            return back();
+        }
+
+        if ($request->new_password == $request->confirm_password) {
+            $userModel->password = bcrypt($request->new_password);
             if ($userModel->save()) {
                 PrintMessage('اطلاعات شما با موفقیت ویرایش گردید', 'success');
                 return back();
@@ -196,25 +204,27 @@ class AuthController extends Controller
 
 
     /*
-     * Ajax Login
+     * ارسال اس ام اس ثبت نام
      * */
     public function CheckUserAjax(Request $request)
     {
         // return 23;
         $userModel = User::where('mobile', $request->mobile)->first();
+        $smsController = new \App\Http\Controllers\SMSController();
         if (!empty($userModel)) {
             if ($userModel->password == 'none') {
                 $Token = (rand(10000, 99999));
                 /*
                  * send sms
                  * */
-//                SmsController::SendSMSRegister($userModel->first_name.' '.$userModel->last_name,$userModel->mobile,$Token);
-                $smsController = new \App\Http\Controllers\SMSController();
-                $smsController->register($userModel->mobile, $Token);
+                $data = [
+                    'token' => $Token
+                ];
+                $smsController->register($userModel->mobile, '7x5tqxosv2', $data);
                 UserActivation::where('user_id', $userModel->id)->delete();
                 $Activation = new UserActivation([
                     'user_id' => $userModel->id,
-                    'token' => $Token
+                    'token'   => $Token
                 ]);
                 if ($Activation->save()) {
                     $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.Sms')->render()];
@@ -232,17 +242,20 @@ class AuthController extends Controller
             $userModel->role_id = 2;
             $userModel->mobile = $request->mobile;
             $userModel->active = 0;
+            $userModel->sex = $request->sex;
             if ($userModel->save()) {
                 $Token = (rand(10000, 99999));
                 /*
                  * send sms
                  * */
-//                SmsController::SendSMSRegister($userModel->first_name . ' ' . $userModel->last_name, $userModel->mobile, $Token);
-                $smsController = new \App\Http\Controllers\SMSController();
-                $smsController->register($userModel->mobile, $Token);
+                $data = [
+                    'token' => $Token
+                ];
+                $smsController->register($userModel->mobile, '7x5tqxosv2', $data);
+
                 $Activation = new UserActivation([
                     'user_id' => $userModel->id,
-                    'token' => $Token
+                    'token'   => $Token
                 ]);
                 if ($Activation->save()) {
                     $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.Sms')->render()];
@@ -260,14 +273,22 @@ class AuthController extends Controller
     {
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
-            $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.NewPassword')->render()];
-            return response()->json($Response);
+
+            if($userModel->userActivation->token == $request->code)
+            {
+                $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.NewPassword')->render()];
+                return response()->json($Response);
+            } else {
+                //پیغام خطا مجددا از سمت فرانت بررسی شود.
+                $Response = ["Success" => "0", "Message" => "کد وارد شده با کد مورد نظر مطابقت ندارد."];
+                return response()->json($Response);
+            }
         }
     }
 
 
     /*
-     * Register New User
+     * ذخیره رمز عبور جدید بعد از ارزیابی کد ۵ رقمی ارسال شده
      * */
     public function RegisterAjaxUser(Request $request)
     {
@@ -278,6 +299,10 @@ class AuthController extends Controller
         $userModel = User::where('mobile', $request->mobile)->first();
         if (!empty($userModel)) {
             $userModel->password = bcrypt($request->password);
+            $userModel->sex = $request->gender;
+            $userModel->active = true;
+            $userModel->first_name = $request->firstName;
+            $userModel->last_name = $request->lastName;
             if ($userModel->save()) {
                 auth()->loginUsingId($userModel->id);
                 $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.Header')->render()];
@@ -317,6 +342,70 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * درخواست لاگین با کد یکبار مصرف
+     */
+    public function AuthWithSms(Request $request, $type)
+    {
+        $userModel = User::where('mobile', $request->mobile)->first();
+        if (!empty($userModel)) {
+            $Token = (rand(10000, 99999));
+            /*
+             * send sms
+             * */
+            $smsController = new \App\Http\Controllers\SMSController();
+            UserActivation::where('user_id', $userModel->id)->delete();
+            $Activation = new UserActivation([
+                'user_id' => $userModel->id,
+                'token'   => $Token
+            ]);
+
+            if ($Activation->save()) {
+                if($type == 'forget_password') {
+                    $data = [
+                        'verification_code' => $Token
+                    ];
+                    $smsController->register($userModel->mobile, '1qodulr83z', $data);
+
+                    $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.ForgetPass')->render()];
+                    return response()->json($Response);
+                } else {
+                    $data = [
+                        'token' => $Token
+                    ];
+                    $smsController->register($userModel->mobile, 'wkf3frx1mm', $data);
+                    $Response = ["Message" => "sms", "Content" => view('frontend.Ajax.Auth.OnceSms')->render()];
+                    return response()->json($Response);
+                }
+            }
+
+        } else {
+                $Response = ["Message" => "user not found"];
+                return response()->json($Response, 404);
+        }
+    }
+
+    /**
+     * ورود با کد یکبار مصرف
+     */
+    public function loginWithSmsCode(Request $request)
+    { // mobile , code
+        $userModel = User::where('mobile', $request->mobile)->first();
+        if (!empty($userModel)) {
+            if ($userModel->userActivation->token == $request->code) {
+                auth::loginUsingId($userModel->id);
+                $Response = ["Message" => "success", "Content" => view('frontend.Ajax.Auth.Header')->render(), "Content2" => view('frontend.Ajax.Auth.Menu')->render()];
+                return response()->json($Response);
+            } else {
+                $Response = ["Message" => "wrong code"];
+                return response()->json($Response, 403);
+            }
+        } else {
+            $Response = ["Message" => "user not found"];
+            return response()->json($Response, 404);
+        }
+    }
+
     public function DefaultLoginAjax(Request $request)
     {
         $Response = ["Message" => "", "Content" => view('frontend.Ajax.Auth.Default', compact('request'))->render()];
@@ -328,6 +417,49 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect(route('HomePage'));
+    }
+
+
+    /**
+     * make new password after clicking on forget password
+     */
+    public function newPassword(Request $request)
+    {
+        $Message = [
+            'code.required' => 'وارد کردن کد الزامی است.',
+            'password.required' => 'وارد کردن رمز جدید الزامی است',
+            'password.min' => 'رمز ورود باید بیش از 6 رقم باشد',
+            'confirm_password.required' => 'تکرار رمز عبور جدید الزامی است.',
+            'confirm_password.min' => 'تکرار رمز عبور باید بیش از 6 رقم باشد.',
+            'mobile.required' => 'شماره موبایل ارسال نشده است.',
+        ];
+        $this->validate($request, [
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6',
+            'mobile' => 'required',
+            'code' => 'required'
+        ], $Message);
+
+
+        if($request->password != $request->confirm_password) {
+            PrintMessage('رمز عبور جدید با تکرار رمز عبور مطابقت ندارد.', 'danger');
+            return back();
+        }
+
+        $userModel = User::where('mobile', $request->mobile)->first();
+
+        if (!empty($userModel)) {
+            if ($userModel->userActivation->token == $request->code) {
+                $userModel->password = bcrypt($request->new_password);
+                if ($userModel->save()) {
+                    PrintMessage('رمز کاربری با موفقیت تغییر یافت.', 'success');
+                    return back();
+                }
+            } else {
+                PrintMessage('کد ارسال شده صحیح نمیباشد.', 'danger');
+                return back();
+            }
+        }
     }
 
 }
